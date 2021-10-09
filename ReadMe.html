@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>¡Milonga!</title>
+  </head>
+
+  <body>
+	<h1>¡Milonga!</h1>
+	<div>
+		<h2>OBJECT:</h2>
+		<p>Assemble and play tango music in the structure used during a milonga (Argentine tango dance event).</p>
+		<p>NOTE: User is expected to have a basic knowledge of the Argentine Tango world...:-)</p>
+	</div>
+	<br/>
+
+	<div>
+		<h2>DESCRIPTION:</h2>
+		<ul>
+			<p>HTML web site used to host:</p>
+			<li>- The ¡Milonga! application (HTML page)</li>
+			<li>- Music folders: tangos and cortinas( See below for explanation)</li>
+			<li>- Data folder: database used in application</li>
+			<li>- javascript procedures files</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>SITE STRUCTURE:</h2>
+		<ul>
+			<p>Main folder:
+			<li>- index.html: The ¡Milonga! application's web page</li>
+			<li>- index.css:  Cascading style sheets used in the index page</li>
+			<li>
+				<p>- 'data' sub-folder:</p>
+				<ul>
+					<li>tangos.xml: tangos, cortinas and singers data structure</li>
+					<li>tangos.dtd: Document-Type-Declaration file for tangos.xml database</li>
+				</ul>
+			</li>
+			<li>
+				<p>- 'js' sub-folder:</p>
+				<ul>
+					<li>- Application's javascript procedures files</li>
+				</ul>
+			</li>
+
+			<li>
+				<p>- 'tangos' sub-folder:</p>
+				<ul>
+					<li>
+						-Artist folders
+						<ul>
+							<li>-Album folders
+								<ul>
+									<li>-Score files</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<p>- 'cortinas' sub-folder:</p>
+				<ul>
+					<li>
+						-Artist folders
+						<ul>
+							<li>-Album folders
+								<ul>
+									<li>-Score files</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>DATA STRUCTURE:</h2>
+		<p>***** IMPORTANT *****</p>
+		<p>The 'tangos.xml' database should reflect EXACTLY, repeat EXACTLY, the content of the 'tangos' and 'cortinas' folder;</p>
+		<p>&nbsp;	This data is used by the application to locate the scores: Any discrepancy in folder/file naming results if score not found!!!</p>
+		<p>&nbsp;	This data identifies the 'styles' used in the application.</p>
+		<p>&nbsp;	and provides additional information: duration, date, singer, etc...</p>
+		<p>The file provided is an EXAMPLE of what should be found in YOUR website.</p>
+	</div>
+	<br/>
+
+	<div>
+		<h2>BACKGROUND:</h2>
+		<p>A milonga is a dance event where tango is danced.</p>
+		<p>The tango dance style, and thus music, comes in three flavors:</p>
+		<ul>
+			<li>- Tango,</li>
+			<li>- Canyengue: old-style tango,</li>
+			<li>- Milonga: fast tango using adapted tango steps,</li>
+			<li>- Vals: tango in 3/4 time</li>
+		</ul>
+		<p>The milonga is structured in 'tandas':</p>
+		<ul>
+			<li>- A group of three to five (usually three) scores of the same type;</li>
+			<li>- Usually from the same artist/orchestra;</li>
+			<li>- Starting with a 'recognition' score where dancers identify the type and look for a partner;</li>
+			<li>- Followed by scores of increasing interest to dancers;</li>
+			<li>- Ended by a 'cortina': score of a totally different music genre and tempo, clearly indicating the end of this 'tanda'.</li>
+			<li>- Hearing this 'cortina', dancers leave the dance floor.</li>
+			<li>- &nbsp;Note: The DJ will make the cortina last until all dancers have left the dance floor...</li>
+		</ul>
+		<p>Tandas alternate through the milonga event:</p>
+		<ul>
+			<li>- Groups of three 'Tandas': two 'tango' tandas followed either by a 'milonga' or 'vals' tanda;</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>CALL:</h2>
+		<p>http://www.&#060;your site&#062;/milonga<p>
+	</div>
+	<br/>
+
+	<div>
+		<h2>APPLICATION LAYOUT:</h2>
+		<p>The application consists of a HTML page:<p>
+		<ul>
+			<li>- Header</li>
+			<li>- Collection panel</li>
+			<li>- Milonga Panel</li>
+		</ul>
+		<img src="images/milongaApp.png" width="640px"/>
+	</div>
+	<br/>
+
+	<div>
+		<h2>COLLECTION PANEL:</h2>
+		<p>The Collection panel displays:</p>
+		<ul>
+			<li>- The current 'style'. Clicking on the style displays a list of choices:
+				<ul>
+					<li>- Canyengue;</li>
+					<li>- Milonga;</li>
+					<li>- Tango;</li>
+					<li>- Vals;</li>
+					<li>- Cortina</li>
+				</ul>
+				<img src="images/collectionStyle.png"/>
+			</li>
+
+			<li>- List of artists according to current style,</li>
+			<li>- List of selected artist's albums where scores of current style are found,</li>
+			<li>- List of selected album's scores of current style,</li>
+			<li>- Audio control:
+				<ul>
+					<li>- Double-clicking on the score starts the play,</li>
+					<li>- Selecting another score stops the play.</li>
+				</ul>
+			</li>
+
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>MILONGA PANEL:</h2>
+		<p>The right panel displays<p>
+		<ul>
+			<li>- The 'Milonga' header,</li>
+			<li>- The milonga tanda/score list,</li>
+			<li>- Audio control</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>BUILDING THE MILONGA:</h2>
+		<p>NOTE:	When a milonga is playing, only the tandas 'to play' can be edited!<p>		
+		<ul>
+			<li>- TANDAS:
+				<ul>
+					<li>- Adding a tanda:
+						<ul>
+							<li>- Drag an artist name from the Collection's Artist list to the 'Milonga' header: an empty tanda is added to the list (with default 'cortina').</li>
+						</ul>
+						<img src="images/addTanda.png" width="640px"/>
+					</li>
+				</ul>
+				<ul>
+					<li>- Removing a tanda:
+						<ul>
+							<li>- Drag a tanda from the milonga list to the 'Milonga' header: the selected tanda is deleted.</li>
+						</ul>
+						<img src="images/removeTanda.png" width="640px"/>
+					</li>
+				</ul>
+				<ul>
+					<li>- Moving a tanda
+						<ul>
+							<li>- Drag a tanda to any other tanda location;</li>
+						</ul>
+						<img src="images/moveTanda.png" width="640px"/>
+					</li>
+				</ul>
+			</li>
+			<li>- SCORES:
+				<ul>
+					<li>- Adding/Updating a score:
+						<ul>
+							<li>- First, select a tanda: Collection style and artist list are updated in the left panel;</li>
+							<li>- Select and drag a score from the Collection's 'score' table to the desired 'score' location in the selected tanda;</li>
+						</ul>
+						<img src="images/addScore.png" width="640px"/>
+					</li>
+
+					<li>- Updating a cortina:
+						<ul>
+							<li>- Switch style to 'Cortina';</li>
+							<li>- Select artist, album;</li>
+							<li>- Drag a score from the 'score' table to the 'cortina' location in the selected tanda;</li>
+						</ul>
+						<img src="images/updateCortina.png" width="640px"/>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>SAVING THE MILONGA:</h2>
+		<p>Save the milonga in its current state.</p>
+		<ul>
+			<li>- Click on the 'Save' button:</li>
+			<li>- Confirm milonga file name;</li>
+			<li>- Milonga is saved in the default 'Download' folder, using 'html' file type.</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>LOADING A MILONGA:</h2>
+		<p>Load a previously saved milonga.</p>
+		<ul>
+			<li>- Click on the 'Select File...' button;</li>
+			<li>- Select a milonga (file type is 'html');</li>
+			<li>- Milonga is listed.</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>CLEARING A MILONGA:</h2>
+		<ul>
+			<li>- Click on the 'Clear' button: the milonga list is cleared.</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>PLAYING THE MILONGA:</h2>
+		<p>Milonga is started by clicking on the 'Play Milonga' button:</p>
+		<ul>
+			<li>- 'Collection' Audio control is hidden,</li>
+			<li>- 'Milonga' controls:
+				<ul>
+					<li>- 'Milonga' Audio control is displayed,</li>
+					<li>- 'Load Milonga' button is hidden,</li>
+					<li>- 'Clear Milonga' button is hidden,</li>
+					<li>- 'Play Milonga' button is hidden,</li>
+					<li>- 'Stop Milonga' button is displayed,</li>
+				</ul>
+			<li>- First tanda is selected (light blue color),</li>
+			<li>- First score is selected (dark blue color) and played,</li>
+			<li>- When score ends, score color turns to light blue,</li>
+			<li>- Process repeats for each score, then cortina,</li>
+			<li>- Process repeats for each tanda.</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>WHILE MILONGA IS PLAYING:</h2>
+		<ul>
+			<li>- Played tanda/scores/cortinas are highlighted in light blue,</li>
+			<li>- Playing score is highlight in blue,</li>
+			<li>- User CAN NOT edit played/playing tandas,</li>
+			<li>- User can manage the remaining tandas: add, move, delete,</li>
+			<li>- User can manage tandas to play: add/move scores, update cortina.</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>
+		<h2>STOPPING/ENDING THE MILONGA:</h2>
+		<p>Milonga is ended when:</p>
+
+		<ul>
+			<li>- Last cortina is played, or</li>
+			<li>- User clicks on the 'Stop Milonga' button.</li>
+		</ul>
+		<p>Then: </p>
+		<ul>
+			<li>- Collection Audio control is displayed,</li>
+			<li>- 'Milonga' controls:
+				<ul>
+					<li>- 'Milonga' Audio control is hidden,</li>
+					<li>- 'Load Milonga' button is displayed,</li>
+					<li>- 'Clear Milonga' button is displayed,</li>
+					<li>- 'Play Milonga' button is displayed,</li>
+					<li>- 'Stop Milonga' button is hidden,</li>
+				</ul>
+			<li>- Milonga colors are reset.</li>
+		</ul>
+	</div>
+	<br/>
+
+	<div>Enjoy!</div>
+</body>
+</html>

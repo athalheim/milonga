@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>¡Milonga!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="index.css">
+    <script type="text/javascript" src="js/table.js"></script>
+    <script type="text/javascript" src="js/attributes.js"></script>
+    <script type="text/javascript" src="js/collection.js"></script>
+    <script type="text/javascript" src="js/dragProcedures.js"></script>
+    <script type="text/javascript" src="js/milonga.js"></script>
+    <script type="text/javascript" src="js/milongaPlayer.js"></script>
+  </head>
+
+  <body>
+    <div style="overflow:hidden; height:100%; width: 100%">
+      <table>
+        <caption style="background-color:beige"><h1>¡Milonga!</h1></caption>
+        <tr>
+          <td id="collectionCell">
+            <div>
+              <h2>Collection</h2>
+            </div>
+
+            <!-- Style Selector -->
+            <div class="center-container">
+              <h3 id="styleButton" style="cursor:pointer; color:red;" onclick="collection.displayStyleSelection(this)">Select Style...</h3>
+              <ul id="styleList" style="display:none; position:absolute; margin-top: 125px; background-color:darkgrey; overflow: hidden; " onclick="collection.selectStyle(event)">
+                <li>Milonga</li>
+                <li>Tango</li>
+                <li>Vals</li>
+                <li>Canyengue</li>
+                <hr width="100%"/>
+                <li>Cortina</li>
+              </ul>
+            </div>
+
+            <div style="height:405px; padding: 5px; background-color: silver;">
+              <!-- Artists List -->
+              <div style="height:120px;">
+                <h3>Artists</h3>
+                <ol id="artistsList" style="height:105px;" onclick="collection.selectArtist(event)" ondragstart="dp.dragArtist(event)""></ol>
+              </div>
+
+              <!-- Albums List -->
+              <div style="height:90px;">
+                <h3>Albums</h3>
+                <ol id="albumsList" style="height:75px;" onclick="collection.selectAlbum(event)"></ol>
+              </div>
+
+              <!-- Scores list -->
+              <div style="height:150px;">
+                <h3>Scores</h3>
+                <ol id="scoresList" style="height:135px;" onclick="collection.selectScore(event)" ondblclick="collection.playScore(event)" ondragstart="dp.dragScore(event)"></ol>
+              </div>
+            </div>
+
+            <!-- Collection Player Controls -->
+            <div id="scorePlayControls" style="width: 100%">
+              <audio id="scoreAudioControl" controls src=""></audio>
+            </div>
+          </td>
+
+          <td id="milongaCell">
+            <div ondragover="dp.allowDropToMilonga(event)" ondrop="dp.dropToMilonga(event)" title="Drag Artist here to initiate Tanda -or- Drag Tanda here to remove.">
+              <h2>Milonga</h2>
+            </div>
+
+            <!-- Inputs -->
+            <div class="center-container">
+              <input type="file" id="loadMilongaInput" name="loadMilongaInput" onchange="milonga.loadMilonga()" accept="text/milonga">
+              <input type="button" value="Save" onclick="milonga.saveMilonga()"/>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <input type="button" id="clearMilongaInput" name="clearMilongaInput" value="Clear" onclick="milonga.clearMilonga()"/>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <input type="button" id="milongaPlayButton" onclick="milongaPlayer.playMilonga()" value="Play Milonga"/>
+              <input type="button" id="milongaStopButton" onclick="milongaPlayer.stopMilonga()" value="Stop Milonga" style="visibility:hidden;"/>
+            </div>
+
+            <!-- Milonga Data -->
+            <div style="height: 405px;">
+              <ul id="milongaList" style="height:100%;" onclick="milonga.selectTanda(event)" ondragstart="dp.dragTanda(event)" ondragover="dp.allowDropToTanda(event)" ondrop="dp.dropToTanda(event)"></ul>
+            </div>
+
+            <!-- Milonga Player Controls -->
+            <div id="milongaAudioControls"  style="width: 100%">
+              <audio id="milongaAudioControl" controls src="" style="visibility: hidden;"></audio>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <script type="text/javascript">
+
+      var locationHref                      = window.location.href;
+      var lastSlashIndex                    = locationHref.lastIndexOf("/");
+      var currentHTTP                       = locationHref.substring(0, lastSlashIndex + 1);
+
+      /* EVENTS */
+      /* Called when milonga player ends */
+      var milongaAudioControl               = document.getElementById("milongaAudioControl");
+      milongaAudioControl.onended           = function() { milongaPlayer.playNextScore(); };
+      
+      /* Initial database load */
+      collection.loadDoc();
+    </script>
+
+  </body>
+</html>

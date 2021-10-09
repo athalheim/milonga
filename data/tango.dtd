@@ -1,0 +1,45 @@
+<!ELEMENT collection (tangos, cortinas, chanteurs)>
+
+<!-- Les  groupes tangos et cortinas utilisent une définition commune: artiste -->
+<!ELEMENT tangos   (artiste+)>
+<!ELEMENT cortinas (artiste*)>
+
+
+<!ELEMENT artiste (album*)>
+<!ATTLIST artiste
+	       id ID                                                                 #REQUIRED
+	  artiste CDATA                                                              #REQUIRED
+	    alias CDATA                                                              #IMPLIED
+    naissance CDATA                                                              #IMPLIED
+	    décès CDATA                                                              #IMPLIED
+	   époque (ViejaGarda | EraDorada | Moderno | Nuevo | Electro | Alternativo) #IMPLIED
+>
+<!ELEMENT album (piece*)>
+<!ATTLIST album
+	       id ID                                                                 #REQUIRED
+	    album CDATA                                                              #REQUIRED
+	     date CDATA                                                              #IMPLIED
+>
+<!ELEMENT piece EMPTY>
+<!ATTLIST piece
+	       id ID                                                                #REQUIRED
+	    titre CDATA                                                             #REQUIRED
+   nomFichier CDATA                                                             #IMPLIED
+	    durée CDATA                                                             #IMPLIED
+	    style (Tango | Vals | Milonga | Canyengue)                              #IMPLIED
+   chanteurId IDREF                                                             #IMPLIED
+	     beat CDATA                                                             #IMPLIED
+	     date CDATA                                                             #IMPLIED
+>
+
+<!ELEMENT chanteurs (chanteur+)>
+<!ELEMENT chanteur EMPTY>
+<!ATTLIST chanteur
+	       id ID                                                                 #REQUIRED
+	 chanteur CDATA                                                              #REQUIRED
+	    alias CDATA                                                              #IMPLIED
+	naissance CDATA                                                              #IMPLIED
+	    décès CDATA                                                              #IMPLIED
+	   époque (ViejaGarda | EraDorada | Moderno | Nuevo | Electro | Alternativo) #IMPLIED
+>
+

@@ -1,0 +1,147 @@
+var milongaPlayer = {
+
+    playingTanda:                           null,
+    playedTandaColor:                       "lightblue",
+
+    playingScore:                           null,
+    playingScoreColor:                      "darkblue",
+
+
+    togglePlayPauseControls: function(_isMilongaPlaying) {
+        /* COLLECTION PANEL */
+        /*  Audio control: Clear the collection audio control */
+        var scoreAudioControl               = document.getElementById("scoreAudioControl");
+        scoreAudioControl.src               = "";
+        scoreAudioControl.pause();
+        document.getElementById("scoreAudioControl").style.visibility   = _isMilongaPlaying? "hidden": "visible";
+        /* MILONGA PANEL */
+        /*  Management Buttons */
+        document.getElementById("loadMilongaInput").style.visibility    = _isMilongaPlaying? "hidden": "visible";
+        document.getElementById("clearMilongaInput").style.visibility   = _isMilongaPlaying? "hidden": "visible";
+        /*   NOTE: Save button is kept visible */
+        /*  Play Buttons */
+        document.getElementById("milongaPlayButton").style.visibility   = _isMilongaPlaying? "hidden": "visible";
+        document.getElementById("milongaStopButton").style.visibility   = _isMilongaPlaying? "visible": "hidden";
+        /*  Audio control: Clear the milonga audio control */
+        var milongaAudioControl             = document.getElementById("milongaAudioControl");
+        milongaAudioControl.src             = "";
+        milongaAudioControl.pause();
+        document.getElementById("milongaAudioControl").style.visibility = _isMilongaPlaying? "visible": "hidden";
+        /* Reset Milonga variables */
+        this.playingTanda                   = null;
+        this.playingScore                   = null;
+    },
+
+
+    /* Play Button: Hidden when milonga is playing */
+    playMilonga: function() {
+        if (document.getElementById("milongaList").innerHTML === "") {
+            alert("Can't play at this time: milonga is empty!");
+        } else {
+            this.togglePlayPauseControls(true);
+            this.playNextScore();
+        }
+    },
+
+
+    /* Stop Button: displayed when milonga is playing */
+    stopMilonga: function() {
+        if (confirm("Confirm stopping the milonga!") === true) {
+            this.endMilonga();
+        }
+    },
+
+
+    /* End Milonga : Called by 'stopMilonga' procedure and when last score has played */
+    endMilonga: function() {
+        this.togglePlayPauseControls(false);
+        table.resetListItem("milongaList");
+    },
+
+
+    /* Playing Milonga: Get next Tanda*/
+    getNextTanda: function() {
+      this.playingScore                     = null;
+      /* First get hold of first/next tanda */
+      if (this.playingTanda) {
+          this.playingTanda                 = this.playingTanda.nextElementSibling;
+      } else {
+          this.playingTanda                 = document.getElementById("milongaList").firstElementChild;
+      }
+      /* Then, when there is a next tanda: */
+      if (this.playingTanda) {
+          /* Remove user selection on playing tanda*/
+          if (this.playingTanda.id === milonga.selectedTandaId) {
+            milonga.selectedTandaId        = null;
+          }
+          /* Highlight tanda and get first score */
+          this.playingTanda.style.backgroundColor = milongaPlayer.playedTandaColor;
+          var playingScoreList             = this.playingTanda.firstElementChild;
+          this.playingScore                = playingScoreList.firstElementChild;
+        }
+    },
+
+
+    getNextScore: function() {
+        if (this.playingScore) {
+            /* Flag current score as 'played' */
+            this.playingScore.style.backgroundColor = milongaPlayer.playedTandaColor;
+            /* Get next score */
+            if (this.playingScore.nextElementSibling) {
+                this.playingScore             = this.playingScore.nextElementSibling;
+            } else {
+                this.getNextTanda();
+            }
+        } else {
+            this.getNextTanda();
+        }
+        /* When there is a next score: */
+        if (this.playingScore) {
+            /* Highlight */
+            this.playingScore.style.backgroundColor     = milongaPlayer.playingScoreColor;
+            /* Skip until playable score or cortina is found */
+            while (this.playingScore.attributes[attributes.idRef].nodeValue === milonga.emptyScoreId) {
+                this.playingScore.style.backgroundColor = milongaPlayer.playedTandaColor;
+                this.playingScore                       = this.playingScore.nextElementSibling;
+                this.playingScore.style.backgroundColor = milongaPlayer.playingScoreColor;
+            }
+        }
+        return this.playingScore;
+    },
+
+
+    /* Playing Milonga: Get next score*/
+    playNextScore: function() {
+        if (this.getNextScore()) {
+            /* Build path to score/cortina */
+            var src                         = "";
+            var rootNode                    = null;
+            var playingScoreIdRef           = this.playingScore.attributes[attributes.idRef].nodeValue;
+            if (playingScoreIdRef.startsWith(collection.tangoPrefix)) {
+              /* Score */
+              src                           = collection.tangosPath;
+              rootNode                      = collection.xmlDoc.querySelectorAll("tangos")[0];
+            } else {
+              /* Cortina */
+              src                           = collection.cortinasPath;
+              rootNode                      = collection.xmlDoc.querySelectorAll("cortinas")[0];
+            }
+            var scoreNode                   = rootNode.querySelector("piece[id='" + playingScoreIdRef +"']");
+            var albumNode                   = scoreNode.parentNode;
+            var artistNode                  = albumNode.parentNode;
+            src                            += artistNode.attributes["artiste"].nodeValue + "/";
+            src                            += albumNode.attributes["album"].nodeValue    + "/";
+            src                            += scoreNode.attributes["titre"].nodeValue    + ".mp3";
+            /* Set audio/source controls */
+            var milongaAudioControl         = document.getElementById("milongaAudioControl");
+            milongaAudioControl.src         = src;
+            milongaAudioControl.load();
+            milongaAudioControl.play();
+        } else {
+            this.endMilonga();
+        }
+    },
+
+};
+
+/* -\\- */
