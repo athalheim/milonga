@@ -15,7 +15,7 @@
   <body>
     <div style="overflow:hidden; height:100%; width: 100%">
       <table>
-        <caption style="background-color:beige"><h1>¡Milonga!</h1></caption>
+        <caption style="background-color:beige; cursor:pointer;" onclick="displayReadMe()" title="Click to display Help file in new window."><h1>¡Milonga!</h1></caption>
         <tr>
           <td id="collectionCell">
             <div>
@@ -96,6 +96,10 @@
       var locationHref                      = window.location.href;
       var lastSlashIndex                    = locationHref.lastIndexOf("/");
       var currentHTTP                       = locationHref.substring(0, lastSlashIndex + 1);
+
+      function displayReadMe() {
+        window.open("ReadMe.html");
+      }
 
       /* EVENTS */
       /* Called when milonga player ends */
