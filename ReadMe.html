@@ -30,19 +30,26 @@
 		<h2>SITE STRUCTURE:</h2>
 		<ul>
 			<p>Main folder:
-			<li>- index.html: The ¡Milonga! application's web page</li>
-			<li>- index.css:  Cascading style sheets used in the index page</li>
+			<li>- index.html: The ¡Milonga! application's web page,</li>
+			<li>- index.css:  Cascading style sheets used in the index page,</li>
+			<li>- ReadMe.html:  This page.</li>
 			<li>
 				<p>- 'data' sub-folder:</p>
 				<ul>
-					<li>tangos.xml: tangos, cortinas and singers data structure</li>
-					<li>tangos.dtd: Document-Type-Declaration file for tangos.xml database</li>
+					<li>tangos.xml: tangos, cortinas and singers data structure,</li>
+					<li>tangos.dtd: Document-Type-Declaration file for tangos.xml database.</li>
 				</ul>
 			</li>
 			<li>
 				<p>- 'js' sub-folder:</p>
 				<ul>
-					<li>- Application's javascript procedures files</li>
+					<li>- Application's javascript procedures files.</li>
+				</ul>
+			</li>
+			<li>
+				<p>- 'images' sub-folder:</p>
+				<ul>
+					<li>- Images used in 'ReadMe' page.</li>
 				</ul>
 			</li>
 
@@ -84,10 +91,24 @@
 		<h2>DATA STRUCTURE:</h2>
 		<p>***** IMPORTANT *****</p>
 		<p>The 'tangos.xml' database should reflect EXACTLY, repeat EXACTLY, the content of the 'tangos' and 'cortinas' folder;</p>
-		<p>&nbsp;	This data is used by the application to locate the scores: Any discrepancy in folder/file naming results if score not found!!!</p>
+		<p>&nbsp;	This data is used by the application to locate the scores: Any discrepancy in folder/file naming results in score not found (error 404)!!!</p>
 		<p>&nbsp;	This data identifies the 'styles' used in the application.</p>
 		<p>&nbsp;	and provides additional information: duration, date, singer, etc...</p>
 		<p>The file provided is an EXAMPLE of what should be found in YOUR website.</p>
+		<br/>
+		<p>Data example:</p>
+		<p>&#060;artist id="AR0082" name="Biagi, Rodolfo" epoch="EraDorada" birth="14/03/1906" death="24/09/1969"&#062;</p>
+		<p style="margin-left:25px">&#160;&#060;album id="AL0108" name="Al Compas Del Vals" date="1938-1951"&#062;</p>
+		<p style="margin-left:50px">&#160;&#060;score id="TA0859" title="Adoración" style="Vals" duration="2:50" date="1951" singerId="CH0271" /&#062;</p>
+		<p style="margin-left:50px">&#160;&#060;score id="TA0860" title="Amor y vals" style="Vals" duration="2:50" beat="128" date="1942" singerId="CH0109" /&#062;</p>
+		<p style="margin-left:50px">&#160;...</p>
+		<p style="margin-left:25px">&#160;&#060;/album&#062;</p>
+		<p>&#060;/artist&#062;</p>
+		<br/>
+		<p>In the example above, path to the second score will be built from:</p>
+		<p style="margin-left:25px">tangos/&#060;artist&#062;/&#060;album&#062;/&#060;score&#062;.mp3</p>
+		<p>thus:</p>
+		<p style="margin-left:25px">tangos/Biagi, Rodolfo/Al Compas Del Vals/Adoración.mp3</p>
 	</div>
 	<br/>
 
