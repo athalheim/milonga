@@ -1,45 +1,45 @@
-<!ELEMENT collection (tangos, cortinas, chanteurs)>
+<!ELEMENT collection (tangos, cortinas, singers)>
 
 <!-- Les  groupes tangos et cortinas utilisent une définition commune: artiste -->
-<!ELEMENT tangos   (artiste+)>
-<!ELEMENT cortinas (artiste*)>
+<!ELEMENT tangos   (artist+)>
+<!ELEMENT cortinas (artist*)>
 
 
-<!ELEMENT artiste (album*)>
-<!ATTLIST artiste
+<!ELEMENT artist (album*)>
+<!ATTLIST artist
 	       id ID                                                                 #REQUIRED
-	  artiste CDATA                                                              #REQUIRED
+	     name CDATA                                                              #REQUIRED
 	    alias CDATA                                                              #IMPLIED
-    naissance CDATA                                                              #IMPLIED
-	    décès CDATA                                                              #IMPLIED
-	   époque (ViejaGarda | EraDorada | Moderno | Nuevo | Electro | Alternativo) #IMPLIED
+        birth CDATA                                                              #IMPLIED
+	    death CDATA                                                              #IMPLIED
+	    epoch (ViejaGarda | EraDorada | Moderno | Nuevo | Electro | Alternativo) #IMPLIED
 >
-<!ELEMENT album (piece*)>
+<!ELEMENT album (score*)>
 <!ATTLIST album
 	       id ID                                                                 #REQUIRED
-	    album CDATA                                                              #REQUIRED
+	     name CDATA                                                              #REQUIRED
 	     date CDATA                                                              #IMPLIED
 >
-<!ELEMENT piece EMPTY>
-<!ATTLIST piece
+<!ELEMENT score EMPTY>
+<!ATTLIST score
 	       id ID                                                                #REQUIRED
-	    titre CDATA                                                             #REQUIRED
-   nomFichier CDATA                                                             #IMPLIED
-	    durée CDATA                                                             #IMPLIED
+	    title CDATA                                                             #REQUIRED
+     filename CDATA                                                             #IMPLIED
+	 duration CDATA                                                             #IMPLIED
 	    style (Tango | Vals | Milonga | Canyengue)                              #IMPLIED
-   chanteurId IDREF                                                             #IMPLIED
+   singerId IDREF                                                             #IMPLIED
 	     beat CDATA                                                             #IMPLIED
 	     date CDATA                                                             #IMPLIED
 >
 
-<!ELEMENT chanteurs (chanteur+)>
-<!ELEMENT chanteur EMPTY>
-<!ATTLIST chanteur
+<!ELEMENT singers (singer+)>
+<!ELEMENT singer EMPTY>
+<!ATTLIST singer
 	       id ID                                                                 #REQUIRED
-	 chanteur CDATA                                                              #REQUIRED
+	     name CDATA                                                              #REQUIRED
 	    alias CDATA                                                              #IMPLIED
-	naissance CDATA                                                              #IMPLIED
-	    décès CDATA                                                              #IMPLIED
-	   époque (ViejaGarda | EraDorada | Moderno | Nuevo | Electro | Alternativo) #IMPLIED
+    	birth CDATA                                                              #IMPLIED
+	    death CDATA                                                              #IMPLIED
+	    epoch (ViejaGarda | EraDorada | Moderno | Nuevo | Electro | Alternativo) #IMPLIED
 >
 
