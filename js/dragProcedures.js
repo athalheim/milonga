@@ -22,10 +22,15 @@
         if (thisTandaId.startsWith(collection.artistPrefix)) {
             this.addTanda(thisTandaId);
         } else if (thisTandaId.startsWith(milonga.tandaPrefix)) {
-            if (milonga.selectedTandaId === thisTandaId) {
-                milonga.selectedTandaId     = null;
+            var thisTanda                   = document.getElementById(thisTandaId);
+            if (milonga.isTandaSelectable(thisTanda)) {
+                if (milonga.selectedTandaId === thisTandaId) {
+                    milonga.selectedTandaId     = null;
+                }
+                milongaList.removeChild(thisTanda);
+            } else {
+                alert("Can't remove this tanda at this time.");
             }
-            milongaList.removeChild(document.getElementById(thisTandaId));
         }
     },
 
@@ -38,10 +43,10 @@
         var newTandaId                      = milonga.tandaPrefix + ticks;
         /* Open tanda item */
         var listContent                     = "<li id='" + newTandaId + "' ";
-        listContent                        += attributes.artisteId + "='" + thisArtistId + "' ";
+        listContent                        += attributes.artistId + "='" + thisArtistId + "' ";
         listContent                        += attributes.dataStyle + "='" + collection.currentStyle + "' ";
         listContent                        += " draggable='true' >";
-        listContent                        += collection.currentStyle + ": " + thisArtistTag.attributes[attributes.artiste].nodeValue + " (" + thisArtistTag.attributes[attributes.époque].nodeValue + ")";
+        listContent                        += collection.currentStyle + ": " + thisArtistTag.attributes[attributes.name].nodeValue + " (" + thisArtistTag.attributes[attributes.epoch].nodeValue + ")";
         /* Build tanda score list*/
         listContent                        += "<ul style='margin-left:25px' ondragstart='dp.dragScore(event)'>";
         /* Add five(5) score tags */
@@ -178,7 +183,7 @@
         /*  Score artist*/
         var scoresListTag                   = scoreElement.parentElement;
         var tandaTag                        = scoresListTag.parentElement;
-        var tandaArtisteId                  = tandaTag.attributes[attributes.artisteId].nodeValue;
+        var tandaArtisteId                  = tandaTag.attributes[attributes.artistId].nodeValue;
         /* Check if score is from same artist */
         if (thisScoreArtistId === tandaArtisteId) {
             this.updateListItem(sourceId, scoreElement);

@@ -3,7 +3,7 @@ var collection = {
     xmlDoc:                                 null,
     rootNode:                               null,
     cortinasNode:                           null,
-    chanteursNode:                          null,
+    singersNode:                            null,
 
     tangosPath:                             "tangos/",
     tangoPrefix:                            "TA",
@@ -23,7 +23,7 @@ var collection = {
         xhttp.onreadystatechange            = function() {
           if (this.readyState == 4 && this.status == 200) {
             collection.xmlDoc               = this.responseXML;
-            collection.chanteursNode        = collection.xmlDoc.querySelector("chanteurs");
+            collection.singersNode          = collection.xmlDoc.querySelector("singers");
             collection.cortinasNode         = collection.xmlDoc.querySelector("cortinas");
             collection.processStyle("Tango");
           }
@@ -56,10 +56,10 @@ var collection = {
         /* Select appropriate artists from database */
         if (thisStyle === "Cortina") {
           this.rootNode                     = this.xmlDoc.querySelector("cortinas");
-          this.scoreByStyleQuery            = "piece";
+          this.scoreByStyleQuery            = "score";
         } else {
           this.rootNode                     = this.xmlDoc.querySelector("tangos");
-          this.scoreByStyleQuery            = "piece[style='" + thisStyle + "']";
+          this.scoreByStyleQuery            = "score[style='" + thisStyle + "']";
         }
         this.listArtists();
     },
@@ -72,13 +72,13 @@ var collection = {
     /* List artists */
     listArtists: function() {
         var listContent                     = "";
-        var artistNodes                     = this.rootNode.getElementsByTagName("artiste");
+        var artistNodes                     = this.rootNode.getElementsByTagName("artist");
         for (var i = 0; i < artistNodes.length; i++) { 
           var artistNode                    = artistNodes[i];
           var scoreCount                    = artistNode.querySelectorAll(this.scoreByStyleQuery).length;
           if (scoreCount > 0) {
             listContent                    += "<li id='" + artistNode.id + "' draggable='true'>";
-            listContent                    += artistNode.attributes[attributes.artiste].nodeValue + " (" + scoreCount + ")";
+            listContent                    += artistNode.attributes[attributes.name].nodeValue + " (" + scoreCount + ")";
             listContent                    += "</li>";
           }
         }
@@ -99,7 +99,7 @@ var collection = {
     selectArtistById: function(_thisArtistId) {
         table.resetListItem("artistsList", _thisArtistId);
         /* Select artist tag */
-        var thisArtistNode                  = this.rootNode.querySelector("artiste[id='" + _thisArtistId +"']");
+        var thisArtistNode                  = this.rootNode.querySelector("artist[id='" + _thisArtistId +"']");
         /* List and count Artist Albums, according to current style */
         var listContent                     = "";
         var listedAlbumCount                = 0;
@@ -110,7 +110,7 @@ var collection = {
           if (scoreCount > 0 ) {
             listedAlbumCount               += 1;
             listContent                    += "<li id='" + albumNode.id + "'>";
-            listContent                    += albumNode.attributes[attributes.album].nodeValue + ' (' + scoreCount + ")";
+            listContent                    += albumNode.attributes[attributes.name].nodeValue + ' (' + scoreCount + ")";
             listContent                    += "</li>";
           }
         }
@@ -156,17 +156,17 @@ var collection = {
 
 
     buildScoreText: function(thisScoreNode) {
-      let thisText                          = thisScoreNode.attributes[attributes.titre].nodeValue;
+      let thisText                          = thisScoreNode.attributes[attributes.title].nodeValue;
       if (thisScoreNode.attributes[attributes.date]) {
         thisText                           += "," + thisScoreNode.attributes[attributes.date].nodeValue;
       }
-      if (thisScoreNode.attributes[attributes.durée]) {
-        thisText                           += " (" + thisScoreNode.attributes[attributes.durée].nodeValue + ")";
+      if (thisScoreNode.attributes[attributes.duration]) {
+        thisText                           += " (" + thisScoreNode.attributes[attributes.duration].nodeValue + ")";
       }
-      if (thisScoreNode.attributes[attributes.chanteurId]) {
-        var thisChanteurId                  = thisScoreNode.attributes[attributes.chanteurId].nodeValue;
-        var thisChanteurNode                = this.chanteursNode.querySelector("[id='" + thisChanteurId + "']");
-        thisText                           += ", " + thisChanteurNode.attributes[attributes.chanteur].nodeValue;
+      if (thisScoreNode.attributes[attributes.singerId]) {
+        var thisSingerId                  = thisScoreNode.attributes[attributes.singerId].nodeValue;
+        var thisSingerNode                = this.singersNode.querySelector("[id='" + thisSingerId + "']");
+        thisText                           += ", " + thisSingerNode.attributes[attributes.name].nodeValue;
       }
       return thisText;
     },
@@ -207,14 +207,19 @@ var collection = {
         var thisArtistNode                  = thisAlbumNode.parentNode;
         var src                             = top.currentHTTP;
         src                                += (this.currentStyle === "Cortina")? this.cortinasPath: this.tangosPath;
-        src                                += thisArtistNode.attributes[attributes.artiste].nodeValue + "/";
-        src                                += thisAlbumNode.attributes[attributes.album].nodeValue    + "/"; 
-        src                                += thisScoreNode.attributes[attributes.titre].nodeValue    + ".mp3";
+        src                                += thisArtistNode.attributes[attributes.name].nodeValue + "/";
+        src                                += thisAlbumNode.attributes[attributes.name].nodeValue    + "/"; 
+        if (thisScoreNode.attributes[attributes.filename]) {
+          src                              += thisScoreNode.attributes[attributes.filename].nodeValue + ".mp3";
+        } else {
+          src                              += thisScoreNode.attributes[attributes.title].nodeValue    + ".mp3";
+        }
         var audio                           = document.getElementById("scoreAudioControl");
         audio.src                           = src;
         audio.load();
         audio.play();  
       },
+
 };
 
 /* -\\- */

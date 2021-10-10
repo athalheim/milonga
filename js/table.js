@@ -24,7 +24,7 @@ var table = {
                 var relativeBottom          = (selectedRectangle.bottom - listElementRectangle.bottom);
                 if (relativeTop < 0) {
                     listElement.scrollTop  += relativeTop;
-                } else if (relativeBottom < 0) {
+                } else if (relativeBottom > 0) {
                     listElement.scrollTop  += relativeBottom;
                 }
             } else {

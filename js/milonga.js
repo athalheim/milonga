@@ -79,7 +79,7 @@ var milonga = {
             if (this.isTandaSelectable(selectedTanda)) {
                 milonga.selectedTandaId     = table.resetListItem("milongaList", selectedTanda.id);
                 collection.processStyle(selectedTanda.attributes[attributes.dataStyle].nodeValue);
-                collection.selectArtistById(selectedTanda.attributes[attributes.artisteId].nodeValue);
+                collection.selectArtistById(selectedTanda.attributes[attributes.artistId].nodeValue);
             } else {
                 alert("Tanda is not selectable!");
             }

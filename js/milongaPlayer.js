@@ -17,7 +17,7 @@ var milongaPlayer = {
         /* MILONGA PANEL */
         /*  Management Buttons */
         document.getElementById("loadMilongaInput").style.visibility    = _isMilongaPlaying? "hidden": "visible";
-        document.getElementById("clearMilongaInput").style.visibility   = _isMilongaPlaying? "hidden": "visible";
+        document.getElementById("clearMilongaButton").style.visibility   = _isMilongaPlaying? "hidden": "visible";
         /*   NOTE: Save button is kept visible */
         /*  Play Buttons */
         document.getElementById("milongaPlayButton").style.visibility   = _isMilongaPlaying? "hidden": "visible";
@@ -126,12 +126,16 @@ var milongaPlayer = {
               src                           = collection.cortinasPath;
               rootNode                      = collection.xmlDoc.querySelectorAll("cortinas")[0];
             }
-            var scoreNode                   = rootNode.querySelector("piece[id='" + playingScoreIdRef +"']");
+            var scoreNode                   = rootNode.querySelector("score[id='" + playingScoreIdRef +"']");
             var albumNode                   = scoreNode.parentNode;
             var artistNode                  = albumNode.parentNode;
-            src                            += artistNode.attributes["artiste"].nodeValue + "/";
-            src                            += albumNode.attributes["album"].nodeValue    + "/";
-            src                            += scoreNode.attributes["titre"].nodeValue    + ".mp3";
+            src                            += artistNode.attributes[attributes.name].nodeValue + "/";
+            src                            += albumNode.attributes[attributes.name].nodeValue    + "/";
+            if (scoreNode.attributes[attributes.filename]) {
+                src                        += scoreNode.attributes[attributes.filename].nodeValue + ".mp3";
+            } else {
+                src                        += scoreNode.attributes[attributes.title].nodeValue    + ".mp3";
+            }
             /* Set audio/source controls */
             var milongaAudioControl         = document.getElementById("milongaAudioControl");
             milongaAudioControl.src         = src;

@@ -1,23 +1,24 @@
 var attributes = {
 
-/* Chanteur */
-    chanteur:                        "chanteur",
-    chanteurId:                      "chanteurId",
-/* Artiste */
-    époque:                          "époque",
-    artiste:                         "artiste",
-    artisteId:                       "artisteId",
+/* Singer */
+    singer:                          "singer",
+    singerId:                        "singerId",
+/* Artist */
+    epoch:                           "epoch",
+    artist:                          "artist",
+    artistId:                        "artistId",
 /* Album */
     album:                           "album",
-/* Pièce */
+/* Score */
     dataStyle:                       "data-style",
-    titre:                           "titre",
-    durée:                           "durée",
+    title:                           "title",
+    duration:                        "duration",
     date:                            "date",
-/* Ids */
+    filename:                        "filename",
+/* Common attributes */
+    name:                            "name",
     id:                              "id",
     idRef:                           "idref",
-/* Score */
 };
 
 /* -\\- */
