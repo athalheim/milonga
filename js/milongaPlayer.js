@@ -117,7 +117,7 @@ var milongaPlayer = {
             var src                         = "";
             var rootNode                    = null;
             var playingScoreIdRef           = this.playingScore.attributes[attributes.idRef].nodeValue;
-            if (playingScoreIdRef.startsWith(collection.tangoPrefix)) {
+            if (playingScoreIdRef.startsWith(collection.tangoIdPrefix)) {
               /* Score */
               src                           = collection.tangosPath;
               rootNode                      = collection.xmlDoc.querySelectorAll("tangos")[0];

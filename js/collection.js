@@ -6,12 +6,12 @@ var collection = {
     singersNode:                            null,
 
     tangosPath:                             "tangos/",
-    tangoPrefix:                            "TA",
+    tangoIdPrefix:                            "TA",
 
     cortinasPath:                           "cortinas/",
-    cortinaPrefix:                          "CO",
+    cortinaIdPrefix:                        "CO",
 
-    artistPrefix:                           "AR",
+    artistIdPrefix:                         "AR",
 
     currentStyle:                           "",
     scoreByStyleQuery:                      "",
@@ -78,7 +78,7 @@ var collection = {
           var scoreCount                    = artistNode.querySelectorAll(this.scoreByStyleQuery).length;
           if (scoreCount > 0) {
             listContent                    += "<li id='" + artistNode.id + "' draggable='true'>";
-            listContent                    += artistNode.attributes[attributes.name].nodeValue + " (" + scoreCount + ")";
+            listContent                    += this.listArtistText(artistNode);
             listContent                    += "</li>";
           }
         }
@@ -87,6 +87,17 @@ var collection = {
         /* Select first artist list item to list all/albums */
         var firstArtistListItem             = document.getElementById("artistsList").firstElementChild;
         this.selectArtistById(firstArtistListItem.id);
+    },
+
+    listArtistText: function(artistNode, isMilonga) {
+      var artistText                        = "";
+      if (isMilonga) artistText            += this.currentStyle + ": ";
+      artistText                           += artistNode.attributes[attributes.name].nodeValue + " (" ;
+      artistText                           += artistNode.attributes[attributes.birth]? artistNode.attributes[attributes.birth].nodeValue: "" ;
+      artistText                           += "-" ;
+      artistText                           += artistNode.attributes[attributes.death]? artistNode.attributes[attributes.death].nodeValue: "" ;
+      artistText                           += ")" ;
+      return artistText
     },
 
     /* SELECT ARTIST and list Albums according to style */

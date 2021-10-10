@@ -1,12 +1,9 @@
 var attributes = {
 
-/* Singer */
-    singer:                          "singer",
-    singerId:                        "singerId",
 /* Artist */
-    epoch:                           "epoch",
     artist:                          "artist",
-    artistId:                        "artistId",
+    birth:                           "birth",
+    death:                           "death",
 /* Album */
     album:                           "album",
 /* Score */
@@ -15,10 +12,15 @@ var attributes = {
     duration:                        "duration",
     date:                            "date",
     filename:                        "filename",
+/* Singer */
+    singerId:                        "singerId",
+/* Tanda */
+    artistId:                        "artistId",
 /* Common attributes */
-    name:                            "name",
+    epoch:                           "epoch",
     id:                              "id",
     idRef:                           "idref",
+    name:                            "name",
 };
 
 /* -\\- */

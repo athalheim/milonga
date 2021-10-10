@@ -1,14 +1,15 @@
 var milonga = {
 
     tandaPrefix:                              "tanda_",
+    selectedTandaId:                          null,
+
     emptyScore:                               "(Score)",
     emptyScoreId:                             "TA0000",
-    scorePrefix:                              "score_",
+    scoreIdPrefix:                              "score_",
 
     defaultCortinaId:                         "CO0000",
-    cortinaPrefix:                            "cortina_",
+    cortinaIdPrefix:                          "cortina_",
 
-    selectedTandaId:                          null,
 
     /* CLEAR MILONGA */
     clearMilonga: function() {
@@ -77,7 +78,11 @@ var milonga = {
         var selectedTanda                   = table.getListElement(event);
         if (selectedTanda.id.startsWith(milonga.tandaPrefix)) {
             if (this.isTandaSelectable(selectedTanda)) {
-                milonga.selectedTandaId     = table.resetListItem("milongaList", selectedTanda.id);
+                if (milonga.selectedTandaId) {
+                    document.getElementById(milonga.selectedTandaId).style.backgroundColor = "";
+                }
+                milonga.selectedTandaId     = selectedTanda.id;
+                selectedTanda.style.backgroundColor = "";
                 collection.processStyle(selectedTanda.attributes[attributes.dataStyle].nodeValue);
                 collection.selectArtistById(selectedTanda.attributes[attributes.artistId].nodeValue);
             } else {

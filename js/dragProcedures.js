@@ -19,7 +19,7 @@
     dropToMilonga: function(ev) {
         ev.preventDefault();
         var thisTandaId                     = ev.dataTransfer.getData("text");
-        if (thisTandaId.startsWith(collection.artistPrefix)) {
+        if (thisTandaId.startsWith(collection.artistIdPrefix)) {
             this.addTanda(thisTandaId);
         } else if (thisTandaId.startsWith(milonga.tandaPrefix)) {
             var thisTanda                   = document.getElementById(thisTandaId);
@@ -37,7 +37,7 @@
 
     addTanda: function(thisArtistId) {
         /* Get artist tag, then artist name */
-        var thisArtistTag                   = collection.xmlDoc.querySelector("[id='" + thisArtistId + "']");
+        var thisArtistNode                   = collection.xmlDoc.querySelector("[id='" + thisArtistId + "']");
         /* Build new tanda as html string*/
         var ticks                           = new Date().getTime();
         var newTandaId                      = milonga.tandaPrefix + ticks;
@@ -46,17 +46,24 @@
         listContent                        += attributes.artistId + "='" + thisArtistId + "' ";
         listContent                        += attributes.dataStyle + "='" + collection.currentStyle + "' ";
         listContent                        += " draggable='true' >";
-        listContent                        += collection.currentStyle + ": " + thisArtistTag.attributes[attributes.name].nodeValue + " (" + thisArtistTag.attributes[attributes.epoch].nodeValue + ")";
+        listContent                        += collection.listArtistText(thisArtistNode, true);
         /* Build tanda score list*/
         listContent                        += "<ul style='margin-left:25px' ondragstart='dp.dragScore(event)'>";
         /* Add five(5) score tags */
-        listContent                        += this.buildEmptyScoreListItem(milonga.scorePrefix + ticks + "_0");
-        listContent                        += this.buildEmptyScoreListItem(milonga.scorePrefix + ticks + "_1");
-        listContent                        += this.buildEmptyScoreListItem(milonga.scorePrefix + ticks + "_2");
-        listContent                        += this.buildEmptyScoreListItem(milonga.scorePrefix + ticks + "_3");
-        listContent                        += this.buildEmptyScoreListItem(milonga.scorePrefix + ticks + "_4");
+        for (var i = 0; i < 5; i++) {
+            listContent                    += "<li id='" + milonga.scoreIdPrefix + ticks + i + "' ";
+            listContent                    += attributes.idRef + "='" + milonga.emptyScoreId + "' ";
+            listContent                    += "draggable='true' >";
+            listContent                    += milonga.emptyScore;
+            listContent                    += "</li>";
+        }
         /* Add cortina tag */
-        listContent                        += this.buildCortinaListItem(milonga.cortinaPrefix + ticks);
+        var thisScoreNode                   = collection.xmlDoc.querySelector("[id='" + milonga.defaultCortinaId + "']");
+        listContent                        += "<li id='" + milonga.cortinaIdPrefix + ticks + "' ";
+        listContent                        += attributes.idRef + "='" + milonga.defaultCortinaId + "' ";
+        listContent                        += "style='margin-left:25px'>";
+        listContent                        += collection.buildScoreText(thisScoreNode);
+        listContent                        += "</li>";
         /* Close score list */
         listContent                        += "</ul>";
         /* Close tanda item */
@@ -67,24 +74,6 @@
         milonga.selectedTandaId             = table.resetListItem("milongaList", newTandaId);
     },
 
-    buildEmptyScoreListItem: function(scoreId) {
-        var listContent                     = "<li id='" + scoreId + "' ";
-        listContent                        += attributes.idRef + "='" + milonga.emptyScoreId + "' ";
-        listContent                        += "draggable='true' >";
-        listContent                        += milonga.emptyScore;
-        listContent                        += "</li>";
-        return listContent;
-    },
-
-    buildCortinaListItem: function(cortinaId) {
-        var thisScoreNode                   = collection.xmlDoc.querySelector("[id='" + milonga.defaultCortinaId + "']");
-        var listContent                     = "<li id='" + cortinaId + "' ";
-        listContent                        += attributes.idRef + "='" + milonga.defaultCortinaId + "' ";
-        listContent                        += "style='margin-left:25px'>";
-        listContent                        += collection.buildScoreText(thisScoreNode);
-        listContent                        += "</li>";
-        return listContent;
-    },
 
     /* *********************************************************************** */
     /* RE-ORDERING TANDAS  */
@@ -106,8 +95,8 @@
 
     /* DROP: Used with tanda list item */
     /* Three possible sources: */
-    /*  -tanda: possible action: move tanda*/
-    /*  -tanda score: possible action: move score inside same tanda */
+    /*  -tanda:            possible action: move tanda */
+    /*  -tanda score:      possible action: move score inside same tanda */
     /*  -collection score: possible action: update score/cortina */
     dropToTanda: function(ev) {
         ev.preventDefault();
@@ -117,14 +106,14 @@
         /* Branch accordingly to source */
         if (sourceId.startsWith(milonga.tandaPrefix)) {
             this.moveTanda(sourceId, targetId);
-        } else if (sourceId.startsWith(milonga.scorePrefix)) {
-            this.moveScore(sourceId, targetId);
-        } else if (sourceId.startsWith(collection.tangoPrefix) && targetId.startsWith(milonga.scorePrefix)) {
+        } else if (sourceId.startsWith(milonga.scoreIdPrefix)) {
+            this.moveTandaScore(sourceId, targetId);
+        } else if (sourceId.startsWith(collection.tangoIdPrefix) && targetId.startsWith(milonga.scoreIdPrefix)) {
             /* Update tanda score with collection score */
-            this.updateScore(sourceId, ev.target);
-        } else if (sourceId.startsWith(collection.cortinaPrefix) && targetId.startsWith(milonga.cortinaPrefix)) {
+            this.updateTandaWithScore(sourceId, ev.target);
+        } else if (sourceId.startsWith(collection.cortinaIdPrefix) && targetId.startsWith(milonga.cortinaIdPrefix)) {
             /* Update cortina with cortina score */
-            this.updateListItem(sourceId, ev.target);
+            this.updateTandaScoreFromTarget(sourceId, ev.target);
         } else {
             alert("Unrecognized move!");
         }
@@ -154,14 +143,14 @@
         milongaList.insertBefore(sourceTanda, targetTanda);
     },
 
-    moveScore: function(sourceId, targetId) {
+    moveTandaScore: function(sourceId, targetId) {
         var sourceScore                     = document.getElementById(sourceId);
         var sourceTanda                     = sourceScore.parentElement.parentElement;
         if (!milonga.isTandaSelectable(sourceTanda)) {
             alert("Can't use source Tanda.");
             return;
         }
-        if (targetId.startsWith(milonga.scorePrefix)) {
+        if (targetId.startsWith(milonga.scoreIdPrefix)) {
             var targetScore                 = document.getElementById(targetId);
             var targetTanda                 = targetScore.parentElement.parentElement;
             if (sourceTanda !== targetTanda) {
@@ -175,29 +164,28 @@
         }
     },
 
-    updateScore: function(sourceId, scoreElement) {
-        var thisScoreNode                   = collection.xmlDoc.querySelector("[id='" + sourceId + "']");
-        var thisScoreAlbumNode              = thisScoreNode.parentElement;
-        var thisScoreArtistNode             = thisScoreAlbumNode.parentElement;
-        var thisScoreArtistId               = thisScoreArtistNode.id;
-        /*  Score artist*/
-        var scoresListTag                   = scoreElement.parentElement;
-        var tandaTag                        = scoresListTag.parentElement;
-        var tandaArtisteId                  = tandaTag.attributes[attributes.artistId].nodeValue;
-        /* Check if score is from same artist */
-        if (thisScoreArtistId === tandaArtisteId) {
-            this.updateListItem(sourceId, scoreElement);
+    updateTandaWithScore: function(sourceId, scoreElement) {
+        /* Get artist from collection */
+        var scoreNode                       = collection.xmlDoc.querySelector("[id='" + sourceId + "']");
+        var scoreArtistNode                 = scoreNode.parentElement.parentElement;
+        /*  Get tanda tag */
+        var tandaTag                        = scoreElement.parentElement.parentElement;
+        /* Check if score and tanda from same artist */
+        if (scoreArtistNode.id === tandaTag.attributes[attributes.artistId].nodeValue) {
+            /* Update when score and tanda from same artist */
+            this.updateTandaScoreFromTarget(sourceId, scoreElement);
         } else if (confirm("This score's artist is different than the tanda artist!\nAdd anyway?")) {
-            this.updateListItem(sourceId, scoreElement);
+            /* Update when user overrides */
+            this.updateTandaScoreFromTarget(sourceId, scoreElement);
         } else {
             alert("Selected score does not belong to Tanda artist!");
         }
     },
 
-    updateListItem: function(sourceId, targetElement) {
-        var thisScoreNode                   = collection.xmlDoc.querySelector("[id='" + sourceId + "']");
+    updateTandaScoreFromTarget: function(sourceId, targetElement) {
+        var scoreNode                       = collection.xmlDoc.querySelector("[id='" + sourceId + "']");
         targetElement.attributes[attributes.idRef].nodeValue = sourceId;
-        targetElement.innerHTML             = collection.buildScoreText(thisScoreNode);
+        targetElement.innerHTML             = collection.buildScoreText(scoreNode);
     },
 
 
@@ -207,7 +195,7 @@
 
     /* drag: from Collecion 'scores' list */
     dragScore: function(ev) {
-        if (ev.target.id.startsWith(collection.tangoPrefix) || ev.target.id.startsWith(collection.cortinaPrefix)) {
+        if (ev.target.id.startsWith(collection.tangoIdPrefix) || ev.target.id.startsWith(collection.cortinaIdPrefix)) {
             table.resetListItem("scoresList", ev.target.id);
         }
         ev.dataTransfer.setData("text", ev.target.id);

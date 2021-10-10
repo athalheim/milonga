@@ -8,6 +8,7 @@ var table = {
 
           /* Highlight/Unhighlight selected list item */
     resetListItem: function(listElementId, elementId) {
+        /* Clear all highlights */
         var listElement                     = document.getElementById(listElementId);
         var listItems                       = listElement.getElementsByTagName("li");
         for (var i = 0; i < listItems.length; i += 1) {
