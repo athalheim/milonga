@@ -20,9 +20,9 @@ var table = {
             if (selectedElement) {
                 selectedElement.style.backgroundColor = "red";
                 var selectedRectangle       = selectedElement.getBoundingClientRect();
-                var listElementRectangle    = listElement.getBoundingClientRect();
-                var relativeTop             = (selectedRectangle.top    - listElementRectangle.top);
-                var relativeBottom          = (selectedRectangle.bottom - listElementRectangle.bottom);
+                var listRectangle           = listElement.getBoundingClientRect();
+                var relativeTop             = (selectedRectangle.top    - listRectangle.top);
+                var relativeBottom          = (selectedRectangle.bottom - listRectangle.bottom);
                 if (relativeTop < 0) {
                     listElement.scrollTop  += relativeTop;
                 } else if (relativeBottom > 0) {

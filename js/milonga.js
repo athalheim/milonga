@@ -23,7 +23,21 @@ var milonga = {
     },
 
 
-  /* LOAD MILONGA */
+    /* LOAD MILONGA */
+    loadSampleMilonga: function(ev) {
+        ev.preventDefault();
+        if (confirm("Load sample milonga?") === true) {
+            var xhttp                           = new XMLHttpRequest();
+            xhttp.onreadystatechange            = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("milongaList").outerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "data/sampleMilonga.html", true);
+            xhttp.send();
+        }
+    },
+
   /* Public function: called from input element */
   /* Expected format: html fragment */
     loadMilonga: function() {
@@ -31,8 +45,8 @@ var milonga = {
             alert("Disabled until milonga has stopped playing!");
         } else {
             var fileInput                   = document.getElementById("loadMilongaInput");
+            fileInput.value                 = "";
             var targetFile                  = fileInput.files[0];
-            document.getElementById("loadMilongaInput").value = "";
             var newFileReader               = new FileReader();
             newFileReader.value             = "";
             newFileReader.onloadend         = function(event) {
@@ -41,6 +55,7 @@ var milonga = {
             newFileReader.readAsText(targetFile);
         }
     },
+
 
 
     /* ************************************************************** */

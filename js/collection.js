@@ -28,7 +28,7 @@ var collection = {
             collection.processStyle("Tango");
           }
         };
-        xhttp.open("GET", "data/tango.xml", true);
+        xhttp.open("GET", "data/tangos.xml", true);
         xhttp.send();
     },
 
@@ -84,6 +84,7 @@ var collection = {
         }
         /* Update Artist List */
         document.getElementById("artistsList").innerHTML = listContent;
+        this.sortList("artistsList");
         /* Select first artist list item to list all/albums */
         var firstArtistListItem             = document.getElementById("artistsList").firstElementChild;
         this.selectArtistById(firstArtistListItem.id);
@@ -133,6 +134,7 @@ var collection = {
         }
         /* Update Album List */
         document.getElementById("albumsList").innerHTML = listContent;
+        this.sortList("albumsList");
         /* Select first album list item to list all/album scores */
         var firstAlbumListItem              = document.getElementById("albumsList").firstElementChild;
         this.selectAlbumById(firstAlbumListItem.id);
@@ -162,7 +164,7 @@ var collection = {
         }
         /* Update Score List and select first score */
         document.getElementById("scoresList").innerHTML = listContent;
-        this.sortScores();
+        this.sortList("scoresList");
     },
 
 
@@ -183,15 +185,15 @@ var collection = {
     },
 
 
-    sortScores: function() {
+    sortList: function(listId) {
+        var selectedList                    = document.getElementById(listId);
         var switched                        = false;
-        var scoresList                      = document.getElementById("scoresList");
         do {
           switched                          = false;
-          var scoreItems                    = scoresList.getElementsByTagName("LI");
-          for (var i = 0; i < (scoreItems.length - 1); i++) {
-            if (scoreItems[i + 1].innerHTML.localeCompare(scoreItems[i].innerHTML) === -1) {
-              scoresList.insertBefore(scoreItems[i + 1], scoreItems[i]);
+          var listItems                     = selectedList.getElementsByTagName("LI");
+          for (var i = 0; i < (listItems.length - 1); i++) {
+            if (listItems[i + 1].innerHTML.localeCompare(listItems[i].innerHTML) === -1) {
+              selectedList.insertBefore(listItems[i + 1], listItems[i]);
               switched = true;
             }
           }

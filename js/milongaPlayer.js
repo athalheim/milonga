@@ -74,8 +74,21 @@ var milongaPlayer = {
           if (this.playingTanda.id === milonga.selectedTandaId) {
             milonga.selectedTandaId        = null;
           }
-          /* Highlight tanda and get first score */
+          /* Highlight tanda */
           this.playingTanda.style.backgroundColor = milongaPlayer.playedTandaColor;
+          /* Center tanda into view */
+          /*  Get Milonga List Center */
+          var milongaList                   = document.getElementById("milongaList");
+          var milongaRectangle              = milongaList.getBoundingClientRect();
+          var desiredTandaCenter            = (milongaRectangle.top + (milongaRectangle.height * 0.5));
+          /*  Get Tanda Center */
+          var tandaRectangle                = this.playingTanda.getBoundingClientRect();
+          var currentTandaCenter            = (tandaRectangle.top + (tandaRectangle.height * 0.5));
+          /*  Get Tanda center offset from Milonga center*/
+          var relativeOffset                = (desiredTandaCenter - currentTandaCenter);
+          /*  Adjust view with offset */
+          milongaList.scrollTop            -= relativeOffset;
+          /* Get first score */
           var playingScoreList             = this.playingTanda.firstElementChild;
           this.playingScore                = playingScoreList.firstElementChild;
         }
