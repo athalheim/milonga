@@ -15,7 +15,7 @@
   <body>
     <div style="overflow:hidden; height:100%; width: 100%">
       <table>
-        <caption style="background-color:beige; cursor:pointer;" onclick="displayReadMe()" title="Click to display Help file in new window."><h1>¡Milonga!</h1></caption>
+        <caption style="background-color:beige;" title="Click to display Help file in new window." oncontextmenu="displayReadMe(event)"><h1>¡Milonga!</h1></caption>
         <tr>
           <td id="collectionCell">
             <div>
@@ -63,18 +63,22 @@
 
           <td id="milongaCell">
             <div ondragover="dp.allowDropToMilonga(event)" ondrop="dp.dropToMilonga(event)" title="Drag Artist here to initiate Tanda -or- Drag Tanda here to remove.">
-              <h2>Milonga</h2>
+              <h2 oncontextmenu="milonga.loadSampleMilonga(event)">Milonga</h2>
             </div>
 
             <!-- Inputs -->
             <div class="center-container">
-              <input type="file" id="loadMilongaInput" name="loadMilongaInput" onchange="milonga.loadMilonga()" accept="text/milonga">
-              <input type="button" value="Save" onclick="milonga.saveMilonga()"/>
-              <span>&nbsp;&nbsp;&nbsp;</span>
-              <input type="button" id="clearMilongaButton" name="clearMilongaButton" value="Clear" onclick="milonga.clearMilonga()"/>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              <input type="button" id="milongaPlayButton" onclick="milongaPlayer.playMilonga()" value="Play Milonga"/>
-              <input type="button" id="milongaStopButton" onclick="milongaPlayer.stopMilonga()" value="Stop Milonga" style="visibility:hidden;"/>
+              <span style="margin-right:25px; border:1px solid black;">
+                <input type="file" id="loadMilongaInput" onchange="milonga.loadMilonga()" accept="text/milonga">
+                <input type="button" value="Save" onclick="milonga.saveMilonga()"/>
+              </span>
+              <span style="border:1px solid black;">
+                <input type="button" id="clearMilongaButton" value="Clear" onclick="milonga.clearMilonga()"/>
+              </span>
+              <span style="margin-left:25px; border:1px solid black;">
+                <input type="button" id="milongaPlayButton" onclick="milongaPlayer.playMilonga()" value="Play Milonga"/>
+                <input type="button" id="milongaStopButton" onclick="milongaPlayer.stopMilonga()" value="Stop Milonga" style="visibility:hidden;"/>
+              </span>
             </div>
 
             <!-- Milonga Data -->
@@ -97,8 +101,12 @@
       var lastSlashIndex                    = locationHref.lastIndexOf("/");
       var currentHTTP                       = locationHref.substring(0, lastSlashIndex + 1);
 
-      function displayReadMe() {
-        window.open("ReadMe.html");
+
+      function displayReadMe(ev) {
+        if (confirm("Load sample help file?") === true) {
+            window.open("ReadMe.html");
+        }
+        ev.preventDefault();
       }
 
       /* EVENTS */

@@ -6,7 +6,7 @@
   </head>
 
   <body>
-	<h1>¡Milonga!</h1>
+	<h1 id="top">¡Milonga!</h1>
 	<div>
 		<h2>OBJECT:</h2>
 		<p>Assemble and play tango music in the structure used during a milonga (Argentine tango dance event).</p>
@@ -15,7 +15,28 @@
 	<br/>
 
 	<div>
-		<h2>DESCRIPTION:</h2>
+		<h2>TABLE OF CONTENTS:</h2>
+		<a href="#description">Description</a><br/>
+		<a href="#siteStructure">Site Structure</a><br/>
+		<a href="#dataStructure">Data Structure</a><br/>
+		<a href="#background">Background</a><br/>
+		<a href="#applicationCall">Application Call</a><br/>
+		<a href="#applicationLayout">Application Layout</a><br/>
+		<a href="#collectionPanel">Collection Panel</a><br/>
+		<a href="#milongaPanel">Milonga Panel</a><br/>
+		<a href="#buildingTheMilonga">Building the Milonga</a><br/>
+		<a href="#savingTheMilonga">Saving the milonga</a><br/>
+		<a href="#loadingAmilonga">Loading a milonga</a><br/>
+		<a href="#clearingTheMilonga">Clearing the milonga</a><br/>
+		<a href="#playingTheMilonga">Playing the milonga</a><br/>
+		<a href="#whileTheMilongaIsPlaying">While the milonga is playing</a><br/>
+		<a href="#stoppingEndingTheMilonga">Stopping/Enging the milonga</a><br/>
+		<a href="#loadingTheSampleMilonga">Loading the sample milonga</a><br/>
+	</div>
+	<br/>
+
+	<div id="description">
+		<h2>Description</h2>
 		<ul>
 			<p>HTML web site used to host:</p>
 			<li>- The ¡Milonga! application (HTML page)</li>
@@ -23,11 +44,12 @@
 			<li>- Data folder: database used in application</li>
 			<li>- javascript procedures files</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>SITE STRUCTURE:</h2>
+	<div id="siteStructure">
+		<h2>Site Structure</h2>
 		<ul>
 			<p>Main folder:
 			<li>- index.html: The ¡Milonga! application's web page,</li>
@@ -84,11 +106,12 @@
 				</ul>
 			</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>DATA STRUCTURE:</h2>
+	<div id="dataStructure">
+		<h2>Data Structure</h2>
 		<p>***** IMPORTANT *****</p>
 		<p>The 'tangos.xml' database should reflect EXACTLY, repeat EXACTLY, the content of the 'tangos' and 'cortinas' folder;</p>
 		<p>&nbsp;	This data is used by the application to locate the scores: Any discrepancy in folder/file naming results in score not found (error 404)!!!</p>
@@ -109,11 +132,12 @@
 		<p style="margin-left:25px">tangos/&#060;artist&#062;/&#060;album&#062;/&#060;score&#062;.mp3</p>
 		<p>thus:</p>
 		<p style="margin-left:25px">tangos/Biagi, Rodolfo/Al Compas Del Vals/Adoración.mp3</p>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>BACKGROUND:</h2>
+	<div id="background">
+		<h2>Background</h2>
 		<p>A milonga is a dance event where tango is danced.</p>
 		<p>The tango dance style, and thus music, comes in three flavors:</p>
 		<ul>
@@ -139,14 +163,15 @@
 	</div>
 	<br/>
 
-	<div>
-		<h2>CALL:</h2>
+	<div id="applicationCall">
+		<h2>Application Call</h2>
 		<p>http://www.&#060;your site&#062;/milonga<p>
-	</div>
+		<a href="#top">Top</a>
+		</div>
 	<br/>
 
-	<div>
-		<h2>APPLICATION LAYOUT:</h2>
+	<div id="applicationLayout">
+		<h2>Application Layout</h2>
 		<p>The application consists of a HTML page:<p>
 		<ul>
 			<li>- Header</li>
@@ -154,11 +179,12 @@
 			<li>- Milonga Panel</li>
 		</ul>
 		<img src="images/milongaApp.png" width="640px"/>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>COLLECTION PANEL:</h2>
+	<div id="collectionPanel">
+		<h2>Collection Panel</h2>
 		<p>The Collection panel displays:</p>
 		<ul>
 			<li>- The current 'style'. Clicking on the style displays a list of choices:
@@ -183,22 +209,24 @@
 			</li>
 
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>MILONGA PANEL:</h2>
+	<div id="milongaPanel">
+		<h2>Milonga Panel</h2>
 		<p>The right panel displays<p>
 		<ul>
 			<li>- The 'Milonga' header,</li>
 			<li>- The milonga tanda/score list,</li>
 			<li>- Audio control</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>BUILDING THE MILONGA:</h2>
+	<div id="buildingTheMilonga">
+		<h2>Building the Milonga</h2>
 		<p>NOTE:	When a milonga is playing, only the tandas 'to play' can be edited!<p>		
 		<ul>
 			<li>- TANDAS:
@@ -248,41 +276,45 @@
 				</ul>
 			</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>SAVING THE MILONGA:</h2>
+	<div id="savingTheMilonga">
+		<h2>Saving the milonga</h2>
 		<p>Save the milonga in its current state.</p>
 		<ul>
 			<li>- Click on the 'Save' button:</li>
 			<li>- Confirm milonga file name;</li>
 			<li>- Milonga is saved in the default 'Download' folder, using 'html' file type.</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>LOADING A MILONGA:</h2>
+	<div id="loadingAmilonga">
+		<h2>Loading a milonga</h2>
 		<p>Load a previously saved milonga.</p>
 		<ul>
 			<li>- Click on the 'Select File...' button;</li>
 			<li>- Select a milonga (file type is 'html');</li>
 			<li>- Milonga is listed.</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>CLEARING A MILONGA:</h2>
+	<div id="clearingTheMilonga">
+		<h2>Clearing the milonga</h2>
 		<ul>
 			<li>- Click on the 'Clear' button: the milonga list is cleared.</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>PLAYING THE MILONGA:</h2>
+	<div id="playingTheMilonga">
+		<h2>Playing the milonga</h2>
 		<p>Milonga is started by clicking on the 'Play Milonga' button:</p>
 		<ul>
 			<li>- 'Collection' Audio control is hidden,</li>
@@ -300,11 +332,12 @@
 			<li>- Process repeats for each score, then cortina,</li>
 			<li>- Process repeats for each tanda.</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>WHILE MILONGA IS PLAYING:</h2>
+	<div id="whileTheMilongaIsPlaying">
+		<h2>While the milonga is playing</h2>
 		<ul>
 			<li>- Played tanda/scores/cortinas are highlighted in light blue,</li>
 			<li>- Playing score is highlight in blue,</li>
@@ -312,11 +345,12 @@
 			<li>- User can manage the remaining tandas: add, move, delete,</li>
 			<li>- User can manage tandas to play: add/move scores, update cortina.</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
-	<div>
-		<h2>STOPPING/ENDING THE MILONGA:</h2>
+	<div id="stoppingEndingTheMilonga">
+		<h2>Stopping/Ending the Milonga Play</h2>
 		<p>Milonga is ended when:</p>
 
 		<ul>
@@ -336,9 +370,23 @@
 				</ul>
 			<li>- Milonga colors are reset.</li>
 		</ul>
+		<a href="#top">Top</a>
 	</div>
 	<br/>
 
+	<div id="loadingTheSampleMilonga">
+		<h2>Loading the sample milonga</h2>
+		<p>A sample collection and milonga is provided for learning purposes:</p>
+		<ul>
+			<li>Sample database.</li>
+			<li>Sample collection: four(4) artists,</li>
+			<li>Sample coortinas: two(2) artists,</li>
+			<li>Sample milonga: six(6) tandas.</li>
+		</ul>
+		<p>To load the sample milonga, right-click on the Milonga panel's 'Milonga' title.</p>
+		<a href="#top">Top</a>
+	</div>
+	<br/>
 	<div>Enjoy!</div>
 </body>
 </html>
