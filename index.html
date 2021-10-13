@@ -4,6 +4,7 @@
     <title>¡Milonga!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="index.css">
+    <script type="text/javascript" src="js/messages.js"></script>
     <script type="text/javascript" src="js/table.js"></script>
     <script type="text/javascript" src="js/attributes.js"></script>
     <script type="text/javascript" src="js/collection.js"></script>
@@ -15,9 +16,9 @@
   <body>
     <div style="overflow:hidden; height:100%; width: 100%">
       <table>
-        <caption style="background-color:beige;" title="Click to display Help file in new window." oncontextmenu="displayReadMe(event)"><h1>¡Milonga!</h1></caption>
+        <caption style="background-color:beige;" title="Click to display Help file in new window." oncontextmenu="table.displayReadMe(event)"><h1>¡Milonga!</h1></caption>
         <tr>
-          <td id="collectionCell">
+          <td id="collectionCell" style="width:40%">
             <div>
               <h2>Collection</h2>
             </div>
@@ -38,19 +39,19 @@
             <div style="height:405px; padding: 5px; background-color: silver;">
               <!-- Artists List -->
               <div style="height:120px;">
-                <h3>Artists</h3>
+                <h3 id="collection_artists">Artists</h3>
                 <ol id="artistsList" style="height:105px;" onclick="collection.selectArtist(event)" ondragstart="dp.dragArtist(event)""></ol>
               </div>
 
               <!-- Albums List -->
               <div style="height:90px;">
-                <h3>Albums</h3>
+                <h3 id="collection_albums">Albums</h3>
                 <ol id="albumsList" style="height:75px;" onclick="collection.selectAlbum(event)"></ol>
               </div>
 
               <!-- Scores list -->
               <div style="height:150px;">
-                <h3>Scores</h3>
+                <h3 id="collection_scores">Scores</h3>
                 <ol id="scoresList" style="height:135px;" onclick="collection.selectScore(event)" ondblclick="collection.playScore(event)" ondragstart="dp.dragScore(event)"></ol>
               </div>
             </div>
@@ -61,34 +62,36 @@
             </div>
           </td>
 
-          <td id="milongaCell">
+          <td id="milongaCell" class="rightColumn">
             <div ondragover="dp.allowDropToMilonga(event)" ondrop="dp.dropToMilonga(event)" title="Drag Artist here to initiate Tanda -or- Drag Tanda here to remove.">
               <h2 oncontextmenu="milonga.loadSampleMilonga(event)">Milonga</h2>
             </div>
 
             <!-- Inputs -->
             <div class="center-container">
-              <span style="margin-right:25px; border:1px solid black;">
-                <input type="file" id="loadMilongaInput" onchange="milonga.loadMilonga()" accept="text/milonga">
-                <input type="button" value="Save" onclick="milonga.saveMilonga()"/>
-              </span>
               <span style="border:1px solid black;">
+                <input type="file" id="loadMilongaInput" onchange="milonga.loadMilonga()" accept="text/milonga">
+              </span>
+              <span style="margin-left:20px; border:1px solid black;">
+                <input type="button" id="saveMilongaButton" value="Save" onclick="milonga.saveMilonga()"/>
+              </span>
+              <span style="margin-left:20px; border:1px solid black;">
                 <input type="button" id="clearMilongaButton" value="Clear" onclick="milonga.clearMilonga()"/>
               </span>
-              <span style="margin-left:25px; border:1px solid black;">
+              <span style="margin-left:20px; border:1px solid black;">
                 <input type="button" id="milongaPlayButton" onclick="milongaPlayer.playMilonga()" value="Play Milonga"/>
                 <input type="button" id="milongaStopButton" onclick="milongaPlayer.stopMilonga()" value="Stop Milonga" style="visibility:hidden;"/>
               </span>
             </div>
 
             <!-- Milonga Data -->
-            <div style="height: 405px;">
+            <div style="height: 406px;">
               <ul id="milongaList" style="height:100%;" onclick="milonga.selectTanda(event)" ondragstart="dp.dragTanda(event)" ondragover="dp.allowDropToTanda(event)" ondrop="dp.dropToTanda(event)"></ul>
             </div>
 
             <!-- Milonga Player Controls -->
             <div id="milongaAudioControls"  style="width: 100%">
-              <audio id="milongaAudioControl" controls src="" style="visibility: hidden;"></audio>
+              <audio id="milongaAudioControl" controls src="" style="visibility: hidden;" onended="milongaPlayer.playNextScore()"></audio>
             </div>
           </td>
         </tr>
@@ -96,26 +99,11 @@
     </div>
 
     <script type="text/javascript">
-
-      var locationHref                      = window.location.href;
-      var lastSlashIndex                    = locationHref.lastIndexOf("/");
-      var currentHTTP                       = locationHref.substring(0, lastSlashIndex + 1);
-
-
-      function displayReadMe(ev) {
-        if (confirm("Load sample help file?") === true) {
-            window.open("ReadMe.html");
-        }
-        ev.preventDefault();
-      }
-
-      /* EVENTS */
-      /* Called when milonga player ends */
-      var milongaAudioControl               = document.getElementById("milongaAudioControl");
-      milongaAudioControl.onended           = function() { milongaPlayer.playNextScore(); };
-      
       /* Initial database load */
       collection.loadDoc();
+      /* Interface language */
+      collection.setCollectionLanguage();
+      milonga.setMilongaLanguage();
     </script>
 
   </body>

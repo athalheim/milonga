@@ -22,6 +22,10 @@ table {
     height:           -webkit-calc(100% - 57px);
     height:           calc(100% - 57px);
 }
+caption {
+    border-radius:    5px;
+    border:           5px solid white;
+}
 tbody {
     height:           -moz-calc(100% - 58px);
     height:           -webkit-calc(100% - 58px);
@@ -30,42 +34,45 @@ tbody {
 tr {
     height:           100%;
 }
-caption, th, td {
+td {
     border-radius:    5px;
     border:           5px solid white;
-}
-th, td {
-    width:            -webkit-calc(50% - 4px);
-    width:            -moz-calc(50% - 4px);
-    width:            calc(50% - 4px);
-    width:            49.7%;
     height:           100%;
     vertical-align:   top;
     display:          inline-block;
     background-color: #369;
     color:            white;
 }​
-ol, ul, li {
-    cursor:           pointer;
-    list-style-type:  none;
+td:last-child {
+    flex: 1;
+    background: yellow;
+    display:inline-block; /* to keep IE happy */
+}
+.rightColumn {
+    width:            -webkit-calc(60% - 4px);
+    width:            -moz-calc(60% - 4px);
+    width:            calc(60% - 4px);
 }
 ol, ul {
+    cursor:           pointer;
+    list-style-type:  none;
     background-color: grey; 
     overflow-y:       auto; 
     border :          1px solid black; 
 }
 
 div {
-    margin-bottom:   10px;
+    margin-bottom:    10px;
 }
 
 .center-container {
-    display:         flex;
-    justify-content: center;
-    align-items:     center;
-    height:          30px;
+    display:          flex;
+    justify-content:  center;
+    align-items:      center;
+    height:           30px;
 }
 audio {
-    margin:           5px;
-    width:            calc(100% - 12px);
+    width:            -webkit-calc(100% - 4px);
+    width:            -moz-calc(100% - 4px);
+    width:            calc(100% - 4px);
 }
