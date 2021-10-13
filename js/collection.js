@@ -17,6 +17,14 @@ var collection = {
     scoreByStyleQuery:                      "",
 
 
+    currentHTTP:                            "",
+
+    setHttp: function() {
+      var locationHref                        = window.location.href;
+      var lastSlashIndex                      = locationHref.lastIndexOf("/");
+      this.currentHTTP                        = locationHref.substring(0, lastSlashIndex + 1)
+    },
+
     /* INITIALIZE DATABASE */
     loadDoc: function() {
         var xhttp                           = new XMLHttpRequest();
@@ -30,6 +38,12 @@ var collection = {
         };
         xhttp.open("GET", "data/tangos.xml", true);
         xhttp.send();
+    },
+
+    setCollectionLanguage: function() {
+      document.getElementById("collection_artists").innerHTML = messages.getMessage("co_artists");
+      document.getElementById("collection_albums").innerHTML  = messages.getMessage("co_albums");
+      document.getElementById("collection_scores").innerHTML  = messages.getMessage("co_scores");
     },
 
 
@@ -52,7 +66,7 @@ var collection = {
     processStyle: function(thisStyle) {
         this.currentStyle                   = thisStyle;
         /* Display selected style name */
-        document.getElementById("styleButton").innerHTML   = "Selected style is " + thisStyle;
+        document.getElementById("styleButton").innerHTML   = messages.getMessage("co_selectedStyle") + thisStyle;
         /* Select appropriate artists from database */
         if (thisStyle === "Cortina") {
           this.rootNode                     = this.xmlDoc.querySelector("cortinas");
@@ -234,5 +248,7 @@ var collection = {
       },
 
 };
+
+collection.setHttp();
 
 /* -\\- */

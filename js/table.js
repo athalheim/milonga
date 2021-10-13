@@ -35,6 +35,12 @@ var table = {
         return elementId;
     },
 
+    displayReadMe: function(ev) {
+        if (confirm(messages.getMessage("ta_loadHelpFile")) === true) {
+            window.open("ReadMe.html");
+        }
+        ev.preventDefault();
+      }
 };
 
 /* -\\- */

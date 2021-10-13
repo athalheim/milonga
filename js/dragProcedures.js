@@ -29,7 +29,7 @@
                 }
                 milongaList.removeChild(thisTanda);
             } else {
-                alert("Can't remove this tanda at this time.");
+                alert(messages.getMessage("dp_noRemove"));
             }
         }
     },
@@ -115,7 +115,7 @@
             /* Update cortina with cortina score */
             this.updateTandaScoreFromTarget(sourceId, ev.target);
         } else {
-            alert("Unrecognized move!");
+            alert(messages.getMessage("dp_unrecognizedMove"));
         }
     },
 
@@ -123,20 +123,20 @@
         var sourceTanda                     = document.getElementById(sourceId);
         var targetTanda                     = null;
         if (!milonga.isTandaSelectable(sourceTanda)) {
-            alert("Can't use source Tanda.");
+            alert(messages.getMessage("dp_NoUseSourceTanda"));
             return;
         }
         if (targetId.startsWith(milonga.tandaPrefix)) {
             targetTanda                     = document.getElementById(targetId);
             if (sourceTanda === targetTanda) {
-                alert("Source and target Tandas are the same!");
+                alert(messages.getMessage("dp_sourceTargetSame"));
                 return;
             } else if (!milonga.isTandaSelectable(targetTanda)) {
-                alert("Can't use target Tanda.");
+                alert(messages.getMessage("dp_noUseTargetTanda"));
                 return;
             }
         } else {
-            alert("Target is not a Tanda.");
+            alert(messages.getMessage("dp_targetNoTanda"));
             return;
         }
         var milongaList                     = document.getElementById("milongaList");
@@ -147,20 +147,20 @@
         var sourceScore                     = document.getElementById(sourceId);
         var sourceTanda                     = sourceScore.parentElement.parentElement;
         if (!milonga.isTandaSelectable(sourceTanda)) {
-            alert("Can't use source Tanda.");
+            alert(messages.getMessage("dp_noUseSourceTanda"));
             return;
         }
         if (targetId.startsWith(milonga.scoreIdPrefix)) {
             var targetScore                 = document.getElementById(targetId);
             var targetTanda                 = targetScore.parentElement.parentElement;
             if (sourceTanda !== targetTanda) {
-                alert("Can't move score to another tanda!");
+                alert(messages.getMessage("dp_noMoveToOtherTanda"));
                 return;
             }
             var targetList                  = targetScore.parentElement;
             targetList.insertBefore(sourceScore, targetScore); 
         } else {
-            alert("Target is not a score!");
+            alert(messages.getMessage("dp_targetIsNotScore"));
         }
     },
 
@@ -174,11 +174,11 @@
         if (scoreArtistNode.id === tandaTag.attributes[attributes.artistId].nodeValue) {
             /* Update when score and tanda from same artist */
             this.updateTandaScoreFromTarget(sourceId, scoreElement);
-        } else if (confirm("This score's artist is different than the tanda artist!\nAdd anyway?")) {
+        } else if (confirm(messages.getMessage("dp_confirmDifferentArtist"))) {
             /* Update when user overrides */
             this.updateTandaScoreFromTarget(sourceId, scoreElement);
         } else {
-            alert("Selected score does not belong to Tanda artist!");
+            alert(messages.getMessage("dp_scoreNotFromArtist"));
         }
     },
 

@@ -11,12 +11,19 @@ var milonga = {
     cortinaIdPrefix:                          "cortina_",
 
 
+    setMilongaLanguage: function() {
+        document.getElementById("saveMilongaButton").value  = messages.getMessage("mi_save");
+        document.getElementById("clearMilongaButton").value = messages.getMessage("mi_clear");
+        document.getElementById("milongaPlayButton").value  = messages.getMessage("mi_play");
+        document.getElementById("milongaStopButton").value  = messages.getMessage("mi_stop");
+    },
+
     /* CLEAR MILONGA */
     clearMilonga: function() {
         if (document.getElementById("milongaList").innerHTML === "") {
-            alert("Can't clear at this time: milonga is empty!");
+            alert(messages.getMessage("mi_noClear"));
         } else {
-            if (confirm("Confirm to clear the milonga!") === true) {
+            if (confirm(messages.getMessage("mi_confirmClearMilonga")) === true) {
                 document.getElementById("milongaList").innerHTML = "";
             }
         }
@@ -26,7 +33,7 @@ var milonga = {
     /* LOAD MILONGA */
     loadSampleMilonga: function(ev) {
         ev.preventDefault();
-        if (confirm("Load sample milonga?") === true) {
+        if (confirm(messages.getMessage("mi_loadSampleMilonga")) === true) {
             var xhttp                           = new XMLHttpRequest();
             xhttp.onreadystatechange            = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -42,7 +49,7 @@ var milonga = {
   /* Expected format: html fragment */
     loadMilonga: function() {
         if (document.getElementById("milongaStopButton").style.visibility === "visible") {
-            alert("Disabled until milonga has stopped playing!");
+            alert(messages.getMessage("mi_disabledUntilPlayStopped"));
         } else {
             var fileInput                   = document.getElementById("loadMilongaInput");
             fileInput.value                 = "";
@@ -64,9 +71,9 @@ var milonga = {
     /* Output format: html fragment */
     saveMilonga: function() {
         if (document.getElementById("milongaList").innerHTML === "") {
-            alert("Can't save at this time: milonga is empty!");
+            alert(messages.getMessage("mi_noSaveEmptyMilonga"));
         } else {
-            var milongaName                     = prompt("Enter milonga title", "myMilonga");
+            var milongaName                     = prompt(messages.getMessage("mi_enterMilongaTitle"), "myMilonga");
             if (milongaName) {
                 /* Clone milonga list */
                 var milongaList                 = document.getElementById("milongaList").cloneNode(true);
@@ -101,7 +108,7 @@ var milonga = {
                 collection.processStyle(selectedTanda.attributes[attributes.dataStyle].nodeValue);
                 collection.selectArtistById(selectedTanda.attributes[attributes.artistId].nodeValue);
             } else {
-                alert("Tanda is not selectable!");
+                alert(messages.getMessage(messages.mi_tandaNoSelect));
             }
         }
 

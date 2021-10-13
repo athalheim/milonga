@@ -36,7 +36,7 @@ var milongaPlayer = {
     /* Play Button: Hidden when milonga is playing */
     playMilonga: function() {
         if (document.getElementById("milongaList").innerHTML === "") {
-            alert("Can't play at this time: milonga is empty!");
+            alert(messages.getMessage("mp_noPlayEmptyMilonga"));
         } else {
             this.togglePlayPauseControls(true);
             this.playNextScore();
@@ -46,7 +46,7 @@ var milongaPlayer = {
 
     /* Stop Button: displayed when milonga is playing */
     stopMilonga: function() {
-        if (confirm("Confirm stopping the milonga!") === true) {
+        if (confirm(messages.getMessage("mp_ConfirmStopMilonga")) === true) {
             this.endMilonga();
         }
     },
