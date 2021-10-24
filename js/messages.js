@@ -1,25 +1,50 @@
 var messages = {
 
-    /* HTML Collection messages */
-    co_selectedStyle: {
-        es: "El estilo seleccionado es ",
-        en: "Selected style is ",
-        fr: "Le style sélectionné est ",
+    /* HTML Scores messages */
+    sc_title:  {
+        es: "Partituras",
+        en: "Scores",
+        fr: "Pièces",
     },
-    co_artists: {
+    sc_style: {
+        es: "Seleccionar estilo: ",
+        en: "Select Style... ",
+        fr: "Sélection du style... ",
+    },
+    sc_selectedStyle: {
+        es: "El estilo es: ",
+        en: "Style is: ",
+        fr: "Le style est: ",
+    },
+    sc_artists: {
         es: "Artistas",
         en: "Artists",
         fr: "Artistes",
     },
-    co_albums: {
+    sc_artists_click: {
+        es: "Haga clic para ampliar. Haga clic derecho para restablecer.",
+        en: "Click to expand. Right-click to reset.",
+        fr: "Clic pour expansion. Clic droit pour réilitialiser",
+    },
+    sc_albums: {
         es: "Álbumes",
         en: "Albums",
         fr: "Albums",
     },
-    co_scores: {
+    sc_albums_click: {
+        es: "Haga clic para ampliar.",
+        en: "Click to expand.",
+        fr: "Clic pour expansion.",
+    },
+    sc_scores: {
         es: "Partituras",
         en: "Scores",
         fr: "Pièces",
+    },
+    sc_scores_click: {
+        es: "Haga clic para ampliar.",
+        en: "Click to expand.",
+        fr: "Clic pour expansion.",
     },
 
     /* HTML Milonga messages */
@@ -34,14 +59,14 @@ var messages = {
         fr: "Effacer",
     },
     mi_play: {
-        es: "Jugar Milonga",
-        en: "Play Milonga",
-        fr: "Jouer la Milonga",
+        es: "Jugar",
+        en: "Play",
+        fr: "Jouer",
     },
     mi_stop: {
-        es: "Detener milonga",
-        en: "Stop Milonga",
-        fr: "Arrêter la milonga",
+        es: "Detener",
+        en: "Stop",
+        fr: "Arrêter",
     },
 
    /* Drag Procedures Messages */
@@ -55,8 +80,8 @@ var messages = {
         en: "Unrecognized move!",
         fr: "Mouvement non reconnu !",
     },
-    dp_NoUseSourceTanda: {
-        es: "¡No se puede usar el objetivo Tanda!",
+    dp_noUseSourceTanda: {
+        es: "¡No se puede usar la fuente Tanda!",
         en: "Can't use source Tanda!",
         fr: "Impossible d'utiliser la Tanda source!",
     },
@@ -144,7 +169,21 @@ var messages = {
         en: "Confirm to stop playing the milonga!",
         fr: "Confirmez pour arrêter la diffusion de la milonga !",
     },
-
+    mp_sourcePlaying: {
+        es: "¡El elemento fuente está jugando!",
+        en: "Source element is playing!",
+        fr: "L'élément source joue présentement!",
+    },
+    mp_targetPlaying: {
+        es: "¡El elemento objetivo está jugando!",
+        en: "Target element is playing!",
+        fr: "L'élément cible joue présentement!",
+    },
+    mp_elementPlaying: {
+        es: "¡Element está jugando!",
+        en: "Element is playing!",
+        fr: "L'élément joue présentement!",
+    },
     /* Table messages */
     ta_loadHelpFile: {
         es: "¿Mostrar página de ayuda?",

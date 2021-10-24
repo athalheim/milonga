@@ -1,31 +1,29 @@
 var milonga = {
 
-    tandaPrefix:                              "tanda_",
+    tandaIdPrefix:                            "tanda_",
     selectedTandaId:                          null,
 
-    emptyScore:                               "(Score)",
-    emptyScoreId:                             "TA0000",
-    scoreIdPrefix:                              "score_",
+    emptyScoreTitle:                          "(Score)",
+    emptyScoreIdRef:                          "TA0000",
+    scoreIdPrefix:                            "score_",
 
-    defaultCortinaId:                         "CO0000",
+    defaultCortinaIdRef:                      "CO0000",
     cortinaIdPrefix:                          "cortina_",
 
 
     setMilongaLanguage: function() {
-        document.getElementById("saveMilongaButton").value  = messages.getMessage("mi_save");
-        document.getElementById("clearMilongaButton").value = messages.getMessage("mi_clear");
-        document.getElementById("milongaPlayButton").value  = messages.getMessage("mi_play");
-        document.getElementById("milongaStopButton").value  = messages.getMessage("mi_stop");
+        document.getElementById("mi_save").value  = messages.getMessage("mi_save");
+        document.getElementById("mi_clear").value = messages.getMessage("mi_clear");
+        document.getElementById("mi_play").value  = messages.getMessage("mi_play");
+        document.getElementById("mi_stop").value  = messages.getMessage("mi_stop");
     },
 
     /* CLEAR MILONGA */
     clearMilonga: function() {
         if (document.getElementById("milongaList").innerHTML === "") {
             alert(messages.getMessage("mi_noClear"));
-        } else {
-            if (confirm(messages.getMessage("mi_confirmClearMilonga")) === true) {
-                document.getElementById("milongaList").innerHTML = "";
-            }
+        } else if (confirm(messages.getMessage("mi_confirmClearMilonga")) === true) {
+            document.getElementById("milongaList").innerHTML = "";
         }
     },
 
@@ -37,7 +35,7 @@ var milonga = {
             var xhttp                           = new XMLHttpRequest();
             xhttp.onreadystatechange            = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("milongaList").outerHTML = this.responseText;
+                    document.getElementById("milongaList").innerHTML = this.responseText;
                 }
             };
             xhttp.open("GET", "data/sampleMilonga.html", true);
@@ -51,13 +49,13 @@ var milonga = {
         if (document.getElementById("milongaStopButton").style.visibility === "visible") {
             alert(messages.getMessage("mi_disabledUntilPlayStopped"));
         } else {
-            var fileInput                   = document.getElementById("loadMilongaInput");
+            var fileInput                   = document.getElementById("mi_load");
             fileInput.value                 = "";
             var targetFile                  = fileInput.files[0];
             var newFileReader               = new FileReader();
             newFileReader.value             = "";
             newFileReader.onloadend         = function(event) {
-                document.getElementById("milongaList").outerHTML = event.target.result;
+                document.getElementById("milongaList").innerHTML = event.target.result;
             };
             newFileReader.readAsText(targetFile);
         }
@@ -85,7 +83,7 @@ var milonga = {
                 /* Export clone */
                 var anchorElement               = document.body.appendChild(document.createElement("a"));
                 anchorElement.download          = milongaName + ".html";
-                anchorElement.href              = "data:text/html," + milongaList.outerHTML;
+                anchorElement.href              = "data:text/html," + milongaList.innerHTML;
                 anchorElement.click();
                 delete anchorElement;
             }
@@ -98,15 +96,16 @@ var milonga = {
     /*  This will update the 'Collection' frame with style and artist */
     selectTanda: function(event) {
         var selectedTanda                   = table.getListElement(event);
-        if (selectedTanda.id.startsWith(milonga.tandaPrefix)) {
+        /* Make sure the selected element is a tanda */
+        if (selectedTanda.id.startsWith(milonga.tandaIdPrefix)) {
             if (this.isTandaSelectable(selectedTanda)) {
                 if (milonga.selectedTandaId) {
-                    document.getElementById(milonga.selectedTandaId).style.backgroundColor = "";
+                    document.getElementById(milonga.selectedTandaId).classList.remove('red');
                 }
                 milonga.selectedTandaId     = selectedTanda.id;
-                selectedTanda.style.backgroundColor = "";
-                collection.processStyle(selectedTanda.attributes[attributes.dataStyle].nodeValue);
-                collection.selectArtistById(selectedTanda.attributes[attributes.artistId].nodeValue);
+                selectedTanda.classList.add('red');
+                scores.processStyle(selectedTanda.attributes[attributes.dataStyle].nodeValue);
+                scores.selectArtistById(selectedTanda.attributes[attributes.artistId].nodeValue);
             } else {
                 alert(messages.getMessage(messages.mi_tandaNoSelect));
             }
@@ -118,7 +117,7 @@ var milonga = {
     isTandaSelectable: function(thisTanda) {
         if (thisTanda.style) {
             if (thisTanda.style.backgroundColor) {
-                return (thisTanda.style.backgroundColor !== milongaPlayer.playedTandaColor);
+                return ((thisTanda.style.backgroundColor !== milongaPlayer.playedColor) && (thisTanda.style.backgroundColor !== milongaPlayer.playingColor));
             }
         }
         return true;

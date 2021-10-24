@@ -12,13 +12,13 @@ var table = {
         var listElement                     = document.getElementById(listElementId);
         var listItems                       = listElement.getElementsByTagName("li");
         for (var i = 0; i < listItems.length; i += 1) {
-          listItems[i].style.backgroundColor = "";
+          listItems[i].classList.remove('red');
         }
         if (elementId) {
             /* Highlight newly selected item */
             var selectedElement             = listElement.querySelector("#" + elementId);
             if (selectedElement) {
-                selectedElement.style.backgroundColor = "red";
+                selectedElement.classList.add('red');
                 var selectedRectangle       = selectedElement.getBoundingClientRect();
                 var listRectangle           = listElement.getBoundingClientRect();
                 var relativeTop             = (selectedRectangle.top    - listRectangle.top);
@@ -40,7 +40,15 @@ var table = {
             window.open("ReadMe.html");
         }
         ev.preventDefault();
-      }
+    },
+
+    resetAudioControl: function(controlId, visibilityState) { 
+        var audioControl                    = document.getElementById(controlId);
+        audioControl.src                    = "";
+        audioControl.removeAttribute("src");
+        audioControl.pause();
+        audioControl.style.visibility       = visibilityState? visibilityState: "visible";
+    },
 };
 
 /* -\\- */
