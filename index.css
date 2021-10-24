@@ -1,78 +1,83 @@
 * {
-    margin:           1px;
+    margin:           0px;
     padding:          0px;
     box-sizing:       border-box;
+    border-radius:    5px;
 }
 html, body {
     overflow:         hidden;
+    width:            100%; 
     height:           100%;
     background-color: grey;
 }
-h2 {
-    text-align:       center;
-}
-h3 {
-    color:           black;
-}
 table {
     table-layout:     fixed; 
-    border-collapse:  collapse;
     width:            100%; 
-    height:           -moz-calc(100% - 57px);
-    height:           -webkit-calc(100% - 57px);
-    height:           calc(100% - 57px);
-}
-caption {
-    border-radius:    5px;
-    border:           5px solid white;
-}
-tbody {
-    height:           -moz-calc(100% - 58px);
-    height:           -webkit-calc(100% - 58px);
-    height:           calc(100% - 58px);
+    height:           100%;
+    cursor:           default;
 }
 tr {
+    width:            100%; 
     height:           100%;
 }
 td {
-    border-radius:    5px;
-    border:           5px solid white;
-    height:           100%;
-    vertical-align:   top;
     display:          inline-block;
     background-color: #369;
-    color:            white;
 }​
 td:last-child {
     flex: 1;
-    background: yellow;
-    display:inline-block; /* to keep IE happy */
 }
-.rightColumn {
-    width:            -webkit-calc(60% - 4px);
-    width:            -moz-calc(60% - 4px);
-    width:            calc(60% - 4px);
+.milongaColumn {
+    width:            -webkit-calc(62% - 6px);
+    width:            -moz-calc(62% - 6px);
+    width:            calc(62% - 6px);
 }
-ol, ul {
-    cursor:           pointer;
-    list-style-type:  none;
-    background-color: grey; 
-    overflow-y:       auto; 
-    border :          1px solid black; 
+/* 'td' headers */
+h2 {
+    text-align:       center;
+
+}
+/* 'div' headers */
+h3 {
+    color:           black;
 }
 
-div {
-    margin-bottom:    10px;
-}
-
-.center-container {
+/* Controls (td's second division) */
+.controlsDiv {
     display:          flex;
     justify-content:  center;
     align-items:      center;
-    height:           30px;
+}
+
+.dataDiv{
+    height:           370px;
+    padding:          5px; 
+    background-color: silver;
+    border:           5px solid white;
+    width:            100%;
+}
+
+ol, ul {
+    cursor:           pointer;
+    list-style:       none;
+    background-color: grey;
+    overflow:         scroll;
+    overflow-x:       hidden; 
+    border :          1px solid black; 
+}
+.olScores {
+    height:           -webkit-calc(100% - 23px);
+    height:           -moz-calc(100% - 23px);
+    height:           calc(100% - 23px);
+   
 }
 audio {
-    width:            -webkit-calc(100% - 4px);
-    width:            -moz-calc(100% - 4px);
-    width:            calc(100% - 4px);
+
+    width:            -webkit-calc(100% - 10px);
+    width:            -moz-calc(100% - 10px);
+    width:            calc(100% - 10px);
+    margin:           5px;
+}
+.red{
+    background-color: red;
 }
