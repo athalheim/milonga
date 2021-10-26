@@ -175,9 +175,9 @@ var messages = {
         fr: "L'élément source joue présentement!",
     },
     mp_targetPlaying: {
-        es: "¡El elemento objetivo está jugando!",
-        en: "Target element is playing!",
-        fr: "L'élément cible joue présentement!",
+        es: "¡Target tanda está sonando!",
+        en: "Target tanda is playing!",
+        fr: "La tanda cible joue présentement!",
     },
     mp_elementPlaying: {
         es: "¡Element está jugando!",

@@ -4,8 +4,8 @@ var milongaPlayer = {
     playingTanda:                           null,
     playingScore:                           null,
 
-    playingColor:                           "LightSkyBlue",
-    playedColor:                            "DeepSkyBlue",
+    playingColor:                           "lightskyblue",
+    playedColor:                            "deepskyblue",
 
 
 

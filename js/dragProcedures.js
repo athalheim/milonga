@@ -182,10 +182,8 @@
     },
 
     updateTandaWithScore: function(sourceId, scoreElement) {
-        /* Get artist from collection */
         var scoreNode                       = scores.xmlDoc.querySelector("[id='" + sourceId + "']");
         var scoreArtistNode                 = scoreNode.parentElement.parentElement;
-        /*  Get tanda tag */
         var tandaTag                        = scoreElement.parentElement.parentElement;
         /* Check if score and tanda from same artist */
         if (scoreArtistNode.id === tandaTag.attributes[attributes.artistId].nodeValue) {
@@ -194,8 +192,6 @@
         } else if (confirm(messages.getMessage("dp_confirmDifferentArtist"))) {
             /* Update when user overrides */
             this.updateTandaScoreFromTarget(sourceId, scoreElement);
-        } else {
-            alert(messages.getMessage("dp_scoreNotFromArtist"));
         }
     },
 
