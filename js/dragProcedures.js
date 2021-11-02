@@ -2,7 +2,7 @@
 
     /* START DRAG: Used with artist list item */
     dragArtist: function(ev) {
-        table.resetListItem("artistsList", ev.target.id);
+        utils.resetListItem("artistsList", ev.target.id);
         ev.dataTransfer.setData("text", ev.target.id);
     },
 
@@ -76,7 +76,7 @@
         /* Append new tanda */
         document.getElementById("milongaList").innerHTML              += listContent;
         /* Highlight and bring into view */
-        milonga.selectedTandaId             = table.resetListItem("milongaList", newTandaId);
+        milonga.selectedTandaId             = utils.resetListItem("milongaList", newTandaId);
     },
 
     addAttribute: function (attributeName, attributevalue) {
@@ -209,7 +209,7 @@
     /* drag: from Collecion 'scores' list */
     dragScore: function(ev) {
         if (ev.target.id.startsWith(scores.tangoIdPrefix) || ev.target.id.startsWith(scores.cortinaIdPrefix)) {
-            table.resetListItem("scoresList", ev.target.id);
+            utils.resetListItem("scoresList", ev.target.id);
         }
         ev.dataTransfer.setData("text", ev.target.id);
     },

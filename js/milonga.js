@@ -11,6 +11,18 @@ var milonga = {
     cortinaIdPrefix:                          "cortina_",
 
 
+    resize: function() {
+             /* Set Data division height: */
+        var milongaListClientHeight         = document.body.clientHeight;
+        milongaListClientHeight            -= (document.getElementsByTagName("caption")[0].clientHeight + 10);
+        milongaListClientHeight            -= (document.getElementById("mi_title").clientHeight         + 10);
+        milongaListClientHeight            -= (document.getElementById("mi_controls").clientHeight      + 10);
+        milongaListClientHeight            -=  document.getElementById("mi_tandas").clientHeight;
+        milongaListClientHeight            -= (document.getElementsByTagName("audio")[1].clientHeight   + 10);
+        document.getElementById("milongaList").style.height    = milongaListClientHeight + "px";
+        document.getElementById("milongaList").style.maxHeight = milongaListClientHeight + "px";
+    },
+
     setMilongaLanguage: function() {
         document.getElementById("mi_save").value  = messages.getMessage("mi_save");
         document.getElementById("mi_clear").value = messages.getMessage("mi_clear");
@@ -95,7 +107,7 @@ var milonga = {
     /* SELECT TANDA  */
     /*  This will update the 'Collection' frame with style and artist */
     selectTanda: function(event) {
-        var selectedTanda                   = table.getListElement(event);
+        var selectedTanda                   = utils.getListElement(event);
         /* Make sure the selected element is a tanda */
         if (selectedTanda.id.startsWith(milonga.tandaIdPrefix)) {
             if (this.isTandaSelectable(selectedTanda)) {

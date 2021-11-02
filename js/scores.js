@@ -18,50 +18,51 @@ var scores = {
     /* Values in expand/collapse 'Scores' tables */
     /*   Note: Computed in 'setDivisionsHeights' procedure */
     /*  Global 'Scores' division height */
-    dataDivHeight:                          240,
+    dataDivHeight:                          null,
     /*  Artists/Albums/Scores default height */
-    artistsDivDefaultHeightPx:              "80px",
-    albumsDivDefaultHeightPx:               "60px",
-    scoresDivDefaultHeightPx:               "100px",
+    artistsDivDefaultHeightPx:              null,
+    albumsDivDefaultHeightPx:               null,
+    scoresDivDefaultHeightPx:               null,
     /*  Expanded division height */
-    expandedDivHeight:                      160,
-    expandedDivHeightPx:                    "160px",
+    expandedDivHeight:                      null,
+    expandedDivHeightPx:                    null,
     /*  Collapsed division height */
-    collapsedDivHeight:                      40,
-    collapsedDivHeightPx:                   "40px",
+    collapsedDivHeight:                     null,
+    collapsedDivHeightPx:                   null,
     /*  Single list item height */
-    listItemHeight:                          20,
+    listItemHeight:                         null,
 
-
+    currentScoresDisplayMode:               null,
     /* ------------------------------------------ */
     /* PROCEDURES */
 
 
+  resize: function() {
+    this.setDivisionsHeights();
+    this.expandScoreDiv(this.currentScoresDisplayMode, null);
+  },
+
     setDivisionsHeights: function() {
-      /* Data division height */
-      var dataDiv                           = document.getElementById("dataDiv");
-      this.dataDivHeight                    = dataDiv.clientHeight;
-      /* !!! Remove border-box width: */
-      this.dataDivHeight                   -= 10;
-      /* Select the first of three divisions: Artists/Albums/Scores */
-      var artistsDiv                        = dataDiv.firstElementChild;
-      /* Select Artists' header, then get its height */
-      var artistsHeader                     = artistsDiv.firstElementChild;
-      var artistsHeaderHeight               = artistsHeader.clientHeight;
-      /* Select artists list */
-      var artistsList                       = artistsDiv.lastElementChild;
+      /* Set Data division height: */
+      this.dataDivHeight                    = document.body.clientHeight;
+      this.dataDivHeight                   -= (document.getElementsByTagName("caption")[0].clientHeight + 10);
+      this.dataDivHeight                   -= (document.getElementById("sc_title").clientHeight         + 10);
+      this.dataDivHeight                   -= (document.getElementById("sc_style").clientHeight         + 10);
+      this.dataDivHeight                   -= (document.getElementsByTagName("audio")[0].clientHeight   + 10);
+
+      /* Get Artists' header height */
+      var artistsHeaderHeight               = document.getElementById("sc_artists").clientHeight;
       /* Single list item height */
-      this.listItemHeight                   = artistsList.firstElementChild.clientHeight;
+      this.listItemHeight                   = document.getElementById("artistsList").firstElementChild.clientHeight;
       /* Collapsed division height */
       this.collapsedDivHeight               = artistsHeaderHeight + this.listItemHeight;
       this.collapsedDivHeightPx             = this.collapsedDivHeight + "px";
       /* Expanded division height */
       this.expandedDivHeight                = this.dataDivHeight - (this.collapsedDivHeight * 2);
       this.expandedDivHeightPx              = this.expandedDivHeight + "px";
-      /*  */
+      /* Set default heights for Artists/Albums/Scores divisions */
       var artistsDivHeight                  = Math.round(0.33 * this.dataDivHeight);
       var albumsDivHeight                   = Math.round(0.25 * this.dataDivHeight);
-      /* Set default heights for Artists/Albums/Scores divisions */
       this.scoresDivDefaultHeightPx         = (this.dataDivHeight - (artistsDivHeight + albumsDivHeight)) + "px";
       this.artistsDivDefaultHeightPx        = artistsDivHeight + "px";
       this.albumsDivDefaultHeightpx         = albumsDivHeight + "px";
@@ -97,12 +98,16 @@ var scores = {
     /* STYLE */
     /* Display styles list */
     displayStyleSelection: function(element) {
-        element.nextElementSibling.style.display = "block";
+        const styleListRect                 = element.getBoundingClientRect();
+        var styleList                       = document.getElementById("styleList");
+        styleList.style.display             = "block";
+        styleList.style.left                = (styleListRect.left + ((styleListRect.width - styleList.clientWidth) * 0.5)) + "px";
+        styleList.style.top                 = styleListRect.bottom + "px";
     },
 
     /* Select style from list */
     selectStyle: function(event) {
-        var element                         = table.getListElement(event);
+        var element                         = utils.getListElement(event);
         document.getElementById("styleList").style.display = "none";
         this.processStyle(element.innerHTML);
     },
@@ -129,13 +134,16 @@ var scores = {
       if (event) {
         if (event.preventDefault  != undefined) event.preventDefault();
         if (event.stopPropagation != undefined) event.stopPropagation();
-        document.getElementById("sc_artistsDiv").style.height = this.artistsDivDefaultHeightPx;
-        document.getElementById("sc_albumsDiv" ).style.height = this.albumsDivDefaultHeightpx;
-        document.getElementById("sc_scoresDiv" ).style.height = this.scoresDivDefaultHeightPx;
-      } else {
+      }
+      this.currentScoresDisplayMode         = mode;
+      if (mode !== null) {
         document.getElementById("sc_artistsDiv").style.height = (mode === 0)?this.expandedDivHeightPx:this.collapsedDivHeightPx;
         document.getElementById("sc_albumsDiv" ).style.height = (mode === 1)?this.expandedDivHeightPx:this.collapsedDivHeightPx;
         document.getElementById("sc_scoresDiv" ).style.height = (mode === 2)?this.expandedDivHeightPx:this.collapsedDivHeightPx;
+      } else {
+        document.getElementById("sc_artistsDiv").style.height = this.artistsDivDefaultHeightPx;
+        document.getElementById("sc_albumsDiv" ).style.height = this.albumsDivDefaultHeightpx;
+        document.getElementById("sc_scoresDiv" ).style.height = this.scoresDivDefaultHeightPx;
       }
       /* Make sure selected item stays into view */
       this.moveSelectedItemIntoView("artistsList");
@@ -194,12 +202,12 @@ var scores = {
     /* SELECT ARTIST and list Albums according to style */
       /* This is called when user selects an artist */
     selectArtist: function(event) {
-        var element                         = table.getListElement(event);
+        var element                         = utils.getListElement(event);
         this.selectArtistById(element.id);
     },
 
     selectArtistById: function(_thisArtistId) {
-        table.resetListItem("artistsList", _thisArtistId);
+        utils.resetListItem("artistsList", _thisArtistId);
         /* Select artist tag */
         var thisArtistNode                  = this.xmlDoc.querySelector("artist[id='" + _thisArtistId +"']");
         /* List and count Artist Albums, according to current style */
@@ -233,12 +241,12 @@ var scores = {
     /* ALBUMS */
     /* Select Album and list Scores (by style) */
     selectAlbum: function(event) {
-        var element                         = table.getListElement(event);
+        var element                         = utils.getListElement(event);
         this.selectAlbumById(element.id);
     },
 
     selectAlbumById: function(thisAlbumId) {
-        table.resetListItem("albumsList", thisAlbumId);
+        utils.resetListItem("albumsList", thisAlbumId);
         var listContent                     = "";
         var thisAlbumNode                   = this.xmlDoc.querySelector("[id='" + thisAlbumId + "']");
         var scoreNodes                      = thisAlbumNode.querySelectorAll(this.scoreByStyleQuery);
@@ -288,15 +296,15 @@ var scores = {
 
     /* SCORES */
     selectScore: function(event) {
-      table.resetAudioControl("scoreAudioControl", "visible")
-      var element                           = table.getListElement(event);
-      table.resetListItem("scoresList", element.id);
+      utils.resetAudioControl("scoreAudioControl", "visible")
+      var element                           = utils.getListElement(event);
+      utils.resetListItem("scoresList", element.id);
     },
 
 
         /* PLAYER: Called when double-clicking on score*/
     playScore: function(event) {
-        var element                         = table.getListElement(event);
+        var element                         = utils.getListElement(event);
         var thisScoreNode                   = this.xmlDoc.querySelector("[id='" + element.id + "']");
         var thisAlbumNode                   = thisScoreNode.parentNode;
         var thisArtistNode                  = thisAlbumNode.parentNode;

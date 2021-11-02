@@ -12,7 +12,7 @@ var milongaPlayer = {
     setControlsToPlay: function(_isMilongaPlaying) {
         /* SCORES PANEL */
         /*  Audio control: Clear the scores audio control */
-        table.resetAudioControl("scoreAudioControl", (_isMilongaPlaying? "hidden": "visible"));
+        utils.resetAudioControl("scoreAudioControl", (_isMilongaPlaying? "hidden": "visible"));
         /* MILONGA PANEL */
         /*  Management Buttons */
         document.getElementById("mi_load").style.visibility   = _isMilongaPlaying? "hidden": "visible";
@@ -21,7 +21,7 @@ var milongaPlayer = {
         document.getElementById("mi_play").style.visibility   = _isMilongaPlaying? "hidden": "visible";
         document.getElementById("mi_stop").style.visibility   = _isMilongaPlaying? "visible": "hidden";
         /*  Audio control: Clear the milonga audio control */
-        table.resetAudioControl("milongaAudioControl", (_isMilongaPlaying? "visible": "hidden"));
+        utils.resetAudioControl("milongaAudioControl", (_isMilongaPlaying? "visible": "hidden"));
         /* Reset Milonga variables */
         this.playingTanda                   = null;
         this.playingScore                   = null;
