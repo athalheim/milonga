@@ -13,7 +13,9 @@ html, body {
 table {
     table-layout:     fixed; 
     width:            100%; 
-    height:           100%;
+    height:           -webkit-calc(100% - 396px);
+    height:           -moz-calc(100% - 39px);
+    height:           calc(100% - 39px);
     cursor:           default;
 }
 tr {
@@ -21,6 +23,8 @@ tr {
     height:           100%;
 }
 td {
+    display:          flex;
+    height:           100%;
     display:          inline-block;
     background-color: #369;
 }​
@@ -35,22 +39,20 @@ td:last-child {
 /* 'td' headers */
 h2 {
     text-align:       center;
-
-}
-/* 'div' headers */
-h3 {
-    color:           black;
 }
 
 /* Controls (td's second division) */
 .controlsDiv {
     display:          flex;
+    height:           23px;
     justify-content:  center;
     align-items:      center;
 }
-
+/* Data (td's third division) */
 .dataDiv{
-    height:           370px;
+    height:           -webkit-calc(100% - 103px);
+    height:           -moz-calc(100% - 103px);
+    height:           calc(100% - 103px);
     padding:          5px; 
     background-color: silver;
     border:           5px solid white;
@@ -65,14 +67,17 @@ ol, ul {
     overflow-x:       hidden; 
     border :          1px solid black; 
 }
+ul {
+    height:           -webkit-calc(100% - 23px);
+    height:           -moz-calc(100% - 23px);
+    height:           calc(100% - 23px);
+}
 .olScores {
     height:           -webkit-calc(100% - 23px);
     height:           -moz-calc(100% - 23px);
     height:           calc(100% - 23px);
-   
 }
 audio {
-
     width:            -webkit-calc(100% - 10px);
     width:            -moz-calc(100% - 10px);
     width:            calc(100% - 10px);
