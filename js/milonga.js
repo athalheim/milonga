@@ -1,26 +1,21 @@
 var milonga = {
 
-    tandaIdPrefix:                            "tanda_",
-    selectedTandaId:                          null,
+    tandaIdPrefix:                          "tanda_",
+    selectedTandaId:                        null,
 
-    emptyScoreTitle:                          "(Score)",
-    emptyScoreIdRef:                          "TA0000",
-    scoreIdPrefix:                            "score_",
+    emptyScoreTitle:                        "(Score)",
+    emptyScoreIdRef:                        "TA0000",
+    scoreIdPrefix:                          "score_",
 
-    defaultCortinaIdRef:                      "CO0000",
-    cortinaIdPrefix:                          "cortina_",
+    defaultCortinaIdRef:                    "CO0000",
+    cortinaIdPrefix:                        "cortina_",
 
 
     resize: function() {
-             /* Set Data division height: */
-        var milongaListClientHeight         = document.body.clientHeight;
-        milongaListClientHeight            -= (document.getElementsByTagName("caption")[0].clientHeight + 10);
-        milongaListClientHeight            -= (document.getElementById("mi_title").clientHeight         + 10);
-        milongaListClientHeight            -= (document.getElementById("mi_controls").clientHeight      + 10);
-        milongaListClientHeight            -=  document.getElementById("mi_tandas").clientHeight;
-        milongaListClientHeight            -= (document.getElementsByTagName("audio")[1].clientHeight   + 10);
-        document.getElementById("milongaList").style.height    = milongaListClientHeight + "px";
-        document.getElementById("milongaList").style.maxHeight = milongaListClientHeight + "px";
+            /* Set Tandas list height: */
+        var tandasListClientHeight          =  (utils.dataDivHeight - document.getElementById("mi_tandas").clientHeight);
+        document.getElementById("mi_tandasList").style.height = tandasListClientHeight + "px";
+        document.getElementById("mi_tandasList").style.maxHeight = tandasListClientHeight + "px";
     },
 
     setMilongaLanguage: function() {
@@ -32,10 +27,10 @@ var milonga = {
 
     /* CLEAR MILONGA */
     clearMilonga: function() {
-        if (document.getElementById("milongaList").innerHTML === "") {
+        if (document.getElementById("mi_tandasList").innerHTML === "") {
             alert(messages.getMessage("mi_noClear"));
         } else if (confirm(messages.getMessage("mi_confirmClearMilonga")) === true) {
-            document.getElementById("milongaList").innerHTML = "";
+            document.getElementById("mi_tandasList").innerHTML = "";
         }
     },
 
@@ -47,7 +42,7 @@ var milonga = {
             var xhttp                           = new XMLHttpRequest();
             xhttp.onreadystatechange            = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("milongaList").innerHTML = this.responseText;
+                    document.getElementById("mi_tandasList").innerHTML = this.responseText;
                 }
             };
             xhttp.open("GET", "data/sampleMilonga.html", true);
@@ -67,7 +62,7 @@ var milonga = {
             var newFileReader               = new FileReader();
             newFileReader.value             = "";
             newFileReader.onloadend         = function(event) {
-                document.getElementById("milongaList").innerHTML = event.target.result;
+                document.getElementById("mi_tandasList").innerHTML = event.target.result;
             };
             newFileReader.readAsText(targetFile);
         }
@@ -80,22 +75,22 @@ var milonga = {
 
     /* Output format: html fragment */
     saveMilonga: function() {
-        if (document.getElementById("milongaList").innerHTML === "") {
+        if (document.getElementById("mi_tandasList").innerHTML === "") {
             alert(messages.getMessage("mi_noSaveEmptyMilonga"));
         } else {
             var milongaName                     = prompt(messages.getMessage("mi_enterMilongaTitle"), "myMilonga");
             if (milongaName) {
                 /* Clone milonga list */
-                var milongaList                 = document.getElementById("milongaList").cloneNode(true);
+                var mi_tandasList                 = document.getElementById("mi_tandasList").cloneNode(true);
                 /* Remove any highlight from clone */
-                var listItems                   = milongaList.getElementsByTagName("li");
+                var listItems                   = mi_tandasList.getElementsByTagName("li");
                 for (var i = 0; i < listItems.length; i += 1) {
                     listItems[i].style.backgroundColor = "";
                 }
                 /* Export clone */
                 var anchorElement               = document.body.appendChild(document.createElement("a"));
                 anchorElement.download          = milongaName + ".html";
-                anchorElement.href              = "data:text/html," + milongaList.innerHTML;
+                anchorElement.href              = "data:text/html," + mi_tandasList.innerHTML;
                 anchorElement.click();
                 delete anchorElement;
             }

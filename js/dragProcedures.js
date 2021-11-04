@@ -27,7 +27,7 @@
                 if (milonga.selectedTandaId === thisTandaId) {
                     milonga.selectedTandaId     = null;
                 }
-                milongaList.removeChild(thisTanda);
+                thisTanda.parentElement.removeChild(thisTanda);
             } else {
                 alert(messages.getMessage("dp_noRemove"));
             }
@@ -74,9 +74,9 @@
         /* Close tanda item */
         listContent                        += "</li>";
         /* Append new tanda */
-        document.getElementById("milongaList").innerHTML              += listContent;
+        document.getElementById("mi_tandasList").innerHTML              += listContent;
         /* Highlight and bring into view */
-        milonga.selectedTandaId             = utils.resetListItem("milongaList", newTandaId);
+        milonga.selectedTandaId             = utils.resetListItem("mi_tandasList", newTandaId);
     },
 
     addAttribute: function (attributeName, attributevalue) {

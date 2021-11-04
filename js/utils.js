@@ -1,5 +1,7 @@
 var utils = {
 
+    dataDivHeight:                          null,
+
           /* Get list element from click event */
     getListElement: function(event) {
         return (event.target || event.srcElement); 
@@ -48,6 +50,15 @@ var utils = {
         audioControl.removeAttribute("src");
         audioControl.pause();
         audioControl.style.visibility       = visibilityState? visibilityState: "visible";
+    },
+
+    resize: function() {
+      /* Set Data division height: */
+      this.dataDivHeight                    = document.getElementsByTagName("td")[0].clientHeight;
+      this.dataDivHeight                   -= (document.getElementById("sc_title"         ).clientHeight + 10);
+      this.dataDivHeight                   -= (document.getElementById("sc_style"         ).clientHeight + 10);
+      this.dataDivHeight                   -= (document.getElementById("sc_AudioControl").clientHeight + 10);
+      document.getElementById("sc_dataDiv").height    = this.dataDivHeight + "px";;
     },
 };
 

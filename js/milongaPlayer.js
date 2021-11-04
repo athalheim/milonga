@@ -4,15 +4,15 @@ var milongaPlayer = {
     playingTanda:                           null,
     playingScore:                           null,
 
-    playingColor:                           "lightskyblue",
-    playedColor:                            "deepskyblue",
+    playingColor:                           "deepskyblue",
+    playedColor:                            "lightskyblue",
 
 
 
     setControlsToPlay: function(_isMilongaPlaying) {
         /* SCORES PANEL */
         /*  Audio control: Clear the scores audio control */
-        utils.resetAudioControl("scoreAudioControl", (_isMilongaPlaying? "hidden": "visible"));
+        utils.resetAudioControl("sc_AudioControl", (_isMilongaPlaying? "hidden": "visible"));
         /* MILONGA PANEL */
         /*  Management Buttons */
         document.getElementById("mi_load").style.visibility   = _isMilongaPlaying? "hidden": "visible";
@@ -21,7 +21,7 @@ var milongaPlayer = {
         document.getElementById("mi_play").style.visibility   = _isMilongaPlaying? "hidden": "visible";
         document.getElementById("mi_stop").style.visibility   = _isMilongaPlaying? "visible": "hidden";
         /*  Audio control: Clear the milonga audio control */
-        utils.resetAudioControl("milongaAudioControl", (_isMilongaPlaying? "visible": "hidden"));
+        utils.resetAudioControl("mi_AudioControl", (_isMilongaPlaying? "visible": "hidden"));
         /* Reset Milonga variables */
         this.playingTanda                   = null;
         this.playingScore                   = null;
@@ -30,7 +30,7 @@ var milongaPlayer = {
 
     /* Play Button: Hidden when milonga is playing */
     playMilonga: function() {
-        if (document.getElementById("milongaList").childElementCount === 0) {
+        if (document.getElementById("mi_tandasList").childElementCount === 0) {
             alert(messages.getMessage("mp_noPlayEmptyMilonga"));
         } else {
             this.setControlsToPlay(true);
@@ -50,8 +50,8 @@ var milongaPlayer = {
     endMilonga: function() {
         this.setControlsToPlay(false);
         /* Clear all highlights */
-        var milongaList                     = document.getElementById("milongaList");
-        var listItems                       = milongaList.getElementsByTagName("li");
+        var mi_tandasList                   = document.getElementById("mi_tandasList");
+        var listItems                       = mi_tandasList.getElementsByTagName("li");
         for (var i = 0; i < listItems.length; i += 1) {
             listItems[i].style.backgroundColor = "";
         }
@@ -66,7 +66,7 @@ var milongaPlayer = {
         }
         /* Get hold of first/next tanda */
         if (isFirst) {
-            this.playingTanda               = document.getElementById("milongaList").firstElementChild;
+            this.playingTanda               = document.getElementById("mi_tandasList").firstElementChild;
         } else {
             this.playingTanda               = this.playingTanda.nextElementSibling;
         }
@@ -79,10 +79,10 @@ var milongaPlayer = {
             /* Set tanda to 'playing' */
             this.playingTanda.style.backgroundColor = this.playingColor;
             /* Center tanda into view */
-            var milongaList                 = document.getElementById("milongaList");
-            var milongaListCenter           = milongaList.offsetTop + (milongaList.clientHeight * 0.5);
+            var mi_tandasList                 = document.getElementById("mi_tandasList");
+            var mi_tandasListCenter           = mi_tandasList.offsetTop + (mi_tandasList.clientHeight * 0.5);
             var selectedTandaCenter         = this.playingTanda.offsetTop + (this.playingTanda.clientHeight * 0.5);
-            milongaList.scrollTop           = (selectedTandaCenter - milongaListCenter);
+            mi_tandasList.scrollTop           = (selectedTandaCenter - mi_tandasListCenter);
             /* Get first score */
             var playingScoreList            = this.playingTanda.firstElementChild;
             this.playingScore               = playingScoreList.firstElementChild;
@@ -128,10 +128,10 @@ var milongaPlayer = {
             src                            += scoreNode.attributes[attributes.title].nodeValue    + ".mp3";
         }
         /* Set audio/source controls */
-        var milongaAudioControl             = document.getElementById("milongaAudioControl");
-        milongaAudioControl.src             = src;
-        milongaAudioControl.load();
-        milongaAudioControl.play();
+        var mi_AudioControl             = document.getElementById("mi_AudioControl");
+        mi_AudioControl.src             = src;
+        mi_AudioControl.load();
+        mi_AudioControl.play();
     },
 
 };
