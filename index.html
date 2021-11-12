@@ -3,113 +3,54 @@
   <head>
     <title>¡Milonga!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="index.css">
+    <link   rel="stylesheet"       href="index.css">
     <script type="text/javascript" src="js/messages.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
-    <script type="text/javascript" src="js/attributes.js"></script>
     <script type="text/javascript" src="js/scores.js"></script>
-    <script type="text/javascript" src="js/dragProcedures.js"></script>
     <script type="text/javascript" src="js/milonga.js"></script>
+    <script type="text/javascript" src="js/dragProcedures.js"></script>
     <script type="text/javascript" src="js/milongaPlayer.js"></script>
   </head>
-
-  <body style="overflow:hidden; height:100%; width: 100%">
-    <table>
-      <caption style="background-color:beige;cursor:context-menu;" title="Click to display Help file in new window." oncontextmenu="table.displayReadMe(event)"><h1>¡Milonga!</h1></caption>
-      <tbody>
-        <tr>
-          <td id="scoresCell" style="width:38%">
-              <!-- 1. Column Title -->
-            <h2 id="sc_title">Scores</h2>
-              <!-- 2. Controls: Style Selector -->
-            <h3 id="sc_style" class="controlsDiv" style="cursor:pointer; color:red;" onclick="scores.displayStyleSelection(this)">Select Style...</h3>
-            <ol id="styleList" style="display:none; position:absolute; background-color:darkgrey; overflow: hidden; " onclick="scores.selectStyle(event)">
-              <li>Milonga</li>
-              <li>Tango</li>
-              <li>Vals</li>
-              <li>Canyengue</li>
-              <hr width="100%"/>
-              <li>Cortina</li>
-            </ol>
-              <!-- 3. Scores Data-->
-            <div id="sc_dataDiv" class="dataDiv">
-
-              <div id="sc_artistsDiv">
-                <h3 id="sc_artists" style="cursor:pointer;" onclick="scores.expandScoreDiv(0)" oncontextmenu="scores.expandScoreDiv(null,event)">Artists</h3>
-                <ol id="artistsList" class="olScores" onclick="scores.selectArtist(event)" ondragstart="dp.dragArtist(event)"">
-                  <li>Artists list...<li>
-                </ol>
-              </div>
-
-
-              <div id="sc_albumsDiv">
-                <h3 id="sc_albums" style="cursor:pointer;" onclick="scores.expandScoreDiv(1)">Albums</h3>
-                <ol id="albumsList" class="olScores" onclick="scores.selectAlbum(event)">
-                  <li>Albums list...<li>
-                </ol>
-              </div>
-
-
-              <div id="sc_scoresDiv">
-                <h3 id="sc_scores" style="cursor:pointer;" onclick="scores.expandScoreDiv(2)">Scores</h3>
-                <ol id="scoresList" class="olScores" onclick="scores.selectScore(event)" ondragstart="dp.dragScore(event)">
-                  <li>Scores list...<li>
-                </ol>
-              </div>
-            </div>
-              <!-- 4. Scores Player Controls -->
-            <audio id="sc_AudioControl" controls></audio>
-          </td>
-
-          <td id="milongaCell" class="milongaColumn">
-              <!-- 1. Column Title -->
-            <h2 id="mi_title" style="cursor:context-menu;" oncontextmenu="milonga.loadSampleMilonga(event)">Milonga</h2>
-              <!-- 2. Controls: Inputs -->
-            <div id="mi_controls" class="controlsDiv">
-              <span style="border:1px solid black;">
-                <input type="file" id="mi_load" onchange="milonga.loadMilonga()" accept="text/milonga">
-              </span>
-              <span style="margin-left:10px; border:1px solid black;">
-                <input type="button" id="mi_save" value="Save" onclick="milonga.saveMilonga()"/>
-              </span>
-              <span style="margin-left:10px; border:1px solid black;">
-                <input type="button" id="mi_clear" value="Clear" onclick="milonga.clearMilonga()"/>
-              </span>
-              <span style="margin-left:10px; border:1px solid black;">
-                <input type="button" id="mi_play" onclick="milongaPlayer.playMilonga()" value="Play"/>
-                <input type="button" id="mi_stop" onclick="milongaPlayer.stopMilonga()" value="Stop" style="visibility:hidden;"/>
-              </span>
-            </div>
-              <!-- 3. Milonga Data -->
-            <div id="mi_dataDiv" class="dataDiv">
-              <h3 id="mi_tandas" ondragover="dp.allowDropToMilonga(event)" ondrop="dp.dropToMilonga(event)" title="Drag Artist here to initiate Tanda -or- Drag Tanda here to remove.">Tandas</h3>
-              <ul id="mi_tandasList" onclick="milonga.selectTanda(event)" ondragstart="dp.dragTanda(event)" ondragover="dp.allowDropToTanda(event)" ondrop="dp.dropToTanda(event)">
-              </ul>
-            </div>
-              <!-- 4. Milonga Player Controls -->
-            <audio id="mi_AudioControl" controls style="visibility:hidden;" onended="milongaPlayer.playNextScore()"></audio>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <script type="text/javascript">
-      function resize() {
-        utils.resize();
-        scores.resize();
-        milonga.resize();
-      }
-      document.addEventListener("DOMContentLoaded", function(event) { 
-        /* Initial database load */
-        scores.loadDoc();
-        /* Set tables heights */
-        resize();
-        /* Interface language */
-        scores.setScoresLanguage();
-        milonga.setMilongaLanguage();
-        window.onresize = resize;
-      });
-    </script>
-
+  <body>
+    <h1 oncontextmenu="utils.displayReadMe(event)">¡Milonga!</h1>
+    <main>
+      <section>
+        <h2 id="scores">Scores</h2>
+        <div>
+          <h3>
+            <b id="artists">Artists</b>
+            <span id="tangoStyle" onclick="scores.displayStyleSelection(this)"></span>
+          </h3>
+          <ol id="tangoStyleList" onclick="scores.selectStyle(event)" style="display: none;">
+            <li>Milonga</li>
+            <li>Tango</li>
+            <li>Vals</li>
+            <li>Canyengue</li>
+            <hr width="100%"/>
+            <li>Cortina</li>
+          </ol>            
+          <ul id="artistsList" onclick="scores.selectFromArtistsList(event)" ondragstart="dp.dragFromScores(event)"> </ul>
+        </div>
+      </section>
+      <section>
+        <h2 id="milonga" onclick="document.getElementById('load').click()" oncontextmenu="milonga.loadSampleMilonga(event)" title="Right-click to load sample milonga">Milonga</h2>
+        <div>
+          <h3>
+            <b id="tandas" ondragover="dp.allowDropToMilonga(event)" ondrop="dp.dropToMilonga(event)" title="Drag Artist/Score here to initiate Tanda -or- Drag Tanda/Score here to remove.">Tandas</b>
+            <span>
+              <input type="file"   id="load"  onchange="milonga.loadMilonga(event)" accept="text/html" style="display: none;">
+              <input type="button" id="save"  onclick="milonga.saveMilonga()"       value="Save"/>
+              <input type="button" id="clear" onclick="milonga.clearMilonga()"      value="Clear"/>
+              <input type="button" id="play"  onclick="milongaPlayer.playMilonga()" value="Play"/>
+              <input type="button" id="stop"  onclick="milongaPlayer.stopMilonga()" value="Stop"       style="visibility:hidden;"/>
+            </span>
+          </h3>
+          <ul id="tandasList" onclick="milonga.selectTanda(event)" ondragstart="dp.dragFromTanda(event)" ondragover="dp.allowDropToTanda(event)" ondrop="dp.dropToTanda(event)" > </ul>
+        </div>
+      </section>
+    </main>
+    <audio controls onended="milongaPlayer.playNextScore()"></audio>
   </body>
 </html>
+
+<!-- -\\- -->

@@ -1,88 +1,131 @@
 * {
-    margin:           0px;
-    padding:          0px;
-    box-sizing:       border-box;
-    border-radius:    5px;
+    margin:            0px;
+    padding:           0px;
+    box-sizing:        border-box;
+    border-radius:     5px;
+    overflow:          hidden;
 }
 html, body {
-    overflow:         hidden;
-    width:            100%; 
-    height:           100%;
+    width:             100%; 
+    height:            100%;
+    min-height:        100%;
     background-color: grey;
 }
-table {
-    table-layout:     fixed; 
-    width:            100%; 
-    height:           -webkit-calc(100% - 396px);
-    height:           -moz-calc(100% - 39px);
-    height:           calc(100% - 39px);
-    cursor:           default;
+body {
+    display:           flex;
+    flex-direction:    column;
 }
-tr {
-    width:            100%; 
-    height:           100%;
+  
+
+/* Page divisions */
+h1, audio {
+    margin:            5px;
+    width:             calc(100% - 10px);
+    min-width:         calc(100% - 10px);
+    flex:              none;
 }
-td {
-    display:          flex;
-    height:           100%;
-    display:          inline-block;
-    background-color: #369;
-}​
-td:last-child {
-    flex: 1;
+h1 {
+    background-color:beige; 
+    cursor:            context-menu; 
+    text-align:        center;
 }
-.milongaColumn {
-    width:            -webkit-calc(62% - 6px);
-    width:            -moz-calc(62% - 6px);
-    width:            calc(62% - 6px);
+main {
+    flex:              auto;
+    background-color:silver;
 }
-/* 'td' headers */
+
+/* Left and right Sections */
+section {
+    display:           flex;
+    flex-flow:         column;
+    margin:            5px;
+    height:            calc(100% - 10px);
+    background-color:  grey;
+}
+section:nth-child(1) {
+    width:             38%; 
+    float:             left; 
+}
+section:nth-child(2) {
+    margin-left:       38%; 
+}
+
+/* Section divisions */
 h2 {
-    text-align:       center;
+    text-align:        center;
+}
+div {
+    flex:              1 1 auto;
+    background-color: silver; 
+    margin:            5px;
 }
 
-/* Controls (td's second division) */
-.controlsDiv {
-    display:          flex;
-    height:           23px;
-    justify-content:  center;
-    align-items:      center;
+/* Scores Section: Dance Style */
+#tangoStyle {
+    cursor:            pointer;
+    color:           red;
 }
-/* Data (td's third division) */
-.dataDiv{
-    height:           -webkit-calc(100% - 103px);
-    height:           -moz-calc(100% - 103px);
-    height:           calc(100% - 103px);
-    padding:          5px; 
-    background-color: silver;
-    border:           5px solid white;
-    width:            100%;
+#tangoStyleList {
+    border:            4px solid #FF0000;
+    position:          absolute; 
+    background-color:beige; 
+    overflow:          hidden;
+    list-style-type:   none;
+    text-align:        left;
+    cursor:            pointer;
+} 
+
+/* Milonga Section */
+#milonga {
+    cursor:            context-menu;
+}
+#tandas {
+    cursor:            copy;
+}
+input {
+    margin-left:       10px;
+    margin-right:      10px;
+    border:            1px solid black
 }
 
-ol, ul {
-    cursor:           pointer;
-    list-style:       none;
-    background-color: grey;
-    overflow:         scroll;
-    overflow-x:       hidden; 
-    border :          1px solid black; 
-}
+/* Main Lists */
 ul {
-    height:           -webkit-calc(100% - 23px);
-    height:           -moz-calc(100% - 23px);
-    height:           calc(100% - 23px);
+    cursor:            pointer;
+    background-color: darkgrey;
+    margin:            5px;
+    height:            calc(100% - 34px);
+    max-height:        calc(100% - 34px);
+    overflow-y:        auto;
 }
-.olScores {
-    height:           -webkit-calc(100% - 23px);
-    height:           -moz-calc(100% - 23px);
-    height:           calc(100% - 23px);
+/*  Boxed first-level list item */
+ul > li {
+    box-sizing:        border-box;
+    border-radius:     5px;
+    border:            2px solid #000000;
+    margin-bottom:     5px;
 }
-audio {
-    width:            -webkit-calc(100% - 10px);
-    width:            -moz-calc(100% - 10px);
-    width:            calc(100% - 10px);
-    margin:           5px;
+
+/* Div headers */
+h3 {
+    margin-left:       10px;
 }
-.red{
-    background-color: red;
+span {
+    margin-left:       20px;
 }
+
+/* Highlights */
+.artist {
+    background-color:yellow;
+}
+.score {
+    background-color:red;
+    font-weight:       bold;
+}
+.tanda {
+    background-color:lightgreen;
+}
+.tandaScore {
+    background-color:green;
+    font-weight:       bold;
+}
+/* -\\- */
