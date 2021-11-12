@@ -1,7 +1,15 @@
 var messages = {
 
-    /* HTML Scores messages */
-    sc_title:  {
+
+    /* Displayed texts */
+    loadHelpFile: {
+        es: "Mostrar página de ayuda",
+        en: "Display Help Page",
+        fr: "Afficher la page d'aide",
+    },
+
+    /* Scores texts */
+    scores: {
         es: "Partituras",
         en: "Scores",
         fr: "Pièces",
@@ -11,74 +19,60 @@ var messages = {
         en: "Select Style... ",
         fr: "Sélection du style... ",
     },
-    sc_selectedStyle: {
-        es: "El estilo es: ",
-        en: "Style is: ",
-        fr: "Le style est: ",
-    },
-    sc_artists: {
+    
+    artists: {
         es: "Artistas",
         en: "Artists",
         fr: "Artistes",
     },
-    sc_artists_click: {
-        es: "Haga clic para ampliar. Haga clic derecho para restablecer.",
-        en: "Click to expand. Right-click to reset.",
-        fr: "Clic pour expansion. Clic droit pour réilitialiser",
-    },
-    sc_albums: {
-        es: "Álbumes",
-        en: "Albums",
-        fr: "Albums",
-    },
-    sc_albums_click: {
-        es: "Haga clic para ampliar.",
-        en: "Click to expand.",
-        fr: "Clic pour expansion.",
-    },
-    sc_scores: {
-        es: "Partituras",
-        en: "Scores",
-        fr: "Pièces",
-    },
-    sc_scores_click: {
-        es: "Haga clic para ampliar.",
-        en: "Click to expand.",
-        fr: "Clic pour expansion.",
-    },
 
-    /* HTML Milonga messages */
-    mi_save: {
+    /* Milonga texts */
+    milonga: {
+        es: "Haga clic para seleccionar y cargar milonga - o - Haga clic derecho para cargar milonga de muestra",
+        en: "Click to select and load milonga - or - Right-click to load sample milonga",
+        fr: "Cliquez pour sélectionner et charger la milonga - ou - Clic droit pour charger l'échantillon de milonga"
+    },
+    tandas: {
+        es: "Arrastre Artista/Partitura aquí para iniciar Tanda -o- Arrastre Tanda/Partitura aquí para eliminar.",
+        en: "Drag Artist/Score here to initiate Tanda -or- Drag Tanda/Score here to remove.",
+        fr: "Glisser l'artiste/la partition ici pour initiae une Tanda -ou- Glisser la Tanda/la partition ici pour la supprimer."
+    },
+    save: {
         es: "Guardar",
         en: "Save",
         fr: "Enregistrer",
     },
-    mi_clear: {
+    clear: {
         es: "Limpiar",
         en: "Clear",
         fr: "Effacer",
     },
-    mi_play: {
+    play: {
         es: "Jugar",
         en: "Play",
         fr: "Jouer",
     },
-    mi_stop: {
+    stop: {
         es: "Detener",
         en: "Stop",
         fr: "Arrêter",
     },
 
    /* Drag Procedures Messages */
+   dp_noCortinaToMilonga: {
+        es: "¡Imposible agregar una cortina a la milonga!",
+        en: "Can't add cortina to milonga!",
+        fr: "Impossible d'ajouter une cortina à la milonga!",
+    },
     dp_noRemove: {
         es: "¡No se puede eliminar este Tanda en este momento!",
         en: "Can't remove this Tanda at this time!",
         fr: "Impossible de retirer cette Tanda pour le moment!",
     },
-    dp_unrecognizedMove: {
-        es: "¡Movimiento no reconocido!",
-        en: "Unrecognized move!",
-        fr: "Mouvement non reconnu !",
+    dp_invalidMove: {
+        es: "¡Movimiento inválido!",
+        en: "Invalid move!",
+        fr: "Mouvement invalide!",
     },
     dp_noUseSourceTanda: {
         es: "¡No se puede usar la fuente Tanda!",
@@ -122,37 +116,37 @@ var messages = {
     },
 
     /* Milonga Messages */
-    mi_noClear: {
+    noClear: {
         es: "No se puede borrar en este momento: ¡La milonga está vacía!",
         en: "Can't clear at this time: Milonga is empty!",
         fr: "Impossible d'effacer pour le moment : La milonga est vide!",
     },
-    mi_confirmClearMilonga: {
+    confirmClearMilonga: {
         es: "¡Confirma para despejar la milonga!",
         en: "Confirm to clear the milonga!",
         fr: "Confirmer l'effacement de la milonga!",
     },
-    mi_loadSampleMilonga: {
+    loadSampleMilonga: {
         es: "¿Cargar milonga de muestra?",
         en: "Load sample milonga?",
         fr: "Charger l'exemple de Milonga?",
     },
-    mi_disabledUntilPlayStopped: {
+    disabledUntilPlayStopped: {
         es: "¡Inhabilitada hasta que la milonga haya dejado de jugar!",
         en: "Disabled until milonga has stopped playing!",
         fr: "Désactivé jusqu'à ce que l'arrêt de la milonga!",
     },
-    mi_noSaveEmptyMilonga: {
+    noSaveEmptyMilonga: {
         es: "No se puede guardar en este momento: ¡la milonga está vacía!",
         en: "Can't save at this time: milonga is empty!",
         fr: "Impossible d'enregistrer pour le moment : la milonga est vide!",
     },
-    mi_enterMilongaTitle: {
+    enterMilongaTitle: {
         es: "Ingrese el nombre de archivo milonga:",
         en: "Enter milonga filename:",
         fr: "Entrez le nom du fichier milonga:",
     },
-    mi_tandaNoSelect: {
+    tandaNoSelect: {
         es: "¡Tanda no se puede seleccionar!",
         en: "Tanda is not selectable!",
         fr: "Tanda n'est pas sélectionnable!",
@@ -179,16 +173,10 @@ var messages = {
         en: "Target tanda is playing!",
         fr: "La tanda cible joue présentement!",
     },
-    mp_elementPlaying: {
-        es: "¡Element está jugando!",
-        en: "Element is playing!",
-        fr: "L'élément joue présentement!",
-    },
-    /* Table messages */
-    ta_loadHelpFile: {
-        es: "¿Mostrar página de ayuda?",
-        en: "Display Help Page?",
-        fr: "Afficher la page d'aide?",
+    mp_elementPlayedOrPlaying: {
+        es: "¡Element ha jugado o está jugando!",
+        en: "Element has played or is playing!",
+        fr: "L'élément a joué ou joue présentement!",
     },
 
     /* Error message */

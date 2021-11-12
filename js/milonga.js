@@ -1,48 +1,34 @@
 var milonga = {
 
-    tandaIdPrefix:                          "tanda_",
     selectedTandaId:                        null,
-
-    emptyScoreTitle:                        "(Score)",
-    emptyScoreIdRef:                        "TA0000",
-    scoreIdPrefix:                          "score_",
-
-    defaultCortinaIdRef:                    "CO0000",
-    cortinaIdPrefix:                        "cortina_",
-
-
-    resize: function() {
-            /* Set Tandas list height: */
-        var tandasListClientHeight          =  (utils.dataDivHeight - document.getElementById("mi_tandas").clientHeight);
-        document.getElementById("mi_tandasList").style.height = tandasListClientHeight + "px";
-        document.getElementById("mi_tandasList").style.maxHeight = tandasListClientHeight + "px";
-    },
+    selectedTandaScoreId:                   null,
 
     setMilongaLanguage: function() {
-        document.getElementById("mi_save").value  = messages.getMessage("mi_save");
-        document.getElementById("mi_clear").value = messages.getMessage("mi_clear");
-        document.getElementById("mi_play").value  = messages.getMessage("mi_play");
-        document.getElementById("mi_stop").value  = messages.getMessage("mi_stop");
+        document.getElementById("milonga").title = messages.getMessage("milonga");
+        document.getElementById("tandas" ).title = messages.getMessage("tandas" );
+        document.getElementById("save"   ).value = messages.getMessage("save"   );
+        document.getElementById("clear"  ).value = messages.getMessage("clear"  );
+        document.getElementById("play"   ).value = messages.getMessage("play"   );
+        document.getElementById("stop"   ).value = messages.getMessage("stop"   );
     },
 
     /* CLEAR MILONGA */
     clearMilonga: function() {
-        if (document.getElementById("mi_tandasList").innerHTML === "") {
-            alert(messages.getMessage("mi_noClear"));
-        } else if (confirm(messages.getMessage("mi_confirmClearMilonga")) === true) {
-            document.getElementById("mi_tandasList").innerHTML = "";
+        if (document.getElementById("tandasList").innerHTML === "") {
+            alert(messages.getMessage("noClear"));
+        } else if (confirm(messages.getMessage("confirmClearMilonga")) === true) {
+            document.getElementById("tandasList").innerHTML = "";
         }
     },
-
 
     /* LOAD MILONGA */
     loadSampleMilonga: function(ev) {
         ev.preventDefault();
-        if (confirm(messages.getMessage("mi_loadSampleMilonga")) === true) {
-            var xhttp                           = new XMLHttpRequest();
-            xhttp.onreadystatechange            = function() {
+        if (confirm(messages.getMessage("loadSampleMilonga")) === true) {
+            var xhttp                       = new XMLHttpRequest();
+            xhttp.onreadystatechange        = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("mi_tandasList").innerHTML = this.responseText;
+                    document.getElementById("tandasList").innerHTML = this.responseText;
                 }
             };
             xhttp.open("GET", "data/sampleMilonga.html", true);
@@ -52,22 +38,19 @@ var milonga = {
 
   /* Public function: called from input element */
   /* Expected format: html fragment */
-    loadMilonga: function() {
-        if (document.getElementById("milongaStopButton").style.visibility === "visible") {
-            alert(messages.getMessage("mi_disabledUntilPlayStopped"));
+    loadMilonga: function(event) {
+        if (document.getElementById("stop").style.visibility === "visible") {
+            alert(messages.getMessage("disabledUntilPlayStopped"));
         } else {
-            var fileInput                   = document.getElementById("mi_load");
-            fileInput.value                 = "";
-            var targetFile                  = fileInput.files[0];
-            var newFileReader               = new FileReader();
-            newFileReader.value             = "";
-            newFileReader.onloadend         = function(event) {
-                document.getElementById("mi_tandasList").innerHTML = event.target.result;
+            var input                       = event.target;
+            var reader                      = new FileReader();
+            reader.onload                   = function() {
+                document.getElementById("tandasList").innerHTML = reader.result;
             };
-            newFileReader.readAsText(targetFile);
+            reader.readAsText(input.files[0]);
+            input.value                     = "";
         }
     },
-
 
 
     /* ************************************************************** */
@@ -75,60 +58,72 @@ var milonga = {
 
     /* Output format: html fragment */
     saveMilonga: function() {
-        if (document.getElementById("mi_tandasList").innerHTML === "") {
-            alert(messages.getMessage("mi_noSaveEmptyMilonga"));
+        if (document.getElementById("tandasList").innerHTML === "") {
+            alert(messages.getMessage("noSaveEmptyMilonga"));
         } else {
-            var milongaName                     = prompt(messages.getMessage("mi_enterMilongaTitle"), "myMilonga");
+            var milongaName                 = prompt(messages.getMessage("enterMilongaTitle"), "myMilonga");
             if (milongaName) {
-                /* Clone milonga list */
-                var mi_tandasList                 = document.getElementById("mi_tandasList").cloneNode(true);
-                /* Remove any highlight from clone */
-                var listItems                   = mi_tandasList.getElementsByTagName("li");
-                for (var i = 0; i < listItems.length; i += 1) {
-                    listItems[i].style.backgroundColor = "";
-                }
-                /* Export clone */
-                var anchorElement               = document.body.appendChild(document.createElement("a"));
-                anchorElement.download          = milongaName + ".html";
-                anchorElement.href              = "data:text/html," + mi_tandasList.innerHTML;
+                var tandasList           = document.getElementById("tandasList").cloneNode(true);
+                tandasList.querySelectorAll("li").forEach( e => e.style.backgroundColor = "");
+                var anchorElement           = document.body.appendChild(document.createElement("a"));
+                anchorElement.download      = milongaName + ".html";
+                anchorElement.href          = "data:text/html," + tandasList.innerHTML;
                 anchorElement.click();
                 delete anchorElement;
             }
         }
     },
 
-
-    /* ************************************************************** */
-    /* SELECT TANDA  */
-    /*  This will update the 'Collection' frame with style and artist */
-    selectTanda: function(event) {
-        var selectedTanda                   = utils.getListElement(event);
-        /* Make sure the selected element is a tanda */
-        if (selectedTanda.id.startsWith(milonga.tandaIdPrefix)) {
-            if (this.isTandaSelectable(selectedTanda)) {
-                if (milonga.selectedTandaId) {
-                    document.getElementById(milonga.selectedTandaId).classList.remove('red');
-                }
-                milonga.selectedTandaId     = selectedTanda.id;
-                selectedTanda.classList.add('red');
-                scores.processStyle(selectedTanda.attributes[attributes.dataStyle].nodeValue);
-                scores.selectArtistById(selectedTanda.attributes[attributes.artistId].nodeValue);
-            } else {
-                alert(messages.getMessage(messages.mi_tandaNoSelect));
-            }
+    removeTandaClass: function(selectedItem) {
+        var selectedListItems                 = selectedItem.querySelectorAll("li");
+        for (var i = 0; i <selectedListItems.length; i++) {
+          selectedListItems[i].classList.remove("tanda");
         }
-
     },
 
-    /* Tanda won't be selectable when played or playing */
-    isTandaSelectable: function(thisTanda) {
-        if (thisTanda.style) {
-            if (thisTanda.style.backgroundColor) {
-                return ((thisTanda.style.backgroundColor !== milongaPlayer.playedColor) && (thisTanda.style.backgroundColor !== milongaPlayer.playingColor));
+    selectTanda: function(event) {
+        if (this.selectedTandaScoreId) {
+            document.getElementById(this.selectedTandaScoreId).classList.remove("tandaScore");
+        }
+        if (this.selectedTandaId) {
+            document.getElementById(this.selectedTandaId).classList.remove("tanda");
+        }
+
+        this.selectedTandaScoreId           = null;
+        this.selectedTandaId                = null;
+        var selectedTanda                   = null;
+        var selectedElement                 = utils.getListElement(event);
+        if (selectedElement.id === "tandasList") {
+            return;
+        }
+
+        selectedTanda                       = selectedElement;
+        if (!selectedElement.id.startsWith("tanda_")) {
+            this.selectedTandaScoreId       = selectedElement.id;
+            selectedTanda                   = selectedElement.parentElement.parentElement;
+        }
+
+        if (utils.isElementPlayingOrPlayed(selectedTanda.id)) {
+            this.selectedTandaScoreId       = null;
+            alert(messages.getMessage("tandaNoSelect"));
+        } else {
+            this.selectedTandaId            = selectedTanda.id;
+            selectedTanda.classList.add("tanda");
+            scores.processStyle(selectedTanda.attributes["data-style"].nodeValue);
+            var artistListItem              = document.getElementById(selectedTanda.attributes["artistId"].nodeValue);
+            scores.selectArtist(artistListItem);
+            if (this.selectedTandaScoreId !== null) {
+                var thisTandaScore          = document.getElementById(this.selectedTandaScoreId);
+                thisTandaScore.classList.add("tandaScore");
+                if (this.selectedTandaScoreId.startsWith("co_")) {
+                    scores.processStyle("Cortina");
+                }
+                if (document.getElementById("stop").style.visibility === "hidden") {
+                    utils.loadScore(thisTandaScore.attributes["idref"].nodeValue);
+                }
             }
         }
-        return true;
-    }
+    },
 
 };
 
