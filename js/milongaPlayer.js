@@ -23,11 +23,11 @@ var milongaPlayer = {
             if (playedScore.id.startsWith("co")) playedScore.parentElement.className = "tandaPlayed";
         }
         for(var scoreToPlay of document.querySelectorAll("p[idref]:not(.scorePlayed)")) {
-            scoreToPlay.parentElement.classList.add("tandaPlaying");
+            scoreToPlay.parentElement.className = "tandaPlaying";
             var idref                       = scoreToPlay.attributes.idref.nodeValue;
-            if (!idref || !utils.getDocNode(idref)) { scoreToPlay.classList.add("scorePlayed"); }
+            if (!idref || !utils.getDocNode(idref)) { scoreToPlay.className ="scorePlayed"; }
             else {
-                scoreToPlay.classList.add("scorePlaying");
+                scoreToPlay.className ="scorePlaying";
                 utils.loadScore(idref);
                 document.querySelector("audio").play();
                 return;
