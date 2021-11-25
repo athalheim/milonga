@@ -19,15 +19,15 @@ var milongaPlayer = {
     playNextScore: function()  {
         var playedScore                     = document.querySelector(".scorePlaying");
         if (playedScore) {
-            playedScore.className = "scorePlayed";
+            playedScore.className           = "scorePlayed";
             if (playedScore.id.startsWith("co")) playedScore.parentElement.className = "tandaPlayed";
         }
-        for(var scoreToPlay of document.querySelectorAll("p[idref]:not(.scorePlayed)")) {
-            scoreToPlay.parentElement.className = "tandaPlaying";
-            var idref                       = scoreToPlay.attributes.idref.nodeValue;
-            if (!idref || !utils.getDocNode(idref)) { scoreToPlay.className ="scorePlayed"; }
+        for(var nextScore of document.querySelectorAll("p[idref]:not(.scorePlayed)")) {
+            nextScore.parentElement.className = "tandaPlaying";
+            var idref                       = nextScore.attributes.idref.nodeValue;
+            if (!idref || !utils.getDocNode(idref)) { nextScore.className = "scorePlayed"; }
             else {
-                scoreToPlay.className ="scorePlaying";
+                nextScore.className         = "scorePlaying";
                 utils.loadScore(idref);
                 document.querySelector("audio").play();
                 return;

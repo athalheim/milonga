@@ -21,19 +21,14 @@ var milonga = {
     setMilonga: function(tandasList) {
         document.getElementById("tandasList").innerHTML = tandasList; 
         document.getElementById("tandasList").querySelectorAll("*").forEach( e => e.setAttribute("draggable", "true"));
-        document.getElementById("tandasList").querySelectorAll("p").forEach( p => {
-            var idref                       = p.attributes.idref.nodeValue;
-            if (!idref || !utils.getDocNode(idref)) { p.innerHTML = "<strike>" + p.innerHTML + "</strike>"; }
-        });
         utils.setTandaControls();
     },
     saveMilonga: function() {
-        var milongaName                     = prompt(messages.getMessage("enterMilongaTitle"), "myMilonga");
+        var milongaName                     = prompt(messages.getMessage("enterMilongaName"), "myMilonga");
         if (milongaName) {
             var exportedMilonga             = document.getElementById("tandasList").cloneNode(true);
             exportedMilonga.querySelectorAll("*"     ).forEach( e => e.removeAttribute("class"));
             exportedMilonga.querySelectorAll("*"     ).forEach( e => e.removeAttribute("draggable"));
-            exportedMilonga.querySelectorAll("strike").forEach( e => e.parentElement.innerHTML = e.innerHTML);
             var anchorElement               = document.body.appendChild(document.createElement("a"));
             anchorElement.download          = milongaName + ".html";
             anchorElement.href              = "data:text/html," + exportedMilonga.innerHTML;
@@ -53,9 +48,9 @@ var milonga = {
         var selectedScore                   = selectedElement.id.startsWith("tanda_")? null: ((selectedElement.attributes.idref.nodeValue !== "")? selectedElement: null);
         var idref                           = selectedScore? selectedScore.attributes.idref.nodeValue: null;
         this.styleArtistScoreSelect(selectedTanda, idref);
-        if (!utils.isElementPlayingOrPlayed(selectedTanda)) { selectedTanda.classList.add("tanda"); }
+        if (!utils.isElementPlayingOrPlayed(selectedTanda)) { selectedTanda.className = "tanda"; }
         if (selectedScore) {
-            selectedScore.classList.add("tandaScore");
+            selectedScore.className = "tandaScore";
             if (utils.isPlayVisible()) utils.loadScore(idref);
         }
     },

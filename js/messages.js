@@ -79,7 +79,7 @@ var messages = {
         en: "Disabled until milonga has stopped playing!",
         fr: "Désactivé jusqu'à ce que l'arrêt de la milonga!",
     },
-    enterMilongaTitle: {
+    enterMilongaName: {
         es: "Ingrese el nombre de archivo milonga:",
         en: "Enter milonga filename:",
         fr: "Entrez le nom du fichier milonga:",
@@ -102,16 +102,10 @@ var messages = {
 
     language: "en",
     getLanguage: function() {
-        this.language                       = (window.navigator.userLanguage || window.navigator.language).split("-")[0];
+        var navLanguage                     = (window.navigator.userLanguage || window.navigator.language).split("-")[0];
+        this.language                       = messages.artists[navLanguage]? navLanguage: "en";
     },
-    getMessage: function(messageId) {
-        if (this[messageId]) {
-            var thisMessage                 = this[messageId][this.language];
-            return thisMessage? thisMessage: this[messageId].en;
-        } else {
-            return ("Error! No message for':" + messageId + "'.");
-        }
-    }
+    getMessage: function(messageId) { return this[messageId][this.language]; }
 };
 
 /* -\\- */

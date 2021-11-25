@@ -15,15 +15,16 @@ var utils = {
         if (scoreNode.attributes.singerId)   scoreText  += " [" + this.getDocNode(scoreNode.attributes.singerId.nodeValue).innerHTML + "]";
         return scoreText;
     },
-    isPlayVisible:     function()         { return (document.getElementById("play").style.visibility === "visible"); },
-    isStopVisible:     function()         { return (document.getElementById("stop").style.visibility === "visible"); },
-    getDocNode:        function(sourceId) { return this.xmlDoc.querySelector("#" + sourceId); },
-    getArtist:         function(sourceId) { return this.getDocNode(sourceId).closest("artist"); },
-    getArtistId:       function(sourceId) { return this.getArtist(sourceId).id; },
-    setTandaControls:  function() {
+    isElementPlayingOrPlayed: function(element)  { return (element.className.indexOf("Play") > -1); },
+    isPlayVisible:            function()         { return (document.getElementById("play").style.visibility === "visible"); },
+    isStopVisible:            function()         { return (document.getElementById("stop").style.visibility === "visible"); },
+    getDocNode:               function(sourceId) { return this.xmlDoc.querySelector("#" + sourceId); },
+    getArtist:                function(sourceId) { return this.getDocNode(sourceId).closest("artist"); },
+    getArtistId:              function(sourceId) { return this.getArtist(sourceId).id; },
+    setTandaControls:         function() {
         document.getElementById("play" ).style.visibility = this.isStopVisible()? "hidden": (document.querySelectorAll("[idref^='TA']").length   > 0)?     "visible": "hidden";
         document.getElementById("clear").style.visibility = this.isStopVisible()? "hidden": (document.getElementById("tandasList").childElementCount > 0)? "visible": "hidden";
-        document.getElementById("save" ).style.visibility = (document.getElementById("tandasList").childElementCount > 0)?    "visible": "hidden";
+        document.getElementById("save" ).style.visibility = (document.getElementById("tandasList").childElementCount > 0)? "visible": "hidden";
     },
     resetAudioControl: function() {
         var audioControl                    = document.querySelector("audio");
@@ -44,9 +45,7 @@ var utils = {
         audioControl.setAttribute("src", src);
         audioControl.load();
     },
-    isElementPlayingOrPlayed: function(element) {
-        return (element.className.indexOf("Play") > -1);
-    },};
+};
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     utils.loadDoc();

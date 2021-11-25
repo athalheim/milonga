@@ -58,7 +58,7 @@
         scoreElement.attributes.idref.nodeValue = sourceId;
         scoreElement.innerHTML              = utils.buildScoreText(utils.getDocNode(sourceId));
         if (utils.getArtistId(scoreElement.attributes.idref.nodeValue) !== scoreElement.parentElement.attributes.idref.nodeValue) scoreElement.innerHTML += " :" + utils.getArtist(sourceId).attributes.name.nodeValue;
-        scoreElement.classList.add("tandaScore");
+        scoreElement.className = "tandaScore";
         if (!utils.isElementPlayingOrPlayed(scoreElement.parentElement)) { scoreElement.parentElement.className = "tanda"; }
     },
 };
