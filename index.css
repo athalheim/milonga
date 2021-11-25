@@ -4,6 +4,7 @@
     box-sizing:        border-box;
     border-radius:     5px;
     overflow:          hidden;
+    user-select:       none;
 }
 html, body {
     width:             100%; 
@@ -15,7 +16,6 @@ body {
     display:           flex;
     flex-direction:    column;
 }
-  
 
 /* Page divisions */
 h1, audio {
@@ -26,7 +26,7 @@ h1, audio {
 }
 h1 {
     background-color:beige; 
-    cursor:            context-menu; 
+    cursor:            pointer; 
     text-align:        center;
 }
 main {
@@ -53,6 +53,11 @@ section:nth-child(2) {
 /* Section divisions */
 h2 {
     text-align:        center;
+    height:            29px;
+    min-height:        29px;
+}
+#milonga {
+    cursor:            context-menu;
 }
 div {
     flex:              1 1 auto;
@@ -67,42 +72,10 @@ div {
 }
 #tangoStyleList {
     border:            4px solid #FF0000;
-    position:          absolute; 
+    position:          absolute;
     background-color:beige; 
-    overflow:          hidden;
-    list-style-type:   none;
-    text-align:        left;
     cursor:            pointer;
-} 
-
-/* Milonga Section */
-#milonga {
-    cursor:            context-menu;
-}
-#tandas {
-    cursor:            copy;
-}
-input {
-    margin-left:       10px;
-    margin-right:      10px;
-    border:            1px solid black
-}
-
-/* Main Lists */
-ul {
-    cursor:            pointer;
-    background-color: darkgrey;
-    margin:            5px;
-    height:            calc(100% - 34px);
-    max-height:        calc(100% - 34px);
-    overflow-y:        auto;
-}
-/*  Boxed first-level list item */
-ul > li {
-    box-sizing:        border-box;
-    border-radius:     5px;
-    border:            2px solid #000000;
-    margin-bottom:     5px;
+    font-weight:       normal;
 }
 
 /* Div headers */
@@ -111,21 +84,77 @@ h3 {
 }
 span {
     margin-left:       20px;
+    margin-right:      10px;
+}
+span:nth-child(1) {
+    margin-right:       40px;
+}
+span p {
+    margin:            0px;
 }
 
-/* Highlights */
+/* Tandas input controls */
+button {
+    margin-left:       10px;
+    margin-right:      10px;
+    border:            1px solid black;
+    visibility:        hidden;
+}
+/* Main Lists */
+ul {
+    cursor:            default;
+    background-color: grey;
+    margin:            5px;
+    height:            calc(100% - 34px);
+    max-height:        calc(100% - 34px);
+    overflow-y:        auto;
+}
+/*  Boxed first-level list item */
+li {
+    cursor:            pointer;
+    box-sizing:        border-box;
+    border-radius:     5px;
+    border:            2px solid #000000;
+    margin-bottom:     5px;
+}
+p {
+    margin-left:       25px;
+}
+p[idref^="CO"] {
+    font-style:        italic;
+}
+
+/* Highlights in Scores */
 .artist {
     background-color:yellow;
 }
 .score {
-    background-color:red;
+    background-color:orange;
     font-weight:       bold;
 }
+/* Highlights in Tandas */
 .tanda {
     background-color:lightgreen;
 }
 .tandaScore {
-    background-color:green;
+    background-color:limegreen;
     font-weight:       bold;
 }
+
+/* Playing flags*/
+/*  Scores */
+.scorePlayed {
+    background-color:deepskyblue;
+}
+.scorePlaying {
+    background-color: dodgerblue;
+}
+/*  Tandas */
+.tandaPlayed {
+    background-color: deepskyblue;
+}
+.tandaPlaying {
+    background-color: lightblue;
+}
+
 /* -\\- */
