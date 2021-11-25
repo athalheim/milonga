@@ -1,130 +1,71 @@
 var milonga = {
-
-    selectedTandaId:                        null,
-    selectedTandaScoreId:                   null,
-
-    setMilongaLanguage: function() {
-        document.getElementById("milonga").title = messages.getMessage("milonga");
-        document.getElementById("tandas" ).title = messages.getMessage("tandas" );
-        document.getElementById("save"   ).value = messages.getMessage("save"   );
-        document.getElementById("clear"  ).value = messages.getMessage("clear"  );
-        document.getElementById("play"   ).value = messages.getMessage("play"   );
-        document.getElementById("stop"   ).value = messages.getMessage("stop"   );
-    },
-
-    /* CLEAR MILONGA */
     clearMilonga: function() {
-        if (document.getElementById("tandasList").innerHTML === "") {
-            alert(messages.getMessage("noClear"));
-        } else if (confirm(messages.getMessage("confirmClearMilonga")) === true) {
+        if (confirm(messages.getMessage("confirmClearMilonga")) === true) {
             document.getElementById("tandasList").innerHTML = "";
+            utils.setTandaControls();
+            return true;
         }
     },
-
-    /* LOAD MILONGA */
-    loadSampleMilonga: function(ev) {
-        ev.preventDefault();
-        if (confirm(messages.getMessage("loadSampleMilonga")) === true) {
-            var xhttp                       = new XMLHttpRequest();
-            xhttp.onreadystatechange        = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("tandasList").innerHTML = this.responseText;
-                }
-            };
-            xhttp.open("GET", "data/sampleMilonga.html", true);
-            xhttp.send();
-        }
-    },
-
-  /* Public function: called from input element */
-  /* Expected format: html fragment */
     loadMilonga: function(event) {
-        if (document.getElementById("stop").style.visibility === "visible") {
-            alert(messages.getMessage("disabledUntilPlayStopped"));
-        } else {
-            var input                       = event.target;
-            var reader                      = new FileReader();
-            reader.onload                   = function() {
-                document.getElementById("tandasList").innerHTML = reader.result;
-            };
-            reader.readAsText(input.files[0]);
-            input.value                     = "";
+        if (event) event.preventDefault();
+        if ((document.getElementById("tandasList").innerHTML === "") || this.clearMilonga()) {
+            event? utils.loadXhttp("data/sampleMilonga.html", "milonga.setMilonga(this.responseText)"): document.getElementById('load').click();
         }
     },
-
-
-    /* ************************************************************** */
-    /* SAVE MILONGA */
-
-    /* Output format: html fragment */
+    loadLocalMilonga: function(input) {
+        var reader                          = new FileReader();
+        reader.onload                       = function() { milonga.setMilonga(reader.result); };
+        reader.readAsText(input.files[0]);
+        input.value                         = "";
+    },
+    setMilonga: function(tandasList) {
+        document.getElementById("tandasList").innerHTML = tandasList; 
+        document.getElementById("tandasList").querySelectorAll("*").forEach( e => e.setAttribute("draggable", "true"));
+        document.getElementById("tandasList").querySelectorAll("p").forEach( p => {
+            var idref                       = p.attributes.idref.nodeValue;
+            if (!idref || !utils.getDocNode(idref)) { p.innerHTML = "<strike>" + p.innerHTML + "</strike>"; }
+        });
+        utils.setTandaControls();
+    },
     saveMilonga: function() {
-        if (document.getElementById("tandasList").innerHTML === "") {
-            alert(messages.getMessage("noSaveEmptyMilonga"));
-        } else {
-            var milongaName                 = prompt(messages.getMessage("enterMilongaTitle"), "myMilonga");
-            if (milongaName) {
-                var tandasList           = document.getElementById("tandasList").cloneNode(true);
-                tandasList.querySelectorAll("li").forEach( e => e.style.backgroundColor = "");
-                var anchorElement           = document.body.appendChild(document.createElement("a"));
-                anchorElement.download      = milongaName + ".html";
-                anchorElement.href          = "data:text/html," + tandasList.innerHTML;
-                anchorElement.click();
-                delete anchorElement;
-            }
+        var milongaName                     = prompt(messages.getMessage("enterMilongaTitle"), "myMilonga");
+        if (milongaName) {
+            var exportedMilonga             = document.getElementById("tandasList").cloneNode(true);
+            exportedMilonga.querySelectorAll("*"     ).forEach( e => e.removeAttribute("class"));
+            exportedMilonga.querySelectorAll("*"     ).forEach( e => e.removeAttribute("draggable"));
+            exportedMilonga.querySelectorAll("strike").forEach( e => e.parentElement.innerHTML = e.innerHTML);
+            var anchorElement               = document.body.appendChild(document.createElement("a"));
+            anchorElement.download          = milongaName + ".html";
+            anchorElement.href              = "data:text/html," + exportedMilonga.innerHTML;
+            try        { anchorElement.click();  }
+            catch (ex) {  }
+            finally    { anchorElement.remove(); }
         }
     },
-
-    removeTandaClass: function(selectedItem) {
-        var selectedListItems                 = selectedItem.querySelectorAll("li");
-        for (var i = 0; i <selectedListItems.length; i++) {
-          selectedListItems[i].classList.remove("tanda");
-        }
-    },
-
     selectTanda: function(event) {
-        if (this.selectedTandaScoreId) {
-            document.getElementById(this.selectedTandaScoreId).classList.remove("tandaScore");
-        }
-        if (this.selectedTandaId) {
-            document.getElementById(this.selectedTandaId).classList.remove("tanda");
-        }
-
-        this.selectedTandaScoreId           = null;
-        this.selectedTandaId                = null;
-        var selectedTanda                   = null;
-        var selectedElement                 = utils.getListElement(event);
-        if (selectedElement.id === "tandasList") {
-            return;
-        }
-
-        selectedTanda                       = selectedElement;
-        if (!selectedElement.id.startsWith("tanda_")) {
-            this.selectedTandaScoreId       = selectedElement.id;
-            selectedTanda                   = selectedElement.parentElement.parentElement;
-        }
-
-        if (utils.isElementPlayingOrPlayed(selectedTanda.id)) {
-            this.selectedTandaScoreId       = null;
-            alert(messages.getMessage("tandaNoSelect"));
-        } else {
-            this.selectedTandaId            = selectedTanda.id;
-            selectedTanda.classList.add("tanda");
-            scores.processStyle(selectedTanda.attributes["data-style"].nodeValue);
-            var artistListItem              = document.getElementById(selectedTanda.attributes["artistId"].nodeValue);
-            scores.selectArtist(artistListItem);
-            if (this.selectedTandaScoreId !== null) {
-                var thisTandaScore          = document.getElementById(this.selectedTandaScoreId);
-                thisTandaScore.classList.add("tandaScore");
-                if (this.selectedTandaScoreId.startsWith("co_")) {
-                    scores.processStyle("Cortina");
-                }
-                if (document.getElementById("stop").style.visibility === "hidden") {
-                    utils.loadScore(thisTandaScore.attributes["idref"].nodeValue);
-                }
-            }
+        if (utils.isPlayVisible()) utils.resetAudioControl();
+        document.querySelectorAll(".tanda"     ).forEach( e => e.classList.remove("tanda"));
+        document.querySelectorAll(".tandaScore").forEach( e => e.classList.remove("tandaScore"));
+        var selectedElement                 = event.target.closest("[id]");
+        if (selectedElement.id === "tandasList")             return;
+        if (utils.isElementPlayingOrPlayed(selectedElement)) return alert(messages.getMessage(selectedElement.id.startsWith("tanda_")? "targetPlayedOrPlaying": "sourcePlayedOrPlaying"));
+        var selectedTanda                   = selectedElement.id.startsWith("tanda_")? selectedElement: selectedElement.parentElement;
+        var selectedScore                   = selectedElement.id.startsWith("tanda_")? null: ((selectedElement.attributes.idref.nodeValue !== "")? selectedElement: null);
+        var idref                           = selectedScore? selectedScore.attributes.idref.nodeValue: null;
+        this.styleArtistScoreSelect(selectedTanda, idref);
+        if (!utils.isElementPlayingOrPlayed(selectedTanda)) { selectedTanda.classList.add("tanda"); }
+        if (selectedScore) {
+            selectedScore.classList.add("tandaScore");
+            if (utils.isPlayVisible()) utils.loadScore(idref);
         }
     },
-
+    styleArtistScoreSelect: function(selectedTanda, scoreId) {
+        scores.listArtists(selectedTanda.firstElementChild.innerHTML, selectedTanda.attributes.idref.nodeValue);
+        if (scoreId) {
+            if (scoreId.startsWith("CO")) scores.listArtists("Cortina", utils.getArtistId(scoreId));
+            scores.selectScore(scoreId);
+        }
+    },
 };
 
 /* -\\- */

@@ -1,131 +1,40 @@
 var scores = {
-
-    currentStyle:                           "",
-    scoreByStyleQuery:                      "",
-
-    selectedArtistId:                       null,
-    selectedArtistText:                     null,
-
-
-    /* *********************************************************************** */
-    /* Language */
-    setScoresLanguage: function() {
-      document.getElementById("scores"  ).innerHTML = messages.getMessage("scores");
-      document.getElementById("artists").innerHTML = messages.getMessage("artists");
-    },
-
-
-    /* Style */
-    displayStyleSelection: function(artistTitle) {
-        const styleTitleRect               = artistTitle.getBoundingClientRect();
-        var styleList                       = document.getElementById("tangoStyleList");
-        styleList.style.display             = "block";
-        styleList.style.left                = styleTitleRect.left + "px";
-        styleList.style.top                 = (styleTitleRect.top + styleTitleRect.height) + "px";
-    },
-
     selectStyle: function(event) {
-        document.getElementById("tangoStyleList").style.display = "none";
-        var element                         = utils.getListElement(event);
-        this.processStyle(element.innerHTML);
+      event.currentTarget.style.display = "none";
+      if (event.target.nodeName === "P") this.listArtists(event.target.innerHTML);
     },
-
-    processStyle: function(thisStyle) {
-        this.currentStyle                   = thisStyle;
-        document.getElementById("tangoStyle").innerHTML =  "(" + thisStyle + ")";
-        if (thisStyle === "Cortina") {
-          this.scoreByStyleQuery            = "score";
-          this.listArtists("cortinas");
-        } else {
-          this.scoreByStyleQuery            = "score[style='" + thisStyle + "']";
-          this.listArtists("tangos");
-        }
+    listArtists: function(tangoStyle, artistId) {
+      document.getElementById("tangoStyle").innerHTML     = tangoStyle;
+      document.getElementById("artistsList").innerHTML    = "";
+      [...utils.xmlDoc.querySelectorAll("artist")].filter(a => a.querySelectorAll("[style='" + document.getElementById("tangoStyle").innerHTML + "']").length > 0).forEach(artistNode => {
+        document.getElementById("artistsList").innerHTML += "<li id='" + artistNode.id + "' draggable='true'>" + artistNode.attributes.name.nodeValue + "</li>";
+      });
+      if (artistId) this.selectArtist(artistId);
     },
-
-
-    /* *********************************************************************** */
-    /* Artists */
-    listArtists: function(tableName) {
-      this.selectedArtistId                 = null;
-      this.selectedArtistText               = null;
-      var listContent                       = "";
-      var tableNode                         = utils.xmlDoc.querySelector(tableName);
-      var artistNodes                       = tableNode.getElementsByTagName("artist");
-      for (var i = 0; i < artistNodes.length; i++) { 
-        var artistNode                      = artistNodes[i];
-        var scoreCount                      = artistNode.querySelectorAll(this.scoreByStyleQuery).length;
-        if (scoreCount > 0) {
-          listContent                      += "<li id='" + artistNode.id + "' draggable='true'>";
-          listContent                      += utils.buildArtistText(artistNode);
-          listContent                      += "</li>";
-        }
-      }
-      document.getElementById("artistsList").innerHTML = listContent;
-    },
-
-
-    /* Select artist/score */
     selectFromArtistsList: function(event) {
-      event.stopPropagation();
-      var listItem                          = utils.getListElement(event);
-      if (listItem.id.startsWith("AR")) {
-        this.selectArtist(listItem);
-      } else if (listItem.id.startsWith("TA") || listItem.id.startsWith("CO")) {
-        this.selectScore(listItem);
-      } else {
-        this.resetScore();
-      }
+      if (utils.isPlayVisible()) utils.resetAudioControl();
+           if (event.target.id.startsWith("TA") || event.target.id.startsWith("CO")) { this.selectScore(event.target.id);  }
+      else if (event.target.id.startsWith("AR"))                                     { this.selectArtist(event.target.id); }
+      else                                                                           { this.resetArtist();                 }
     },
-
-    selectArtist: function(thisArtistListItem) {
-      if (thisArtistListItem.id.startsWith("TA")) return;
-      if (this.selectedArtistId !== null) {
-        var previousArtist                  = document.getElementById(this.selectedArtistId);
-        previousArtist.innerHTML            = this.selectedArtistText;
-        previousArtist.classList.remove("artist");
-        this.selectedArtistId               = null;
-        this.selectedArtistText             = null;
-      }
-      this.selectedArtistId                 = thisArtistListItem.id;
-      this.selectedArtistText               = thisArtistListItem.innerHTML;
+    selectArtist: function(thisArtistId) {
+      this.resetArtist();
+      var thisArtistListItem                = document.getElementById(thisArtistId);
+      thisArtistListItem.innerHTML          = "<strong>" + thisArtistListItem.innerHTML + "</strong>";
+      utils.getArtist(thisArtistId).querySelectorAll("[style='" + document.getElementById("tangoStyle").innerHTML + "']").forEach(thisScoreNode => {
+        thisArtistListItem.innerHTML       += "<p id='" + thisScoreNode.id + "' draggable='true'>"+ utils.buildScoreText(thisScoreNode)+ "</p>";
+      });
       thisArtistListItem.classList.add("artist");
-      var artistListContent                 = "<b>" + thisArtistListItem.innerHTML + "</b>";
-      artistListContent                    += "<ol style='margin-left:10px;'>";
-      var thisArtistNode                    = utils.xmlDoc.querySelector("artist[id='" + this.selectedArtistId +"']");
-      var artistScores                      = thisArtistNode.querySelectorAll(this.scoreByStyleQuery);
-      for (var i = 0; i < artistScores.length; i++) {
-        var thisScoreNode                   = artistScores[i];
-        artistListContent                  += "<li id='" + thisScoreNode.id + "' draggable='true'>";
-        artistListContent                  += utils.buildScoreText(thisScoreNode);
-        artistListContent                  += "</li>";
-      } 
-      artistListContent                    += "</ol>";
-      thisArtistListItem.innerHTML          = artistListContent;
     },
-
-
-    /* Scores */
-    selectScore: function(thisScoreListItem) {
-      this.removeScoreClass(thisScoreListItem.parentElement);
-      thisScoreListItem.classList.add("score");
-      if (document.getElementById("stop").style.visibility === "hidden") {
-        utils.loadScore(thisScoreListItem.id);
-      }
+    resetArtist: function() {
+      document.querySelectorAll(".artist").forEach( e => e.innerHTML = e.firstElementChild.innerHTML);
+      document.querySelectorAll(".artist").forEach( e => e.classList.remove("artist"));
     },
-
-    resetScore: function() {
-      if (this.selectedArtistId !== null) {
-        this.removeScoreClass(document.getElementById(this.selectedArtistId));
-        if (document.getElementById("stop").style.visibility === "hidden") {
-          utils.resetAudioControl();
-        }
-      }
+    selectScore: function(thisScoreId) {
+      document.querySelectorAll(".score").forEach( e => e.classList.remove("score"));
+      document.getElementById(thisScoreId).classList.add("score");
+      if (utils.isPlayVisible()) utils.loadScore(thisScoreId);
     },
-
-    removeScoreClass: function(selectedList) {
-      selectedList.querySelectorAll( ".score" ).forEach( e => e.classList.remove("score"));
-    },
-
 };
 
 /* -\\- */

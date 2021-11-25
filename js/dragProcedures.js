@@ -1,180 +1,66 @@
 ﻿var dp = {
-
-    /* 1. SCORES: drag:*/
-    /*  - Artist: to 'Tandas' title: */
-    /*  - Score:  to tanda scores: */
-    dragFromScores: function(ev) {
-        if (ev.target.id.startsWith("AR"))     scores.selectArtist(ev.target);
-        ev.dataTransfer.setData("text", ev.target.id);
+    dragFromScores: function(event) {
+        event.target.id.startsWith("AR")? scores.selectArtist(event.target.id): scores.selectScore(event.target.id);
+        event.dataTransfer.setData("text", event.target.id);
     },
+    dropToMilonga: function(event) {
+        event.preventDefault();
+        var sourceId                        = event.dataTransfer.getData("text");
+        var sourceElement                   = document.getElementById(sourceId);
+             if (sourceId.startsWith("AR"))                     { this.addTanda(sourceId); }
+        else if (sourceId.startsWith("TA"))                     { this.addTanda(utils.getArtistId(sourceId), sourceId); }
+        else if (utils.isElementPlayingOrPlayed(sourceElement)) { alert(messages.getMessage("sourcePlayedOrPlaying")); }
+        else if (sourceId.startsWith("tanda_"))                 { sourceElement.remove(); }
+        else if (sourceId.startsWith("score_"))                 { sourceElement.attributes.idref.nodeValue = ""; sourceElement.innerHTML = "-----"; }
 
-    /* 2. MILONGA */
-    /* 'Tandas' header: allow drop:      */
-    /*   From Scores:                    */
-    /*    Artist:  Add new tanda         */
-    /*    Score:   Not processed         */
-    /*   From Tandas:                    */
-    /*    Tanda:   Remove selected tanda */
-    /*    Score:   Remove selected score */
-    /*    Cortina: Not processed         */
-    allowDropToMilonga: function(ev) {
-        ev.preventDefault();
+        utils.setTandaControls();
     },
-
-    dropToMilonga: function(ev) {
-        ev.preventDefault();
-        var thisDroppedId                   = ev.dataTransfer.getData("text");
-        if (thisDroppedId.startsWith("AR")) {
-            /* Initiate empty tanda (skip cortinas)*/
-            if (scores.currentStyle === "Cortina") {
-                alert(messages.getMessage("dp_noCortinaToMilonga"));
-            } else {
-                this.addTanda(thisDroppedId);
-            }
-        } else if (thisDroppedId.startsWith("TA")) {
-            /* Initiate tanda with first score (skip cortinas)*/
-            if (scores.currentStyle === "Cortina") {
-                alert(messages.getMessage("dp_noCortinaToMilonga"));
-            } else {
-                var thisScoreNode               = utils.xmlDoc.querySelector("[id='" + thisDroppedId + "']");
-                var thisArtistNode              = thisScoreNode.parentNode.parentNode;
-                this.addTanda(thisArtistNode.id);
-                var thisTanda                   = document.getElementById(milonga.selectedTandaId);
-                var thisTandaFirstScore         = thisTanda.getElementsByTagName("li")[0];
-                this.updateTandaWithScore(thisDroppedId, thisTandaFirstScore);
-            }
-        } else if (thisDroppedId.startsWith("CO")) {
-            /* No cortina */
-            alert(messages.getMessage("dp_noCortinaToMilonga"));
-        } else if (utils.isElementPlayingOrPlayed(thisDroppedId)) {
-            /* No remove when played/playing */
-            alert(messages.getMessage("mp_elementPlayedOrPlaying"));
-        } else if (thisDroppedId.startsWith("tanda_")) {
-            var thisTanda                   = document.getElementById(thisDroppedId);
-            if (milonga.selectedTandaId === thisDroppedId) {
-                milonga.selectedTandaId = null;
-            }
-            thisTanda.parentElement.removeChild(thisTanda);
-        } else if (thisDroppedId.startsWith("sc_")) {
-            /* Remove score from tanda */
-            var thisScore                   = document.getElementById(thisDroppedId);
-            thisScore.attributes["idref"].nodeValue = "TA0000";
-            thisScore.innerHTML             = "(Score)";
-        }
-    },
-
-    addTanda: function(thisArtistId) {
-        /* Get artist tag, then artist name */
-        var thisArtistNode                  = utils.xmlDoc.querySelector("[id='" + thisArtistId + "']");
-        /* Build new tanda as html string*/
+    addTanda: function(thisArtistId, thisScoreId) {
+        document.querySelectorAll(".tanda"     ).forEach( e => e.classList.remove("tanda"));
+        document.querySelectorAll(".tandaScore").forEach( e => e.classList.remove("tandaScore"));
         var ticks                           = new Date().getTime();
         var newTandaId                      = "tanda_" + ticks;
-        var listContent                     = "<li id='" + newTandaId + "' artistId='" + thisArtistId + "' data-style='" + scores.currentStyle + "' draggable='true'>";
-        listContent                        +=   utils.buildArtistText(thisArtistNode, true);
-        listContent                        +=   "<ol style='margin-left:25px'>";
-        for (var i = 0; i < 5; i++) {
-            listContent                    +=     "<li id='sc_" + ticks + "_" + i + "' idref='TA0000' draggable='true'>(Score)</li>";
-        }
-        var thisScoreNode                   = utils.xmlDoc.querySelector("[id='" + "CO0000"+ "']");
-        listContent                        +=     "<li id='co_" + ticks + "' idref='CO0000' style='margin-left:25px'>";
-        listContent                        +=       utils.buildScoreText(thisScoreNode, true);
-        listContent                        +=     "</li>";
-        listContent                        +=   "</ol>";
+        var listContent                     = "<li id='" + newTandaId + "' draggable='true' className='tanda' idref='" + thisArtistId + "'>";
+        listContent                        +=   "<strong>" + document.getElementById("tangoStyle").innerHTML + "</strong>: " + utils.getArtist(thisArtistId).attributes.name.nodeValue;
+        for(i=0;i<5;i++) {     listContent +=   "<p id='score_"   + ticks + "_" + i + "' draggable='true' idref=''>-----</p>"; };
+        listContent                        +=   "<p id='cortina_" + ticks           + "' draggable='true' idref='CO0000'>" + utils.buildScoreText(utils.getDocNode("CO0000"), true) + "</p>";
         listContent                        += "</li>";
-        document.getElementById("tandasList").innerHTML  += listContent;
-        milonga.selectedTandaId             = newTandaId;
+        document.getElementById("tandasList").innerHTML += listContent;
+        if (thisScoreId) this.updateTandaSameArtistCheck(thisScoreId, document.getElementById(newTandaId).querySelector("p"));
     },
-
-    /* 3. TANDAS */
-    /* Drag from tandas: */
-    /*  - Tanda: */
-    /*   -- to 'Tandas' title:       remove tanda */
-    /*   -- to other tanda location: move tanda to this location */
-    /*  - Score: */
-    /*   -- to 'Tandas' title:       remove score */
-    /*   -- to other score location within same tanda: move score to this location */
-  
-    dragFromTanda: function(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
+    dragFromTanda: function(event) {
+        var sourceElement                   = event.target.id? event.target: event.target.parentElement;
+             if (utils.isElementPlayingOrPlayed(sourceElement)) { event.preventDefault(); alert(messages.getMessage("sourcePlayedOrPlaying")); }
+        else if (sourceElement.id.startsWith("cortina_"))       { event.preventDefault(); }
+        else                                                    { event.dataTransfer.setData("text", sourceElement.id); }
     },
-
-    /* DROP: Used with tanda list item */
-    /* Three possible sources: */
-    /*  -Score:       update score/cortina */
-    /*  -Tanda:       move tanda */
-    /*  -Tanda score: move score inside SAME tanda */
-    allowDropToTanda: function(ev) {
-        ev.preventDefault();
+    dropToTanda: function(event) {
+        event.preventDefault();
+        var targetElement                   = event.target.id? event.target: event.target.parentElement;
+        var targetId                        = targetElement.id;
+        var sourceId                        = event.dataTransfer.getData("text");
+        var sourceElement                   = document.getElementById(sourceId);
+             if (utils.isElementPlayingOrPlayed(targetElement))                    { alert(messages.getMessage("targetPlayedOrPlaying")); }
+        else if (sourceId === targetId)                                            { alert(messages.getMessage("sourceTargetSame")); }
+        else if (targetId.startsWith("tanda_")   && sourceId.startsWith("tanda_")) { targetElement.parentElement.insertBefore(sourceElement, targetElement); }
+        else if (targetId.startsWith("score_")   && sourceId.startsWith("score_")) { (sourceElement.parentElement === targetElement.parentElement)? targetElement.parentElement.insertBefore(sourceElement, targetElement): alert(messages.getMessage("noMoveToOtherTanda")); }
+        else if (targetId.startsWith("score_")   && sourceId.startsWith("TA"))     { this.updateTandaSameArtistCheck(sourceId, targetElement); }
+        else if (targetId.startsWith("cortina_") && sourceId.startsWith("CO"))     { this.updateTandaScore(sourceId, targetElement); }
+        else                                                                       { alert(messages.getMessage("invalidMove")); }
+        utils.setTandaControls();
     },
-
-    dropToTanda: function(ev) {
-        ev.preventDefault();
-        var targetId                        = ev.target.id;
-        var sourceId                        = ev.dataTransfer.getData("text");
-        if (utils.isElementPlayingOrPlayed(sourceId)) {
-            alert(messages.getMessage("mp_sourcePlaying"));
-        } else if (sourceId.startsWith("tanda_")) {
-            this.moveTanda(sourceId, targetId);
-        } else if (sourceId.startsWith("sc_")) {
-            this.moveTandaScore(sourceId, targetId);
-        } else if (targetId.startsWith("tanda_")) {
-            alert(messages.getMessage("dp_targetIsNotScore"));
-        } else if (utils.isElementPlayingOrPlayed(targetId)) {
-            alert(messages.getMessage("mp_elementPlayedOrPlaying"));
-        } else if (sourceId.startsWith("TA") && targetId.startsWith("sc_")) {
-            this.updateTandaWithScore(sourceId, ev.target);
-        } else if (sourceId.startsWith("CO") && targetId.startsWith("co_")) {
-            this.updateTandaScoreFromTarget(sourceId, ev.target);
-        } else {
-            alert(messages.getMessage("dp_invalidMove"));
-        }
+    updateTandaSameArtistCheck: function(sourceId, scoreElement) {
+        if ((utils.getArtistId(sourceId) === scoreElement.parentElement.attributes.idref.nodeValue) || confirm(messages.getMessage("confirmDifferentArtist"))) { this.updateTandaScore(sourceId, scoreElement); } 
     },
-
-    moveTanda: function(sourceId, targetId) {
-        if (targetId.startsWith("tanda_")) {
-            if (sourceId === targetId) {
-                alert(messages.getMessage("dp_sourceTargetSame"));                
-            } else {
-                var sourceTanda                 = document.getElementById(sourceId);
-                var targetTanda                 = document.getElementById(targetId);
-                targetTanda.parentElement.insertBefore(sourceTanda, targetTanda);
-            }
-        } else {
-           alert(messages.getMessage("dp_targetNoTanda"));
-        }
+    updateTandaScore: function(sourceId, scoreElement) {
+        document.querySelectorAll(".tanda").forEach( e => e.classList.remove("tanda"));
+        document.querySelectorAll(".tandaScore").forEach( e => e.classList.remove("tandaScore"));
+        scoreElement.attributes.idref.nodeValue = sourceId;
+        scoreElement.innerHTML              = utils.buildScoreText(utils.getDocNode(sourceId));
+        if (utils.getArtistId(scoreElement.attributes.idref.nodeValue) !== scoreElement.parentElement.attributes.idref.nodeValue) scoreElement.innerHTML += " :" + utils.getArtist(sourceId).attributes.name.nodeValue;
+        scoreElement.classList.add("tandaScore");
+        if (!utils.isElementPlayingOrPlayed(scoreElement.parentElement)) { scoreElement.parentElement.className = "tanda"; }
     },
-
-    moveTandaScore: function(sourceId, targetId) {
-        if (targetId.startsWith("sc_")) {
-            var sourceScore                 = document.getElementById(sourceId);
-            var targetScore                 = document.getElementById(targetId);
-            if (sourceScore.parentElement === targetScore.parentElement) {
-                targetScore.parentElement.insertBefore(sourceScore, targetScore); 
-            } else {
-                alert(messages.getMessage("dp_noMoveToOtherTanda"));
-            }    
-        } else {
-            alert(messages.getMessage("dp_targetIsNotScore"));
-        }
-    },
-
-    updateTandaWithScore: function(sourceId, scoreElement) {
-        var scoreNode                       = utils.xmlDoc.querySelector("[id='" + sourceId + "']");
-        var scoreArtistNode                 = scoreNode.parentNode.parentNode;
-        var tandaTag                        = scoreElement.parentElement.parentElement;
-        if (scoreArtistNode.id === tandaTag.attributes["artistId"].nodeValue) {
-            this.updateTandaScoreFromTarget(sourceId, scoreElement);
-        } else if (confirm(messages.getMessage("dp_confirmDifferentArtist"))) {
-            this.updateTandaScoreFromTarget(sourceId, scoreElement);
-        }
-    },
-
-    updateTandaScoreFromTarget: function(sourceId, targetElement) {
-        targetElement.attributes["idref"].nodeValue = sourceId;
-        var scoreNode                       = utils.xmlDoc.querySelector("[id='" + sourceId + "']");
-        targetElement.innerHTML             = utils.buildScoreText(scoreNode, sourceId.startsWith("CO"));
-    },
-
 };
 
 /* -\\- */
