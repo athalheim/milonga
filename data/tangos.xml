@@ -1,90 +1,89 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE collection SYSTEM "tangos.dtd"[]>
 <collection>
-  <tangos>
-    <artist id="AR0163" name="Guido, Juan" epoch="ViejaGarda" birth="1/02/1898" death="5/10/1945">
-      <album id="AL0302" name="Tango de mi vida, Vol 1" date="1928-1929">
-        <score id="TA2684" title="Déjalo" style="Tango" duration="3:20" beat="115" date="1928" />
-        <score id="TA2686" title="Medio y medio" style="Tango" duration="3:21" beat="118" date="1928" />
-        <score id="TA2687" title="Triste corazón" style="Tango" duration="2:55" beat="114" date="1929" />
+  <Tango>
+    <artist id="AR0163" name="Guido, Juan (1898-1945)">
+      <album id="AL0302" name="Tango de mi vida, Vol 1">
+        <score id="TA2684" style="Tango"     duration="3:20" date="1928" >Déjalo</score>
+        <score id="TA2686" style="Tango"     duration="3:21" date="1928" >Medio y medio</score>
+        <score id="TA2687" style="Tango"     duration="2:55" date="1929" >Triste corazón</score>
       </album>
-      <album id="AL0303" name="Tango de mi vida, Vol 4" date="1929-1931">
-        <score id="TA2690" title="Barrio querido" style="Tango" duration="2:46" beat="116" date="1930" />
-        <score id="TA2692" title="Hacelo por la vieja" style="Tango" duration="2:32" beat="116" date="1929" />
-        <score id="TA2693" title="Mi piba" style="Tango" duration="2:48" beat="119" date="1931" />
+      <album id="AL0303" name="Tango de mi vida, Vol 4">
+        <score id="TA2690" style="Tango"     duration="2:46" date="1930" >Barrio querido</score>
+        <score id="TA2692" style="Tango"     duration="2:32" date="1929" >Hacelo por la vieja</score>
+        <score id="TA2693" style="Tango"     duration="2:48" date="1931" >Mi piba</score>
       </album>
     </artist>
-    <artist id="AR0093" name="Lomuto, Francisco" epoch="EraDorada" birth="24/11/1893" death="23/12/1950">
+    <artist id="AR0093" name="Lomuto, Francisco (1893-1950)">
       <album id="AL0274" name="Amor y Celos">
-        <score id="TA2329" title="Caminito" style="Tango" duration="3:15" beat="130" singerId="CH0156" />
-        <score id="TA2331" title="La cumparsita" style="Tango" duration="3:06" />
+        <score id="TA2329" style="Tango"     duration="3:15" singerId="CH0156" >Caminito</score>
+        <score id="TA2331" style="Tango"     duration="3:06" >La cumparsita</score>
       </album>
-      <album id="AL0326" name="Coleccion 78 RPM- 1931-1950 - CD 1" date="1931/1950">
-        <score id="TA2847" title="Aquí me pongo a cantar" style="Milonga" duration="2:18" beat="113" singerId="CH0176" />
-        <score id="TA2849" title="Congojas que matan" style="Vals" duration="2:23" beat="136" singerId="CH0001" />
-        <score id="TA2851" title="Desagravio" style="Tango" duration="2:40" beat="122" singerId="CH0176" />
-        <score id="TA2853" title="Jugando jugando" style="Vals" duration="2:43" beat="135" singerId="CH0088" />
-        <score id="TA2857" title="No hay tierra como la mía" style="Milonga" duration="2:30" beat="101" singerId="CH0156" />
-        <score id="TA2865" title="Un vals" style="Vals" duration="2:26" beat="135" singerId="CH0088" />
+      <album id="AL0326" name="Coleccion 78 RPM- 1931-1950 - CD 1">
+        <score id="TA2847" style="Milonga"   duration="2:18" singerId="CH0176" >Aquí me pongo a cantar</score>
+        <score id="TA2849" style="Vals"      duration="2:23" singerId="CH0001" >Congojas que matan</score>
+        <score id="TA2851" style="Tango"     duration="2:40" singerId="CH0176" >Desagravio</score>
+        <score id="TA2853" style="Vals"      duration="2:43" singerId="CH0088" >Jugando jugando</score>
+        <score id="TA2857" style="Milonga"   duration="2:30" singerId="CH0156" >No hay tierra como la mía</score>
+        <score id="TA2865" style="Vals"      duration="2:26" singerId="CH0088" >Un vals</score>
       </album>
-      <album id="AL0327" name="Colección 78 RPM- 1931-1950 - CD 2" date="1931/1950">
-        <score id="TA2869" title="Bajo un cielo de estrellas" style="Vals" duration="2:49" beat="140" singerId="CH0067" />
-        <score id="TA2876" title="Qué tiempo aquel" style="Milonga" duration="2:33" beat="96" singerId="CH0156" />
+      <album id="AL0327" name="Colección 78 RPM- 1931-1950 - CD 2">
+        <score id="TA2869" style="Vals"      duration="2:49" singerId="CH0067" >Bajo un cielo de estrellas</score>
+        <score id="TA2876" style="Milonga"   duration="2:33" singerId="CH0156" >Qué tiempo aquel</score>
       </album>
       <album id="AL0213" name="Tango de mi vida, Vol 2">
-        <score id="TA2041" title="Aunque parezca mentira" style="Tango" duration="3:26" beat="124" date="1932" singerId="CH0067" />
-        <score id="TA2042" title="Risas y besos" style="Vals" duration="2:26" beat="123" date="1932" singerId="CH0067" />
-      </album>
-    </artist>
-    <artist id="AR0165" name="Maglio, Juan" epoch="ViejaGarda" birth="18/11/1880" death="14/07/1934">
-      <album id="AL0306" name="Tango de mi vida, Vol 1">
-        <score id="TA2701" title="Arrepentido" style="Tango" duration="3:04" beat="116" date="1927" />
-        <score id="TA2703" title="Campanita" style="Tango" duration="3:03" beat="119" date="1927" />
-        <score id="TA2705" title="Flor de rea" style="Tango" duration="3:06" beat="112" date="1928" singerId="CH0216" />
-      </album>
-      <album id="AL0454" name="1927-1932" date="1927/1932">
-        <score id="TA4243" title="Abrojos" style="Canyengue" duration="2:51" />
-        <score id="TA4250" title="En un rincon del cafe" style="Canyengue" duration="3:00" singerId="CH0216" />
-        <score id="TA4253" title="La copa del olvido" style="Canyengue" duration="2:29" />
+        <score id="TA2041" style="Tango"     duration="3:26" date="1932" singerId="CH0067" >Aunque parezca mentira</score>
+        <score id="TA2042" style="Vals"      duration="2:26" date="1932" singerId="CH0067" >Risas y besos</score>
       </album>
     </artist>
-    <artist id="AR0168" name="Orquesta Típica Brunswick" epoch="ViejaGarda" birth="1925" death="1944">
+    <artist id="AR0165" name="Maglio, Juan (1880-1934)">
+      <album id="AL0306" name="Tango de mi vida, Vol 1">
+        <score id="TA2701" style="Tango"     duration="3:04" date="1927" >Arrepentido</score>
+        <score id="TA2703" style="Tango"     duration="3:03" date="1927" >Campanita</score>
+        <score id="TA2705" style="Tango"     duration="3:06" date="1928" singerId="CH0216" >Flor de rea</score>
+      </album>
+      <album id="AL0454" name="1927-1932">
+        <score id="TA4243" style="Canyengue" duration="2:51" >Abrojos</score>
+        <score id="TA4250" style="Canyengue" duration="3:00" singerId="CH0216" >En un rincon del cafe</score>
+        <score id="TA4253" style="Canyengue" duration="2:29" >La copa del olvido</score>
+      </album>
+    </artist>
+    <artist id="AR0168" name="Orquesta Típica Brunswick (1925-1944)">
       <album id="AL0309" name="Tango de mi vida, Vol 1">
-        <score id="TA2729" title="Inspiración" style="Tango" duration="3:20" beat="119" date="1931" />
-        <score id="TA2736" title="Pensalo muchacho" style="Tango" duration="2:48" date="1931" />
+        <score id="TA2729" style="Tango"     duration="3:20" date="1931" >Inspiración</score>
+        <score id="TA2736" style="Tango"     duration="2:48" date="1931" >Pensalo muchacho</score>
       </album>
       <album id="AL0310" name="Tango de mi vida, Vol 2">
-        <score id="TA2738" title="Mariposa de ilusión" style="Tango" duration="2:56" beat="117" date="1932" singerId="CH0068" />
+        <score id="TA2738" style="Tango"     duration="2:56" date="1932" singerId="CH0068" >Mariposa de ilusión</score>
       </album>
       <album id="AL0311" name="Tango de mi vida, Vol 4">
-	<score id="TA2745" title="Borratina" style="Tango" duration="2:48" beat="114" date="1931" />
-	<score id="TA2740" title="Estoy penando" style="Tango" duration="3:00" beat="117" date="1931" />
-	<score id="TA2742" title="Tardes de Palermo" style="Tango" duration="3:02" beat="117" date="1931" />
+	      <score id="TA2745" style="Tango"     duration="2:48" date="1931" >Borratina</score>
+	      <score id="TA2740" style="Tango"     duration="3:00" date="1931" >Estoy penando</score>
+	      <score id="TA2742" style="Tango"     duration="3:02" date="1931" >Tardes de Palermo</score>
       </album>
     </artist>
-  </tangos>
-  <cortinas>
+  </Tango>
+
+  <Cortina>
     <artist name="Appleton" id="AR0117">
       <album name="Appleton" id="AL0222">
-        <score id="CO0000" title="Take Five" duration="0:30" />
+        <score id="CO0000" style="Cortina"   duration="0:30" >Take Five</score>
       </album>
-    </artist>
+    </artist>
     <artist name="Benny Bailey" id="AR0118">
       <album name="The Satchmo Legacy" id="AL0223">
-        <score id="CO0006" title="Basin Street Blues" duration="0:30" />
+        <score id="CO0006" style="Cortina"   duration="0:30" >Basin Street Blues</score>
       </album>
-    </artist>
-  </cortinas>
-  <singers>
-    <singer id="CH0001" name="Acuña, Alberto Hilarión" birth="21/10/1896" death="6/12/1975" epoch="EraDorada" />
-    <singer id="CH0019" name="Azul, Príncipe" alias="de Costa, Herberto Emiliano" birth="11/09/1901" death="09/09/1935" epoch="ViejaGarda" />
-    <singer id="CH0067" name="Díaz, Fernando" alias="z, Fernando Alfredo" birth="14/12/1903" death="11/01/1981" epoch="ViejaGarda" />
-    <singer id="CH0068" name="Díaz, Luis" birth="18/02/1893" death="19/04/1978" epoch="ViejaGarda" />
-    <singer id="CH0088" name="Galarce, Carlos" birth="" death="" epoch="EraDorada" />
-    <singer id="CH0156" name="Omar, Jorge" birth="18/09/1912 " death="18/02/1989" epoch="EraDorada" />
-    <singer id="CH0176" name="Rivera, Alberto" birth="" death="" epoch="EraDorada" />
-    <singer id="CH0216" name="Viván, Carlos" birth="" death="" epoch="ViejaGarda" />
-    <singer id="CH0267" name="Díaz, Fernando - Omar, Jorge" birth="" death="" epoch="EraDorada" />
-    <singer id="CH0268" name="Díaz, Fernando - Simone, Mercedes" birth="" death="" epoch="EraDorada" />
-  </singers>
+    </artist>
+  </Cortina>
+
+  <Singers>
+    <singer id="CH0001" >Acuña, Alberto Hilarión (1896-1975)</singer>
+    <singer id="CH0067" >Díaz, Fernando (1903-1981)</singer>
+    <singer id="CH0068" >Díaz, Luis (1893-1978)</singer>
+    <singer id="CH0088" >Galarce, Carlos</singer>
+    <singer id="CH0156" >Omar, Jorge (1912-1989)</singer>
+    <singer id="CH0176" >Rivera, Alberto</singer>
+    <singer id="CH0216" >Viván, Carlos</singer>
+  </Singers>
 </collection>
