@@ -3,42 +3,40 @@
   <head>
     <title>¡Milonga!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link    rel="stylesheet"      href="index.css">
-    <script type="text/javascript" src="js/messages.js"></script>
-    <script type="text/javascript" src="js/utils.js"></script>
-    <script type="text/javascript" src="js/scores.js"></script>
-    <script type="text/javascript" src="js/milonga.js"></script>
-    <script type="text/javascript" src="js/dragProcedures.js"></script>
-    <script type="text/javascript" src="js/milongaPlayer.js"></script>
+    <link        rel="stylesheet"      href="index.css">
+    <script     type="text/javascript"  src="js/messages.js"></script>
+    <script     type="text/javascript"  src="js/utils.js"></script>
+    <script     type="text/javascript"  src="js/scores.js"></script>
+    <script     type="text/javascript"  src="js/milonga.js"></script>
+    <script     type="text/javascript"  src="js/dragProcedures.js"></script>
+    <script     type="text/javascript"  src="js/milongaPlayer.js"></script>
   </head>
   <body>
-    <h1 onclick="window.open('ReadMe.html')">¡Milonga!</h1>
+    <h1 id="helpTitle" onclick="window.open('ReadMe.html')">¡Milonga!</h1>
     <main>
       <section>
-        <h2 id="scores">Scores</h2>
+        <h2>Partituras</h2>
         <div>
           <h3>
-            <span id="artists">Artists</span>
-            <span id="tangoStyle" onclick="this.nextElementSibling.style.display='inline'"></span>
-            <span id="tangoStyleList" onclick="scores.selectStyle(event)" style="display: none;">
-              <p>Milonga</p><p>Tango</p><p>Vals</p><p>Canyengue</p><p>Cortina</p>
-            </span>            
+            <span>Artistas</span>
+            <span id="styleTitle" onclick="this.nextElementSibling.style.display='inline'"></span>
+            <span id="styleList"  onclick="scores.selectStyle(event)" style="display: none;"><p>Milonga</p><p>Tango</p><p>Vals</p><p>Canyengue</p><p>Cortina</p></span>            
           </h3>
-          <ul id="artistsList" onclick="scores.selectFromArtistsList(event)" ondragstart="dp.dragFromScores(event)"></ul>
+          <ol id="artistsList" onclick="scores.selectFromArtistsList(event)" ondragstart="dp.dragFromScores(event)"></ol>
         </div>
       </section>
       <section>
-        <h2 id="milonga" onclick="milonga.loadMilonga()" oncontextmenu="milonga.loadMilonga(event)">Milonga</h2>
+        <h2 id="milongaTitle" onclick="milonga.loadMilonga()" oncontextmenu="milonga.loadMilonga(event)">Milonga</h2>
         <div>
           <h3>
-            <span id="tandas" ondragover="event.preventDefault();" ondrop="dp.dropToMilonga(event)">Tandas</span>
+            <span>Tandas</span>
             <input  type="file"   id="load"  onchange="milonga.loadLocalMilonga(this)" accept="text/html" style="display: none;">
             <button type="button" id="save"   onclick="milonga.saveMilonga()"       >Save</button>
             <button type="button" id="clear"  onclick="milonga.clearMilonga()"      >Clear</button>
             <button type="button" id="play"   onclick="milongaPlayer.playMilonga()" >Play</button>
             <button type="button" id="stop"   onclick="milongaPlayer.stopMilonga()" >Stop</button>
           </h3>
-          <ul id="tandasList" onclick="milonga.selectTanda(event)" ondragstart="dp.dragFromTanda(event)" ondragover="event.preventDefault()" ondrop="dp.dropToTanda(event)" ></ul>
+          <ul id="tandasList" onclick="milonga.selectTanda(event)" ondragstart="dp.dragFromTandas(event)" ondragover="event.preventDefault()" ondrop="dp.dropToTandas(event)" ></ul>
         </div>
       </section>
     </main>
