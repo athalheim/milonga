@@ -1,14 +1,10 @@
 var milonga = {
     clearMilonga: function() {
-        if (confirm(messages.getMessage("confirmClearMilonga")) === true) {
-            document.getElementById("tandasList").innerHTML = "";
-            utils.setTandaControls();
-            return true;
-        }
+        if (confirm(messages.getMessage("confirmClearMilonga")) === true) return this.setMilonga("");
     },
     loadMilonga: function(event) {
         if (event) event.preventDefault();
-        if ((document.getElementById("tandasList").innerHTML === "") || this.clearMilonga()) {
+        if ((document.querySelectorAll("ul > li").length === 0) || this.clearMilonga()) {
             event? utils.loadXhttp("data/sampleMilonga.html", "milonga.setMilonga(this.responseText)"): document.getElementById('load').click();
         }
     },
@@ -20,15 +16,17 @@ var milonga = {
     },
     setMilonga: function(tandasList) {
         document.getElementById("tandasList").innerHTML = tandasList; 
-        document.getElementById("tandasList").querySelectorAll("*").forEach( e => e.setAttribute("draggable", "true"));
+        document.querySelectorAll("[idref]").forEach(e => {
+            e.setAttribute("draggable", "true"); 
+            if (!utils.isDocNode(e.attributes.idref.nodeValue)) if (!e.querySelector("strike")) {e.innerHTML = "<strike>" + e.innerHTML + "</strike>"};
+        });
         utils.setTandaControls();
     },
     saveMilonga: function() {
         var milongaName                     = prompt(messages.getMessage("enterMilongaName"), "myMilonga");
         if (milongaName) {
             var exportedMilonga             = document.getElementById("tandasList").cloneNode(true);
-            exportedMilonga.querySelectorAll("*"     ).forEach( e => e.removeAttribute("class"));
-            exportedMilonga.querySelectorAll("*"     ).forEach( e => e.removeAttribute("draggable"));
+            exportedMilonga.querySelectorAll("[idref]").forEach(e => {e.removeAttribute("class"); e.removeAttribute("draggable")});
             var anchorElement               = document.body.appendChild(document.createElement("a"));
             anchorElement.download          = milongaName + ".html";
             anchorElement.href              = "data:text/html," + exportedMilonga.innerHTML;
@@ -38,27 +36,25 @@ var milonga = {
         }
     },
     selectTanda: function(event) {
-        if (utils.isPlayVisible()) utils.resetAudioControl();
-        document.querySelectorAll(".tanda"     ).forEach( e => e.classList.remove("tanda"));
-        document.querySelectorAll(".tandaScore").forEach( e => e.classList.remove("tandaScore"));
+        if (utils.playVisible())              utils.resetAudioControl();
+        utils.cleanTandas();
         var selectedElement                 = event.target.closest("[id]");
-        if (selectedElement.id === "tandasList")             return;
-        if (utils.isElementPlayingOrPlayed(selectedElement)) return alert(messages.getMessage(selectedElement.id.startsWith("tanda_")? "targetPlayedOrPlaying": "sourcePlayedOrPlaying"));
-        var selectedTanda                   = selectedElement.id.startsWith("tanda_")? selectedElement: selectedElement.parentElement;
-        var selectedScore                   = selectedElement.id.startsWith("tanda_")? null: ((selectedElement.attributes.idref.nodeValue !== "")? selectedElement: null);
-        var idref                           = selectedScore? selectedScore.attributes.idref.nodeValue: null;
-        this.styleArtistScoreSelect(selectedTanda, idref);
-        if (!utils.isElementPlayingOrPlayed(selectedTanda)) { selectedTanda.className = "tanda"; }
+        if (selectedElement.id === "tandasList")           return;
+        if (utils.elementPlayingOrPlayed(selectedElement)) return utils.displayPlayMessage(selectedElement.id);
+        var selectedTanda                   = selectedElement.closest("li");
+        var selectedScore                   = selectedElement.closest("p");
+        this.styleArtistScoreSelect(selectedTanda, selectedScore);
+        if (!utils.elementPlayingOrPlayed(selectedTanda)) { selectedTanda.className = "tanda"; }
         if (selectedScore) {
-            selectedScore.className = "tandaScore";
-            if (utils.isPlayVisible()) utils.loadScore(idref);
+            selectedScore.className         = "tandaScore";
+            if (utils.playVisible())          utils.loadScore(selectedScore.attributes.idref.nodeValue);
         }
     },
-    styleArtistScoreSelect: function(selectedTanda, scoreId) {
+    styleArtistScoreSelect: function(selectedTanda, selectedScore) {
         scores.listArtists(selectedTanda.firstElementChild.innerHTML, selectedTanda.attributes.idref.nodeValue);
-        if (scoreId) {
-            if (scoreId.startsWith("CO")) scores.listArtists("Cortina", utils.getArtistId(scoreId));
-            scores.selectScore(scoreId);
+        if (selectedScore) {
+            if (selectedScore.id.startsWith("co")) scores.listArtists("Cortina", utils.getArtistId(selectedScore.attributes.idref.nodeValue));
+            scores.selectScore(selectedScore.id);
         }
     },
 };
