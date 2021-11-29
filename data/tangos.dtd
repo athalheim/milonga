@@ -3,30 +3,29 @@
 <!ELEMENT tangos   (artist+)>
 <!ELEMENT cortinas (artist+)>
 
-
-<!ELEMENT artist (album+)>
+<!ELEMENT artist   (album+)>
 <!ATTLIST artist
 	       id ID                                                                 #REQUIRED
 	     name CDATA                                                              #REQUIRED
 >
-<!ELEMENT album (score+)>
+<!ELEMENT album    (score+)>
 <!ATTLIST album
 	       id ID                                                                 #REQUIRED
 	     name CDATA                                                              #REQUIRED
 >
-<!ELEMENT score (#PCDATA)>
+<!ELEMENT score    (#PCDATA)>
 <!ATTLIST score
 	       id ID                                                                 #REQUIRED
 	    style (Tango | Vals | Milonga | Canyengue | Cortina)                     #REQUIRED
-     filename CDATA                                                              #IMPLIED
-	 duration CDATA                                                              #IMPLIED
+	 duration CDATA                                                              #REQUIRED
 	     date CDATA                                                              #IMPLIED
      singerId IDREF                                                              #IMPLIED
+     filename CDATA                                                              #IMPLIED
 >
 
-<!ELEMENT singers (singer+)>
-<!ELEMENT singer (#PCDATA)>
+<!ELEMENT singers  (singer+)>
+<!ELEMENT singer   (#PCDATA)>
 <!ATTLIST singer
-	       id ID                                                                  #REQUIRED
+	       id ID                                                                 #REQUIRED
 >
 

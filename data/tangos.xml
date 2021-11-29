@@ -2,7 +2,7 @@
 <!DOCTYPE collection SYSTEM "tangos.dtd"[]>
 <collection>
   <Tango>
-    <artist id="AR0163" name="Guido, Juan (1898-1945)">
+    <artist id="AR0163" name="Guido, Juan Bautista (1898-1945)">
       <album id="AL0302" name="Tango de mi vida, Vol 1">
         <score id="TA2684" style="Tango"     duration="3:20" date="1928" >Déjalo</score>
         <score id="TA2686" style="Tango"     duration="3:21" date="1928" >Medio y medio</score>
@@ -44,7 +44,7 @@
       </album>
       <album id="AL0454" name="1927-1932">
         <score id="TA4243" style="Canyengue" duration="2:51" >Abrojos</score>
-        <score id="TA4250" style="Canyengue" duration="3:00" singerId="CH0216" >En un rincon del cafe</score>
+        <score id="TA4250" style="Canyengue" duration="3:00" singerId="CH0216" filename="En un rincon del cafe">Cafecito de mí barrio</score>
         <score id="TA4253" style="Canyengue" duration="2:29" >La copa del olvido</score>
       </album>
     </artist>
