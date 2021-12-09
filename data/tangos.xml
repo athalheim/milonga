@@ -2,7 +2,7 @@
 <!DOCTYPE collection SYSTEM "tangos.dtd"[]>
 <collection>
   <Tango>
-    <artist id="AR0163" name="Guido, Juan Bautista (1898-1945)">
+    <artist id="AR0163" name="Guido, Juan Bautista" date="(1898-1945)">
       <album id="AL0302" name="Tango de mi vida, Vol 1">
         <score id="TA2684" style="Tango"     duration="3:20" date="1928" >Déjalo</score>
         <score id="TA2686" style="Tango"     duration="3:21" date="1928" >Medio y medio</score>
@@ -14,7 +14,7 @@
         <score id="TA2693" style="Tango"     duration="2:48" date="1931" >Mi piba</score>
       </album>
     </artist>
-    <artist id="AR0093" name="Lomuto, Francisco (1893-1950)">
+    <artist id="AR0093" name="Lomuto, Francisco" date="(1893-1950)">
       <album id="AL0274" name="Amor y Celos">
         <score id="TA2329" style="Tango"     duration="3:15" singerId="CH0156" >Caminito</score>
         <score id="TA2331" style="Tango"     duration="3:06" >La cumparsita</score>
@@ -36,7 +36,7 @@
         <score id="TA2042" style="Vals"      duration="2:26" date="1932" singerId="CH0067" >Risas y besos</score>
       </album>
     </artist>
-    <artist id="AR0165" name="Maglio, Juan (1880-1934)">
+    <artist id="AR0165" name="Maglio, Juan" date="(1880-1934)">
       <album id="AL0306" name="Tango de mi vida, Vol 1">
         <score id="TA2701" style="Tango"     duration="3:04" date="1927" >Arrepentido</score>
         <score id="TA2703" style="Tango"     duration="3:03" date="1927" >Campanita</score>
@@ -48,7 +48,7 @@
         <score id="TA4253" style="Canyengue" duration="2:29" >La copa del olvido</score>
       </album>
     </artist>
-    <artist id="AR0168" name="Orquesta Típica Brunswick (1925-1944)">
+    <artist id="AR0168" name="Orquesta Típica Brunswick" date="(1925-1944)">
       <album id="AL0309" name="Tango de mi vida, Vol 1">
         <score id="TA2729" style="Tango"     duration="3:20" date="1931" >Inspiración</score>
         <score id="TA2736" style="Tango"     duration="2:48" date="1931" >Pensalo muchacho</score>
