@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>¡Milonga! Help Page</title>
+  </head>
+
+  <body>
+	<h1 id="top">¡Milonga! Help Page</h1>
+	<div>
+		<h2>OBJECT:</h2>
+		<p>Assemble and play tango music in the structure used during a milonga (Argentine tango dance event).</p>
+		<p>NOTE: User is expected to have a basic knowledge of the Argentine Tango world...:-)</p>
+	</div>
+	<br/>
+
+	<div>
+		<h2>TABLE OF CONTENTS:</h2>
+		<a href="#description">Description</a><br/>
+		<a href="#siteStructure">Site Structure</a><br/>
+		<a href="#dataStructure">Data Structure</a><br/>
+		<a href="#background">Background</a><br/>
+		<a href="#applicationCall">Application Call</a><br/>
+		<a href="#applicationLayout">Application Layout</a><br/>
+		<a href="#scoresPanel">Scores Panel</a><br/>
+		<a href="#milongaPanel">Milonga Panel</a><br/>
+		<a href="#savingTheMilonga">Saving the milonga</a><br/>
+		<a href="#loadingAmilonga">Loading a milonga</a><br/>
+		<a href="#loadingSampleMilonga">Loading a milonga</a><br/>
+		<a href="#clearingTheMilonga">Clearing the milonga</a><br/>
+		<a href="#playingTheMilonga">Playing the milonga</a><br/>
+		<a href="#whileTheMilongaIsPlaying">While the milonga is playing</a><br/>
+		<a href="#stoppingEndingTheMilonga">Stopping/Enging the milonga</a><br/>
+	</div>
+	<br/>
+
+	<div id="description">
+		<h2>Description</h2>
+		<ul>
+			<p>HTML web site used to host:</p>
+			<li>- The ¡Milonga! application (HTML page)</li>
+			<li>- Music folders: Tango and Cortina( See below for explanation)</li>
+			<li>- Data folder: database used in application</li>
+			<li>- Javascript procedures files</li>
+		</ul>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="siteStructure">
+		<h2>Site Structure</h2>
+		<ul>
+			<p>Main folder:
+			<li>- index.html: The ¡Milonga! application's web page,</li>
+			<li>- index.css:  Cascading style sheets used in the index page,</li>
+			<li>- ReadMe.html:  This page.</li>
+			<li>
+				<p>- 'data' sub-folder:</p>
+				<ul>
+					<li>tangos.xml: tangos, cortinas and singers data structure,</li>
+					<li>tangos.dtd: Document-Type-Declaration file for tangos.xml database.</li>
+					<li>sampleMilonga.html: Sample milonga.</li>
+				</ul>
+			</li>
+			<li>
+				<p>- 'js' sub-folder:</p>
+				<ul>
+					<li>- Application's javascript procedures files.</li>
+				</ul>
+			</li>
+			<li>
+				<p>- 'images' and 'videos' sub-folders:</p>
+				<ul>
+					<li>- Images and videos used in 'Read Me' page (this page).</li>
+				</ul>
+			</li>
+
+			<li>
+				<p>- 'Tango' and 'Cortina' sub-folders:</p>
+				<ul>
+					<li>
+						-Artist folders
+						<ul>
+							<li>-Album folders
+								<ul>
+									<li>-Score files</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<br/>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="dataStructure">
+		<h2>Data Structure</h2>
+		<p>***** IMPORTANT *****</p>
+		<p>The 'tangos.xml' database should reflect EXACTLY, repeat EXACTLY, the structure of the 'Tango' and 'Cortina' folder;</p>
+		<p>&nbsp;	This data is used by the application to locate the scores: Any discrepancy in folder/file naming results in score not found (error 404)!!!</p>
+		<p>&nbsp;	The score's 'title' attribute should match the file name. In case the title should contain forbidden characters, the 'filename' attribute shall be used instead.</p>
+		<p>&nbsp;	This data identifies the 'styles' used in the application.</p>
+		<p>&nbsp;	and provides additional information: duration, date, singer, etc...</p>
+		<p>The file provided is an EXAMPLE of what should be found in YOUR website.</p>
+		<br/>
+		<p>Data example:</p>
+		<p style="margin-left:25px">&#060;artist id="AR0082" name="Biagi, Rodolfo (1906-1969)"></p>
+		<p style="margin-left:35px">&#160;&#060;album id="AL0108" name="Al Compas Del Vals" date="1938-1951"&#062;</p>
+		<p style="margin-left:45px">&#160;&#060;score id="TA0859" style="Vals" duration="2:50" title="Adoración"   date="1951" singerId="CH0271" /&#062;</p>
+		<p style="margin-left:45px">&#160;&#060;score id="TA0860" style="Vals" duration="2:50" title="Amor y vals" date="1942" singerId="CH0109" /&#062;</p>
+		<p style="margin-left:45px">&#160;...</p>
+		<p style="margin-left:35px">&#160;&#060;/album&#062;</p>
+		<p style="margin-left:25px">&#060;/artist&#062;</p>
+		<br/>
+		<p>In the example above, path to the second score will be built from:</p>
+		<p style="margin-left:25px">tangos/&#060;artist&#062;/&#060;album&#062;/&#060;score&#062;.mp3</p>
+		<p>thus:</p>
+		<p style="margin-left:25px">Tango/Biagi, Rodolfo/Al Compas Del Vals/Adoración.mp3</p>
+		<br/>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="background">
+		<h2>Background</h2>
+		<p>A milonga is a dance event where tango music is played and people dance on this music.</p>
+		<p>The tango dance style, and thus music, comes in four(4) flavors:</p>
+		<ul>
+			<li>- Tango,</li>
+			<li>- Canyengue: old-style tango,</li>
+			<li>- Milonga: fast tango using adapted tango steps,</li>
+			<li>- Vals: tango in 3/4 time</li>
+		</ul>
+		<p>The milonga event is structured in 'tandas':</p>
+		<ul>
+			<li>- A group of three to five (usually three) scores of the same type;</li>
+			<li>- Usually from the same artist/orchestra;</li>
+			<li>- Starting with a 'recognition' score where dancers identify the type and look for a partner;</li>
+			<li>- Followed by scores of increasing interest to dancers;</li>
+			<li>- Ended by a 'cortina': score of a totally different music genre and tempo, clearly indicating the end of this 'tanda'.</li>
+			<li>- Hearing this 'cortina', dancers leave the dance floor.</li>
+			<li>- &nbsp;Note: The DJ will make the cortina last until all dancers have left the dance floor...</li>
+		</ul>
+		<p>Tandas alternate through the milonga event:</p>
+		<ul>
+			<li>- Groups of three 'Tandas': two 'tango'/'canyengue' tandas followed alternately by a 'milonga' or 'vals' tanda;</li>
+		</ul>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="applicationCall">
+		<h2>Application Call</h2>
+		<p>http://www.&#060;your site&#062;/milonga<p>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<hr width="100%"/>
+
+	<div id="applicationLayout">
+		<h2>Application Layout</h2>
+		<p>The application consists of a HTML page:<p>
+		<ul>
+			<li>- Top panel: Header</li>
+			<li>- Left panel: Scores</li>
+			<li>- Right panel: Milonga</li>
+			<li>- Bottom panel: Audio control</li>
+		</ul>
+		<img src="images/1. initial.png" width="640px"/>
+		<a href="videos/1. Tour and Scores.mp4" target="_blank">Scores Video</a>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="topPanel">
+		<h2>Top Panel</h2>
+		<p>The ¡Milonga! panel</p>
+		<ul>
+			<li>- Clicking on the header loads this page</li>
+		</ul>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="scoresPanel">
+		<h2>Scores Panel</h2>
+		<p>The Scores (left) panel displays:</p>
+		<ul>
+			<li>- 'Scores' header,</li>
+			<li>- 'Artists' with current tango dance 'style'. Clicking on the style displays a list of choices:
+				<ul>
+					<li>- Canyengue;</li>
+					<li>- Milonga;</li>
+					<li>- Tango;</li>
+					<li>- Vals;</li>
+					<li>- Cortina</li>
+				</ul>
+			</li>
+			<li>- List of artists according to current style.</li>
+		</ul>
+		<a href="videos/1. Tour and Scores.mp4" target="_blank">Scores Video</a>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="milongaPanel">
+		<h2>Milonga Panel</h2>
+		<p>The Milonga (right) panel displays:<p>
+		<ul>
+			<li>- 'Milonga' header,</li>
+			<li>- 'Tandas' sub-header with controls,</li>
+			<li>- List of tandas.</li>
+		</ul>
+		<p>The 'Milonga' Header:<p>
+		<ul>
+			<li>- Click: opens the file control to select and load a previously-saved milonga,</li>
+			<li>- Right-click: loads the sample milonga.</li>
+		</ul>
+		<p>The 'Tandas' control buttons:<p>
+		<ul>
+			<li>- 'Tandas' header:</li>
+			<ul>
+				<li>- Artists are dropped here to initiate a new blank tanda,</li>
+				<li>- Scores are dropped here to initiate a new tanda with the first score already set,</li>
+				<li>- Tandas are dropped here to remove from the milonga,</li>
+				<li>- Tandas scores are dropped here to remove from the tanda,</li>
+			</ul>
+			<li>- Save button: Appears when at least one tanda is listed,</li>
+			<li>- Clear button: Appears when at least one tanda is listed,</li>
+			<li>- Play button: Appears when at least one tanda is listed; Hidden when milonga plays,</li>
+			<li>- Stop button: Appears when milonga plays; hidden otherwise.</li>
+		</ul>
+		<a href="videos/2. Tanda construction.mp4" target="_blank">Tanda Construction</a><br/>
+		<a href="videos/3. Tanda Management.mp4" target="_blank">Tanda Construction</a>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="savingTheMilonga">
+		<h2>Saving the milonga</h2>
+		<p>Save the milonga in its current state.</p>
+		<ul>
+			<li>- Click on the 'Save' button:</li>
+			<li>- Confirm milonga file name;</li>
+			<li>- Milonga is saved in the default 'Download' folder, using 'html' file type.</li>
+		</ul>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="loadingAmilonga">
+		<h2>Loading a milonga</h2>
+		<p>Load a previously saved milonga.</p>
+		<ul>
+			<li>- Click on the 'Milonga' Header;</li>
+			<li>- Select a milonga (file type is 'html');</li>
+			<li>- Milonga is listed.</li>
+		</ul>
+		<a href="#top">Top</a>
+	</div>
+	<br/>
+
+	<div id="loadingSampleMilonga">
+		<h2>Loading the Sample milonga</h2>
+		<p>Load a previously saved milonga.</p>
+		<ul>
+			<li>- Right-click on the 'Milonga' Header;</li>
+			<li>- Sample Milonga is loaded.</li>
+		</ul>
+		<a href="#top">Top</a>
+	</div>
+	<br/>
+
+	<div id="clearingTheMilonga">
+		<h2>Clearing the milonga</h2>
+		<ul>
+			<li>- Click on the 'Clear' button: Confirm to clear the milonga.</li>
+		</ul>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="playingTheMilonga">
+		<h2>Playing the milonga</h2>
+		<p>Milonga is started by clicking on the 'Play' button:</p>
+		<ul>
+			<li>- 'Milonga' controls:
+				<ul>
+					<li>- 'Play' button is hidden,</li>
+					<li>- 'Stop' button is displayed,</li>
+				</ul>
+			<li>- First tanda is selected (light blue color),</li>
+			<li>- First score is selected (dark blue color) and played,</li>
+			<li>- When score ends, score color turns to light blue,</li>
+			<li>- Process repeats for each score, then cortina,</li>
+			<li>- Process repeats for each tanda.</li>
+		</ul>
+		<a href="videos/4. Sample Milonga Play.mp4" target="_blank">Play the Milonga</a>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="whileTheMilongaIsPlaying">
+		<h2>While the milonga is playing</h2>
+		<ul>
+			<li>- Played tanda/scores/cortinas are highlighted in light blue,</li>
+			<li>- Playing score is highlight in blue,</li>
+			<li>- User CAN NOT edit played/playing tandas,</li>
+			<li>- User can manage the remaining tandas: add, move, delete,</li>
+			<li>- User can manage tandas to play: add/move scores, update cortina.</li>
+		</ul>
+		<a href="videos/5. Milonga Edition during Play.mp4" target="_blank">Edit the Milonga while playing</a>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div id="stoppingEndingTheMilonga">
+		<h2>Stopping/Ending the Milonga Play</h2>
+		<p>Milonga is ended when:</p>
+
+		<ul>
+			<li>- Last cortina is played, or</li>
+			<li>- User clicks on the 'Stop' button.</li>
+		</ul>
+
+		<p>Then: </p>
+		<ul>
+			<li>- Milonga colors are reset.</li>
+			<li>- 'Stop' button is hidden,</li>
+			<li>- 'Play' button is displayed,</li>
+		</ul>
+	</div>
+	<a href="#top">Top</a>
+	<br/>
+
+	<div>Enjoy!</div>
+</body>
+</html>

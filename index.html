@@ -12,35 +12,34 @@
     <script     type="text/javascript"  src="js/milongaPlayer.js"></script>
   </head>
   <body>
-    <h1 id="helpTitle" onclick="window.open('ReadMe.html')">¡Milonga!</h1>
+    <header>
+      <h1>¡Milonga!</h1>
+      <img id="aboutTitle" src="images/about.png" onclick="window.open('readMe.html')"/>
+    </header>
     <main>
       <section>
-        <h2>Partituras</h2>
-        <div>
-          <h3>
-            <span>Artistas</span>
-            <span id="styleTitle" onclick="this.nextElementSibling.style.display='inline'"></span>
-            <span id="styleList"  onclick="scores.selectStyle(event)" style="display: none;"><p>Milonga</p><p>Tango</p><p>Vals</p><p>Canyengue</p><p>Cortina</p></span>            
-          </h3>
-          <ol id="artistsList" onclick="scores.selectFromArtistsList(event)" ondragstart="dp.dragFromScores(event)"></ol>
-        </div>
+        <h2>
+          <span>Partituras</span>
+          <select id="styleList" onchange="scores.listArtists(this.value)"><option>Milonga</option><option>Tango</option><option>Vals</option><option>Canyengue</option><option>Cortina</option></select>
+        </h2>
+        <ol id="partituras" onclick="scores.selectFromArtistsList(event)" ondragstart="dp.dragFromScores(event)"></ol>
       </section>
       <section>
-        <h2 id="milongaTitle" onclick="milonga.loadMilonga()" oncontextmenu="milonga.loadMilonga(event)">Milonga</h2>
-        <div>
-          <h3>
-            <span>Tandas</span>
-            <input  type="file"   id="load"  onchange="milonga.loadLocalMilonga(this)" accept="text/html" style="display: none;">
-            <button type="button" id="save"   onclick="milonga.saveMilonga()"       >Save</button>
-            <button type="button" id="clear"  onclick="milonga.clearMilonga()"      >Clear</button>
-            <button type="button" id="play"   onclick="milongaPlayer.playMilonga()" >Play</button>
-            <button type="button" id="stop"   onclick="milongaPlayer.stopMilonga()" >Stop</button>
-          </h3>
-          <ul id="tandasList" onclick="milonga.selectTanda(event)" ondragstart="dp.dragFromTandas(event)" ondragover="event.preventDefault()" ondrop="dp.dropToTandas(event)" ></ul>
-        </div>
+        <h2>
+          <span   id="milongaTitle"         onclick="milonga.loadMilonga()" oncontextmenu="milonga.loadMilonga(event)">Milonga</span>
+          <input  id="load"  type="file"   onchange="milonga.loadLocalMilonga(this)" accept="text/html" style="display:none;">
+          <button id="save"  type="button"  onclick="milonga.saveMilonga()"       >Save</button>
+          <button id="clear" type="button"  onclick="milonga.clearMilonga()"      >Clear</button>
+          <button id="play"  type="button"  onclick="milongaPlayer.playMilonga()" >Play</button>
+          <button id="stop"  type="button"  onclick="milongaPlayer.stopMilonga()" >Stop</button>
+        </h2>
+        <ul id="milongaList" onclick="milonga.selectFromMilonga(event)" ondragstart="dp.dragFromMilonga(event)" ondragover="event.preventDefault()" ondrop="dp.dropToMilonga(event)" ></ul>
       </section>
     </main>
-    <audio controls onended="milongaPlayer.playNextScore()"></audio>
+    <footer>
+      <audio controls onended="milongaPlayer.playNextScore()"></audio>
+      <img id="fadeoutTitle" src="images/fadeout.png" onclick="milongaPlayer.setFadeout()" />
+    </footer>
   </body>
 </html>
 
