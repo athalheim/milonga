@@ -1,38 +1,44 @@
 var scores = {
-    selectStyle:              function(event) {
-      event.currentTarget.style.display     = "none";
-      if (event.target.nodeName === "P")      this.listArtists(event.target.innerHTML);
-    },
-    listArtists:              function(tangoStyle, artistId) {
-      document.getElementById("styleTitle").innerHTML     = tangoStyle;
-      document.getElementById("artistsList").innerHTML    = "";
-      [...utils.xmlDoc.querySelectorAll("artist")].filter(a => a.querySelectorAll("[style='" + tangoStyle + "']").length).forEach(artistNode => {
-        document.getElementById("artistsList").innerHTML += "<li id='" + artistNode.id + "' draggable='true'>" + artistNode.attributes.name.nodeValue + (artistNode.attributes.date? artistNode.attributes.date.nodeValue: "") +"</li>";
-      });
+    selectedScores:              [],
+    listArtists:              function(tangoStyle, artistId, scoreId) {
+      utils.resetAudioControl();
+      this.selectedScores                   = [];
+      document.getElementById('styleList').value = tangoStyle;
+      document.getElementById("partituras").innerHTML    = "";
+      [...utils.xmlDoc.querySelectorAll("artist")].filter(a => a.querySelectorAll("[style='" + tangoStyle + "']").length).forEach(e => { document.getElementById("partituras").innerHTML += "<li id='" + e.id + "' draggable='true'>" + utils.buildArtistText(e.id) +"</li>"; });
       if (artistId)                           this.selectArtist(artistId);
+      if (scoreId)                            this.selectScore(scoreId);
     },
-    selectFromArtistsList:    function(event) {
-      if (utils.playVisible())                utils.resetAudioControl();
-           if (event.target.id.startsWith("TA") || event.target.id.startsWith("CO")) { this.selectScore(event.target.id);  }
-      else if (event.target.id.startsWith("AR"))                                     { this.selectArtist(event.target.id); }
-      else                                                                           { this.resetArtist();                 }
+    selectFromPartituras:     function(event) {
+      utils.resetAudioControl();
+      var sourceElement                     = event.target.closest("[id]");
+           if (sourceElement.id === "partituras") { this.resetArtist(); }
+      else if (sourceElement.id.startsWith("AR")) { this.selectArtist(sourceElement.id); }
+      else                                        { this.selectScore(sourceElement.id, event.ctrlKey);  }
     },
     selectArtist:             function(thisArtistId) {
+      utils.resetAudioControl();
       this.resetArtist();
       var thisArtistListItem                = document.getElementById(thisArtistId);
       thisArtistListItem.innerHTML          = "<strong>" + thisArtistListItem.innerHTML + "</strong>";
-      utils.getArtist(thisArtistId).querySelectorAll("[style='" + document.getElementById("styleTitle").innerHTML + "']").forEach(thisScoreNode => {
-        thisArtistListItem.innerHTML       += "<p id='" + thisScoreNode.id + "' draggable='true'>"+ utils.buildScoreText(thisScoreNode)+ "</p>";
-      });
+      utils.getArtist(thisArtistId).querySelectorAll("[style='" + document.getElementById('styleList').value + "']").forEach(e => { thisArtistListItem.innerHTML     += "<p id='" + e.id + "' draggable='true'>"+ utils.buildScoreText(e)+ "</p>"; });
       thisArtistListItem.className          = "artist";
     },
     resetArtist:              function() {
-      document.querySelectorAll(".artist").forEach(e => {e.innerHTML = e.firstElementChild.innerHTML; e.classList.remove("artist")});
+      document.querySelectorAll(".artist").forEach(e => {e.innerHTML = e.firstElementChild.innerHTML; e.className = ""; });
+      this.selectedScores                   = [];
     },
-    selectScore:              function(thisScoreId) {
-      document.querySelectorAll(".score").forEach(e => e.classList.remove("score"));
-      document.getElementById(thisScoreId).className = "score";
-      if (utils.playVisible())                utils.loadScore(thisScoreId);
+    selectScore:              function(thisScoreId, isCtrl) {
+      utils.resetAudioControl();
+      if (isCtrl) {
+        document.getElementById(thisScoreId).className = "score";
+        this.selectedScores.push(thisScoreId);
+      } else {
+        document.querySelectorAll(".score").forEach(e => e.className = "");
+        document.getElementById(thisScoreId).className = "score";
+        this.selectedScores                 = [thisScoreId];
+        if (!utils.isStopVisible())           utils.loadScore(thisScoreId);
+      }
     },
 };
 

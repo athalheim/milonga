@@ -1,31 +1,32 @@
 var milonga = {
-    clearMilonga: function() {
-        if (confirm(messages.getMessage("confirmClearMilonga")) === true) return this.setMilonga("");
-    },
-    loadMilonga: function(event) {
-        if (event) event.preventDefault();
-        if ((document.querySelectorAll("ul > li").length === 0) || this.clearMilonga()) {
-            event? utils.loadXhttp("data/sampleMilonga.html", "milonga.setMilonga(this.responseText)"): document.getElementById('load').click();
+    clearMilonga:             function()      { 
+        if (confirm(messages.getMessage("confirmClearMilonga"))) {
+            document.getElementById("milongaList").innerHTML = ""; 
+            utils.setMilongaControls();
         }
     },
-    loadLocalMilonga: function(input) {
+    loadMilonga:              function(event) {
+        if (event) event.preventDefault();
+        if ((document.querySelectorAll("ul > li").length === 0) || confirm(messages.getMessage("confirmClearMilonga"))) {
+            if (event) { utils.loadXhttp("data/sampleMilonga.html", "milonga.setMilonga(this.responseText)"); } 
+            else       { document.getElementById('load').click();}
+        }
+    },
+    loadLocalMilonga:         function(input) {
         var reader                          = new FileReader();
         reader.onload                       = function() { milonga.setMilonga(reader.result); };
         reader.readAsText(input.files[0]);
         input.value                         = "";
     },
-    setMilonga: function(tandasList) {
-        document.getElementById("tandasList").innerHTML = tandasList; 
-        document.querySelectorAll("[idref]").forEach(e => {
-            e.setAttribute("draggable", "true"); 
-            if (!utils.isDocNode(e.attributes.idref.nodeValue)) if (!e.querySelector("strike")) {e.innerHTML = "<strike>" + e.innerHTML + "</strike>"};
-        });
-        utils.setTandaControls();
+    setMilonga:               function(milongaList) {
+        document.getElementById("milongaList").innerHTML = milongaList; 
+        document.querySelectorAll("[idref]").forEach(e => { e.setAttribute("draggable", "true"); if (!utils.getDocNode(e.attributes.idref.nodeValue)) if (!e.querySelector("strike")) {e.innerHTML = "<strike>" + e.innerHTML + "</strike>"}; });
+        utils.setMilongaControls();
     },
-    saveMilonga: function() {
+    saveMilonga:              function()      {
         var milongaName                     = prompt(messages.getMessage("enterMilongaName"), "myMilonga");
         if (milongaName) {
-            var exportedMilonga             = document.getElementById("tandasList").cloneNode(true);
+            var exportedMilonga             = document.getElementById("milongaList").cloneNode(true);
             exportedMilonga.querySelectorAll("[idref]").forEach(e => {e.removeAttribute("class"); e.removeAttribute("draggable")});
             var anchorElement               = document.body.appendChild(document.createElement("a"));
             anchorElement.download          = milongaName + ".html";
@@ -35,26 +36,22 @@ var milonga = {
             finally    { anchorElement.remove(); }
         }
     },
-    selectTanda: function(event) {
-        if (utils.playVisible())              utils.resetAudioControl();
-        utils.cleanTandas();
-        var selectedElement                 = event.target.closest("[id]");
-        if (selectedElement.id === "tandasList")           return;
-        if (utils.elementPlayingOrPlayed(selectedElement)) return utils.displayPlayMessage(selectedElement.id);
-        var selectedTanda                   = selectedElement.closest("li");
-        var selectedScore                   = selectedElement.closest("p");
-        this.styleArtistScoreSelect(selectedTanda, selectedScore);
-        if (!utils.elementPlayingOrPlayed(selectedTanda)) { selectedTanda.className = "tanda"; }
-        if (selectedScore) {
-            selectedScore.className         = "tandaScore";
-            if (utils.playVisible())          utils.loadScore(selectedScore.attributes.idref.nodeValue);
-        }
+    cleanMilonga:             function()      {
+        document.querySelectorAll("[idref]").forEach(e => { e.classList.remove("tandaScore"); e.classList.remove("tanda");});
     },
-    styleArtistScoreSelect: function(selectedTanda, selectedScore) {
-        scores.listArtists(selectedTanda.firstElementChild.innerHTML, selectedTanda.attributes.idref.nodeValue);
-        if (selectedScore) {
-            if (selectedScore.id.startsWith("co")) scores.listArtists("Cortina", utils.getArtistId(selectedScore.attributes.idref.nodeValue));
-            scores.selectScore(selectedScore.id);
+    selectFromMilonga:        function(event) {
+        utils.resetAudioControl();
+        milonga.cleanMilonga();
+        var thisElement                     = event.target.closest("[id]");
+        if (thisElement.id === "milongaList")            return;
+        if (utils.isElementPlayingOrPlayed(thisElement)) return utils.displayPlayedMessage(thisElement.id);
+        var thisTanda                       = thisElement.closest("li");
+        scores.listArtists(thisTanda.firstElementChild.innerHTML, thisTanda.attributes.idref.nodeValue);
+        if (!utils.isElementPlayingOrPlayed(thisTanda)) thisTanda.className = "tanda";
+        var thisScore                       = thisElement.closest("p");
+        if (thisScore) {
+            thisScore.id.startsWith("cortina_")? scores.listArtists("Cortina", utils.getArtistId(thisScore.attributes.idref.nodeValue), thisScore.attributes.idref.nodeValue):  scores.selectScore(thisScore.attributes.idref.nodeValue);
+            thisScore.className             = "tandaScore";
         }
     },
 };
