@@ -17,17 +17,18 @@ body {
     flex-direction:    column;
 }
 
-/* Page divisions: header, main, footer */
+    /* Page divisions: header, main, footer */
 header, footer {
     flex:              none;
     margin:            5px;
+    margin-bottom:     0px;
 }
 main {
     background-color:silver;
     flex:              auto;
 }
 
-/* header content */
+    /* header content */
 h1 {
     background-color:beige; 
     display:           inline-block;
@@ -35,18 +36,18 @@ h1 {
     text-align:        center;
     width:             calc(100% - 45px);
 }
-/* footer content */
+    /* footer content */
 audio {
     min-width:         calc(100% - 45px);
     width:             calc(100% - 45px);
 }
-/* header and footer images */
+    /* header and footer images */
 #aboutTitle, #fadeoutTitle {
     cursor:            pointer;
     width:             39px;
 }
 
-/* Main content */
+    /* Main content */
 section {
     background-color:  grey;
     display:           flex;
@@ -60,8 +61,7 @@ section:nth-child(1) {
 }
 section:nth-child(2) { margin-left:      38%;         }
 
-
-/* Section divisions */
+    /* Section divisions */
 h2 {
     height:            29px;
     margin-left:       10px;
@@ -76,20 +76,20 @@ button {
     margin-left:       20px;
     visibility:        hidden;
 }
-/* Scores dance style */
 
+    /* Partituras dance style */
 #styleList {
     background-color:beige; 
     cursor:            pointer;
+    font-size:         16px;
 }
-/* Milonga span styles */
+    /* Milonga Title */
 #milongaTitle {
     color:           red;
     cursor:            pointer;
 }
 
-
-/* Lists: Scores, Milonga */
+    /* Lists: Partituras and Milonga */
 ol, ul {
     background-color: lightgrey;
     flex:              1 1 auto;
@@ -97,31 +97,31 @@ ol, ul {
     margin:            5px;
     padding:           5px;
 }
-/*  List items are boxed */
+    /*  List items are boxed */
 li {
     border:            2px solid #000000;
     cursor:            pointer;
+    margin-left:       10px;
     margin-bottom:     5px;
 }
 li:last-child      { margin-bottom:      0px;         }
 
-    /* Milonga items  */
-ul > li            { margin-left:        20px;        }
+    /* Partituras */
 p                  { margin-left:        25px;        }
 p[idref^="CO"]     { font-style:         italic;      }
 
-    /* Highlights in Scores */
+    /* Highlights in Partituras */
 .artist            { background-color: yellow;      }
 .score             { background-color: orange;      }
-    /* Highlights in Tandas */
+    /* Highlights in Milonga */
 .tanda             { background-color: lightgreen;  }
 .tandaScore        { background-color: limegreen;   }
 
     /* Playing flags*/
-    /*  Scores */
+    /*  Partituras */
 .scorePlayed       { background-color: deepskyblue; }
 .scorePlaying      { background-color: dodgerblue;  }
-    /*  Tandas */
+    /*  Milonga */
 .tandaPlayed       { background-color: deepskyblue; }
 .tandaPlaying      { background-color: lightblue;   }
 
