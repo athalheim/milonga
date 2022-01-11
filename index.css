@@ -77,8 +77,8 @@ button {
     visibility:        hidden;
 }
 
-    /* Partituras dance style */
-#styleList {
+    /* Partituras selects */
+select {
     background-color:beige; 
     cursor:            pointer;
     font-size:         16px;
