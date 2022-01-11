@@ -29,7 +29,7 @@ var milongaPlayer = {
         }
         milongaPlayer.endMilonga();
     },
-    fadeoutInterval:                        null,
+    fadeoutInterval:          null,
     setFadeout:               function() { utils.isStopVisible()? milongaPlayer.fadeoutInterval = setInterval(milongaPlayer.fadeoutFollow, 50): alert(messages.getMessage("fadeoutTitle")); },
     fadeoutFollow:            function() {
         document.querySelector("audio").volume -= 0.01;

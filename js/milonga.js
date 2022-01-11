@@ -46,7 +46,8 @@ var milonga = {
         if (thisElement.id === "milongaList")            return;
         if (utils.isElementPlayingOrPlayed(thisElement)) return utils.displayPlayedMessage(thisElement.id);
         var thisTanda                       = thisElement.closest("li");
-        scores.listArtists(thisTanda.firstElementChild.innerHTML, thisTanda.attributes.idref.nodeValue);
+        var tandaSpecs                      = thisTanda.firstElementChild.innerHTML.split(",");
+        scores.listArtists(tandaSpecs[0].trim(), tandaSpecs[1].trim(), thisTanda.attributes.idref.nodeValue);
         if (!utils.isElementPlayingOrPlayed(thisTanda)) thisTanda.className = "tanda";
         var thisScore                       = thisElement.closest("p");
         if (thisScore) {

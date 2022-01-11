@@ -1,6 +1,11 @@
 var utils = {
     xmlDoc:                   null,
-    loadDoc:                  function() { this.loadXhttp("data/tangos.xml", "utils.xmlDoc=this.responseXML; scores.listArtists('Tango');"); },
+    loadDoc:                  function() { this.loadXhttp("data/tangos.xml", "utils.setDoc(this.responseXML);"); },
+    setDoc:                   function(docContent) {
+        utils.xmlDoc                        = docContent;
+        if (this.xmlDoc.querySelector("artist[era]") === null) { document.getElementById('eraList').remove(); }
+        scores.listArtists('ViejaGarda', 'Tango');
+    },
     loadXhttp:                function(filename, callback) {
         var xhttp                           = new XMLHttpRequest();
         xhttp.onreadystatechange            = function() {if ((this.readyState === 4) && (this.status === 200)) eval(callback);};
@@ -66,7 +71,6 @@ var utils = {
 document.addEventListener("DOMContentLoaded", function(event) { 
     utils.loadDoc(); 
     messages.setLanguage(); 
-    alert(messages.getMessage("mainTitle"));
 });
 
 /* -\\- */

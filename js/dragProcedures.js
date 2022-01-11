@@ -41,7 +41,11 @@
         milonga.cleanMilonga();
         var ticks                           = new Date().getTime();
         var listContent                     = "<li id='tanda_" + ticks + "' draggable='true' className='tanda' idref='" + artistId + "'>";
-        listContent                        +=   "<strong>" + document.getElementById("styleList").value + "</strong>: " + utils.buildArtistText(artistId);
+        listContent                        += "<strong>";
+        if (document.getElementById("eraList")) listContent += document.getElementById("eraList").value + ", "
+        listContent                        +=   document.getElementById("styleList").value
+        listContent                        += "</strong>: " + utils.buildArtistText(artistId);
+        
         for(i=0; i<5; i++) {   listContent +=   "<p id='score_"   + ticks + "_" + i + "' draggable='true' idref=''>-----</p>"; };
         listContent                        +=   "<p id='cortina_" + ticks           + "' draggable='true' idref='CO0000'>" + utils.buildScoreText(utils.getDocNode("CO0000"), true) + "</p>";
         listContent                        += "</li>";
