@@ -13,16 +13,17 @@
   </head>
   <body>
     <header>
-      <h1 id="mainTitle" onclick="utils.setFullScreen()">¡Milonga!</h1>
-      <img id="aboutTitle"                  onclick="window.open('readMe.html')" src="images/about.png"/>
+      <h1         id="mainTitle"            onclick="utils.setFullScreen()">¡Milonga!</h1>
+      <img        id="aboutTitle"           onclick="window.open('readMe.html')" src="images/about.png"/>
     </header>
     <main>
       <section>
         <h2>
           <span>Partituras</span>
-          <select id="styleList"           onchange="scores.listArtists(this.value)"><option>Milonga</option><option>Tango</option><option>Vals</option><option>Canyengue</option><option>Cortina</option></select>
+          <select id="eraList"             onchange="scores.selectEra(this.value)"><option>ViejaGarda</option><option>EraDorada</option><option>Nuevo</option><option>Moderno</option><option>Electro</option><option>Alternativo</option></select>
+          <select id="styleList"           onchange="scores.selectStyle(this.value)"><option>Milonga</option><option>Tango</option><option>Vals</option><option>Canyengue</option><option>Cortina</option></select>
         </h2>
-        <ol id="partituras"                 onclick="scores.selectFromPartituras(event)" ondragstart="dp.dragFromScores(event)"></ol>
+        <ol       id="partituras"           onclick="scores.selectFromPartituras(event)" ondragstart="dp.dragFromScores(event)"></ol>
       </section>
       <section>
         <h2>
@@ -33,12 +34,12 @@
           <button id="play"  type="button"  onclick="milongaPlayer.playMilonga()" >Play</button>
           <button id="stop"  type="button"  onclick="milongaPlayer.stopMilonga()" >Stop</button>
         </h2>
-        <ul id="milongaList"                onclick="milonga.selectFromMilonga(event)" ondragstart="dp.dragFromMilonga(event)" ondragover="event.preventDefault()" ondrop="dp.dropToMilonga(event)" ></ul>
+        <ul       id="milongaList"          onclick="milonga.selectFromMilonga(event)" ondragstart="dp.dragFromMilonga(event)" ondragover="event.preventDefault()" ondrop="dp.dropToMilonga(event)" ></ul>
       </section>
     </main>
     <footer>
-      <audio controls onended="milongaPlayer.playNextScore()"></audio>
-      <img id="fadeoutTitle" src="images/fadeout.png" onclick="milongaPlayer.setFadeout()" />
+      <audio controls                       onended="milongaPlayer.playNextScore()"></audio>
+      <img        id="fadeoutTitle"         onclick="milongaPlayer.setFadeout()" src="images/fadeout.png" />
     </footer>
   </body>
 </html>
