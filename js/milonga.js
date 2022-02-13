@@ -46,12 +46,22 @@ var milonga = {
         if (thisElement.id === "milongaList")            return;
         if (utils.isElementPlayingOrPlayed(thisElement)) return utils.displayPlayedMessage(thisElement.id);
         var thisTanda                       = thisElement.closest("li");
+        /* Expected specs pattern is '<b>[era, ]style</b>'  */
         var tandaSpecs                      = thisTanda.firstElementChild.innerHTML.split(",");
-        scores.listArtists(tandaSpecs[0].trim(), tandaSpecs[1].trim(), thisTanda.attributes.idref.nodeValue);
+        /* Expected text pattern is '[era, ]style'  */
+        if (tandaSpecs.length === 2) {
+            scores.listArtists(tandaSpecs[0].trim(), tandaSpecs[1].trim(), thisTanda.attributes.idref.nodeValue);
+        } else {
+            scores.listArtists(null, tandaSpecs[0].trim(), thisTanda.attributes.idref.nodeValue);
+        }
         if (!utils.isElementPlayingOrPlayed(thisTanda)) thisTanda.className = "tanda";
         var thisScore                       = thisElement.closest("p");
         if (thisScore) {
-            thisScore.id.startsWith("cortina_")? scores.listArtists("Cortina", utils.getArtistId(thisScore.attributes.idref.nodeValue), thisScore.attributes.idref.nodeValue):  scores.selectScore(thisScore.attributes.idref.nodeValue);
+            if (thisScore.id.startsWith("cortina_")) { 
+                scores.listArtists(null, "Cortina", utils.getArtistId(thisScore.attributes.idref.nodeValue), thisScore.attributes.idref.nodeValue)
+            } else {
+                scores.selectScore(thisScore.attributes.idref.nodeValue);
+            }
             thisScore.className             = "tandaScore";
         }
     },
